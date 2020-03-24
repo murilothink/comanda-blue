@@ -1,0 +1,46 @@
+/*Extra css*/
+html, body{
+    height: 100%;
+    margin: 0;
+}
+/*---------*/
+#root{
+    height: 100%;
+}
+
+html {
+  height: 100%;
+}
+
+body{
+  margin:0;
+  height: 100%;
+}
+
+.wrapper {
+  display: flex;
+  min-height: 100%;
+  color: rgba(88, 85, 85, 1);
+}
+
+.main_collumn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 0 0.75cm;
+}
+
+.lista_itens_wrapper {
+  width: 10cm;
+ /* background-color: #2d9bf0; */
+ border: 1px rgba(88, 85, 85, 1);
+}
+
+.row_1{
+  width: 100%;
+}
+
+.btn_extrato{
+  float:right;
+  background-color: #2d9bf0 !important;
+}
