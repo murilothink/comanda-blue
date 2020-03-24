@@ -3,7 +3,6 @@ import React,{Component} from 'react';
 function App() {
   return (
     <div className="App">
-    <ul>
       <label 
       className = "labelName"> Nome </label>
       <div className= "divInputButton">
@@ -18,7 +17,6 @@ function App() {
         </div>
         <button className = "login">Entrar</button>
         </div>
-      </ul>
     </div>
   );
 }
