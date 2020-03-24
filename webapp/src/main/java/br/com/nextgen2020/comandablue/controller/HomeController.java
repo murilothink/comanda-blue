@@ -3,6 +3,7 @@ package br.com.nextgen2020.comandablue.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+
 @Controller // marks this class as a Spring MVC controller.
 public class HomeController {
 
