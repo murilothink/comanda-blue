@@ -1,0 +1,62 @@
+{
+  "name": "comanda-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Sistema de comandas para restaurantes",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:murilothink/comanda-blue.git"
+  },
+  "keywords": [],
+  "author": "CI&T NextGen2020 - Blue",
+  "contributors": [
+    "Cristiano Andrade de Aguiar <aguiar@ciandt.com>",
+    "Danilo de Nadai Sicari <danilons@ciandt.com>",
+    "Erik Kenzo Oura Carlini Valle <erik@ciandt.com>",
+    "João Pedro Benicio <jbenicio@ciandt.com>",
+    "Luciano Alves dos Santos <lucianos@ciandt.com>",
+    "Luciano Henrique Arendt Rodrigues <lucianohr@ciandt.com>",
+    "Murilo Henrique Gomes <murilohg@ciandt.com>",
+    "Rafael Sperandio Scheiner <rscheiner@ciandt.com>",
+    "Renato Vinicius dos Santos <renatods@ciandt.com>",
+    "Tiago Fernandes Tasselli <tiagotasselli@ciandt.com>"
+  ],
+  "license": "MIT License",
+  "homepage": "https://github.com/murilothink/comanda-blue",
+  "bugs": {
+    "url": "https://github.com/murilothink/comanda-blue/issues"
+  },
+  "dependencies": {
+    "@material-ui/core": "^4.9.7",
+    "@material-ui/icons": "^4.9.1",
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "axios": "^0.19.2",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "react-router-dom": "^5.1.2",
+    "react-scripts": "3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
