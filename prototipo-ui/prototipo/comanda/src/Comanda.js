@@ -46,7 +46,6 @@ class Comanda extends Component{
                 </Button>
                     </Grid>
 
-
                 <Grid 
               container
               style={{height:"100%"}}
@@ -60,7 +59,6 @@ class Comanda extends Component{
                     </Button></p>
                 </Grid>
 
-               
                 </Grid>     
         )  
     }
