@@ -1,19 +1,32 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
-//Abrir discussao com o Luciano e os estags sobre a ideia dos PINS, QR CODE, Id da Mesa
+
 @Entity
 public class Mesa {
-    public Integer getId() {
-        return id;
-    }
 
-    public void setId(Integer id) {
-        this.id = id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @NotEmpty
+    private String nome;
+
+    // TODO pesquisar como gerar pin e qrcode. Por eqto usar id_estabelecimento-id_mesa
+    @NotEmpty
+    private String pin;
+
+    @NotEmpty
+    private String qrCode;
+
+    @ManyToOne // varias mesas para 1 estabelecimento
+    private Estabelecimento estabelecimento;
+
+    public Long getId() {
+        return id;
     }
 
     public String getNome() {
@@ -40,16 +53,11 @@ public class Mesa {
         this.qrCode = qrCode;
     }
 
-    @Id
-    private Integer id;
+    public Estabelecimento getEstabelecimento() {
+        return estabelecimento;
+    }
 
-    @NotNull
-    private String nome;
-
-    //Disscutir se pin deve ser vinculado ao estabelecimento ou a mesa
-    @NotEmpty
-    private String pin;
-
-    @NotEmpty
-    private String qrCode;
+    public void setEstabelecimento(Estabelecimento estabelecimento) {
+        this.estabelecimento = estabelecimento;
+    }
 }

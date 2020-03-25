@@ -1,7 +1,5 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
-import java.util.List;
-
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -9,7 +7,7 @@ import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.NotEmpty;
 
 @Entity
-@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"razaoSocial"}) } )
+@Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"nome"}) } )
 public class Estabelecimento {
 
     @NotEmpty
@@ -17,41 +15,21 @@ public class Estabelecimento {
     private String cnpj;
 
     @NotEmpty
-    private String razaoSocial;
-
-    private List<Funcionario> funcionarios;
+    private String nome;
 
     @NotEmpty
     private String endereco;
-
-    private List<Mesa> mesa;
 
     public String getCnpj() {
         return cnpj;
     }
 
-    public void setCnpj(String cnpj) {
-        this.cnpj = cnpj;
+    public String getNome() {
+        return nome;
     }
 
-    public String getRazaoSocial() {
-        return razaoSocial;
-    }
-
-    public void setRazaoSocial(String razaoSocial) {
-        this.razaoSocial = razaoSocial;
-    }
-
-    public List<Funcionario> getFuncionarios() {
-        return funcionarios;
-    }
-
-//    public void setFuncionarios(List<Funcionario> funcionarios) {
-//        this.funcionarios = funcionarios;
-//    }
-
-    public List<Mesa> getMesa() {
-        return mesa;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public String getEndereco() {
@@ -61,5 +39,4 @@ public class Estabelecimento {
     public void setEndereco(String endereco) {
         this.endereco = endereco;
     }
-
 }

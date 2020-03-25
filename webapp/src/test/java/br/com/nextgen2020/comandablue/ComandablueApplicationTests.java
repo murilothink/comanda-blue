@@ -1,7 +1,7 @@
 package br.com.nextgen2020.comandablue;
 
-import br.com.nextgen2020.comandablue.model.User;
-import br.com.nextgen2020.comandablue.repository.UserRepository;
+import br.com.nextgen2020.comandablue.model.entidade.*;
+import br.com.nextgen2020.comandablue.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,24 +19,24 @@ class ComandablueApplicationTests {
 	private TestEntityManager entityManager;
 
 	@Autowired
-	private UserRepository userRepository;
+	private UsuarioRepository usuarioRepository;
 
 	@Test
 	void contextLoads() {
 	}
 
 	@Test
-	public void whenFindByName_thenReturnUser() {
+	public void whenFindByName_thenReturnUsuario() {
 		// given
-		User zeze = new User("zeze.foca@yahoo.com", "José Foca da Silva", "12345");
+		Usuario zeze = new Usuario("zeze.foca@yahoo.com", "José Foca da Silva", "12345");
 		entityManager.persist(zeze);
 		entityManager.flush();
 
 		// when
-		User found = userRepository.findByName(zeze.getName());
+		Usuario found = usuarioRepository.findByName(zeze.getNome());
 
 		// then
-		assertThat(found.getName()).isEqualTo(zeze.getName());
+		assertThat(found.getNome()).isEqualTo(zeze.getNome());
 	}
 
 }

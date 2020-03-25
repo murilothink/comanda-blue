@@ -5,5 +5,4 @@ import javax.persistence.Entity;
 public class Cliente extends Usuario {
 
 
-
 }

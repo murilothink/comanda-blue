@@ -1,9 +1,6 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -11,42 +8,29 @@ import javax.validation.constraints.NotNull;
 public class Produto {
 
     @Id
-    @NotEmpty
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
     @NotEmpty
     private String nome;
 
     @NotEmpty
-    private Integer valor;
+    private Double valor;
 
     @NotEmpty
     private String descricao;
 
+    @NotEmpty
+    private String unidade;
+
     @NotNull
-    private Categoria categoria;
+    @ManyToOne // varios produtos para 1 categoria
+    private CategoriaProduto categoriaProduto;
 
     @NotEmpty
     private String imagemDoProduto;
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public void setValor(Integer valor) {
-        this.valor = valor;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public Integer getId() {
+    public Long getId() {
         return id;
     }
 
@@ -54,19 +38,47 @@ public class Produto {
         return nome;
     }
 
-    public Integer getValor() {
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public Double getValor() {
         return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
     }
 
     public String getDescricao() {
         return descricao;
     }
 
-    public Categoria getCategoria() {
-        return categoria;
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
+
+    public String getUnidade() {
+        return unidade;
+    }
+
+    public void setUnidade(String unidade) {
+        this.unidade = unidade;
+    }
+
+    public CategoriaProduto getCategoriaProduto() {
+        return categoriaProduto;
+    }
+
+    public void setCategoriaProduto(CategoriaProduto categoriaProduto) {
+        this.categoriaProduto = categoriaProduto;
     }
 
     public String getImagemDoProduto() {
         return imagemDoProduto;
+    }
+
+    public void setImagemDoProduto(String imagemDoProduto) {
+        this.imagemDoProduto = imagemDoProduto;
     }
 }

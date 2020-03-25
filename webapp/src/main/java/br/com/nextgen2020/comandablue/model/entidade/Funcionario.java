@@ -6,6 +6,9 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Funcionario extends Usuario{
 
+    @NotNull
+    private String funcao;
+
     public String getFuncao() {
         return funcao;
     }
@@ -13,8 +16,5 @@ public class Funcionario extends Usuario{
     public void setFuncao(String funcao) {
         this.funcao = funcao;
     }
-
-    @NotNull
-    private String funcao;
 
 }

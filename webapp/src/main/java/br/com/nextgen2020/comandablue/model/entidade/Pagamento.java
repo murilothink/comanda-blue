@@ -1,23 +1,63 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-import org.hibernate.annotations.Entity;
+import br.com.nextgen2020.comandablue.model.enums.TipoPagamentoEnum;
+
 @Entity
 public class Pagamento {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
 
-    private Cliente cliente;
+    @NotNull
+    @ManyToOne // varios pagamentos para 1 usuario
+    private Usuario cliente;
 
+    @NotNull
+    @ManyToOne // varios pagamentos para 1 comanda
     private Comanda comanda;
 
-    private Integer valorPago;
+    private Double valorPago;
 
-    private TipoPagamento tipoPagemento;
+    @Enumerated(EnumType.STRING)
+    private TipoPagamentoEnum tipoPagamento;
 
+    public Long getId() {
+        return id;
+    }
+
+    public Usuario getCliente() {
+        return cliente;
+    }
+
+    public void setCliente(Usuario cliente) {
+        this.cliente = cliente;
+    }
+
+    public Comanda getComanda() {
+        return comanda;
+    }
+
+    public void setComanda(Comanda comanda) {
+        this.comanda = comanda;
+    }
+
+    public Double getValorPago() {
+        return valorPago;
+    }
+
+    public void setValorPago(Double valorPago) {
+        this.valorPago = valorPago;
+    }
+
+    public TipoPagamentoEnum getTipoPagamento() {
+        return tipoPagamento;
+    }
+
+    public void setTipoPagamento(TipoPagamentoEnum tipoPagamento) {
+        this.tipoPagamento = tipoPagamento;
+    }
 }
