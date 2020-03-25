@@ -72,7 +72,7 @@
 
 .container {
     overflow-y: auto;
-    height: 367.5px;
+    height: 100%;
     position: relative;
     margin-top: 15px;
 }

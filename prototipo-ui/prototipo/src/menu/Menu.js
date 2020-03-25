@@ -16,9 +16,8 @@ export default function Menu(){
             <span style={{fontSize: "25px"}}>Menu:</span>
             <Button size="small" className="btn_extrato" variant="contained" color="primary">Exibir Extrato</Button>
             </div>  
-            <div>
-                {<MenuList />}
-            </div>
+            <MenuList />
+            
         </div>
         <aside class="lista_itens_wrapper">
                 {<ItemList />}
