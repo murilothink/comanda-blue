@@ -6,13 +6,15 @@ import imageLogo from './download.png'
 
 export default class ComandaHeader extends Component{
     render() {
-        return(
+        return(            
+          <div className="header">     
             <AppBar position="static" style={{ background: '#2d9bf0'}}>
               <Toolbar style={{ height: '60px'}}>
                 <img src={imageLogo} alt="Logo cit" height="60px" width="60px" />
                 <h2 className="textheader">Comanda - BLUE</h2>
               </Toolbar>
             </AppBar>
+          </div>
         )
     }
 }

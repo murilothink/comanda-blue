@@ -10,16 +10,8 @@ html, body{
 
 .header {
   height: 60px;
-  width: 100%;
   background-color: blue;
-  margin: 0px;
-}
-
-.textheader {
-  color: white;
   margin: 0;
-  padding: 20px;
-  font-weight: normal;
 }
 
 .content {
@@ -32,23 +24,7 @@ html, body{
   position: fixed;
   height: 80px;
   bottom: 0px;
-  background-color: #2d9bf0 ;
+  background-color: blue;
   width: 100%;
   margin: 0;
-}
-
-.textfooter {
-  text-align: center;
-  color: white;
-  margin: 5px;
-  font-weight: normal;
-  
-}
-
-.textcopy {
-  font-weight: normal;
-  margin-top: 0;
-  text-align: right;
-  color: white;
-  padding: 0 20px;
 }
