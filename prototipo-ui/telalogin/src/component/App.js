@@ -11,49 +11,48 @@ import ComandaFooter from '../layout/ComandaFooter';
 export default function SignIn() {
  
   return (
-      <div style={{height:"100%"}} ><ComandaHeader/>
-
-        <Container component="main" maxWidth = "xs" style={{height:"100%"}}>
-          <CssBaseline/>
-            
-
-            <Grid
-              container
-              style={{height:"100%"}}
-              spacing={0}
-              justify="center"
-              direction="column"
-            >
-
-              <Typography 
-                component="h1" 
-                variant="h5"  
-                align="center"
+      <div className = 'Comanda'>
+        <ComandaHeader/>
+        <div className='content'>
+          <Container component="main" maxWidth = "xs" style={{height:"100%"}}>
+            <CssBaseline/>
+              <Grid
+                container
+                style={{height:"100%"}}
+                spacing={0}
+                justify="center"
+                direction="column"
               >
-                Bem Vindo!
-              </Typography>
 
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="Nome"
-                name="name"
-                autoComplete="name"
-                autoFocus  
-              />
+                <Typography 
+                  component="h1" 
+                  variant="h5"  
+                  align="center"
+                >
+                  Bem Vindo!
+                </Typography>
 
-              <Button 
-                variant="contained" 
-                style={{ background: '#2d9bf0', color: 'white'}}
-              >
-                Entrar
-              </Button>
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Nome"
+                  name="name"
+                  autoComplete="name"
+                  autoFocus  
+                />
 
-            </Grid>
-        </Container>
+                <Button 
+                  variant="contained" 
+                  style={{ background: '#2d9bf0', color: 'white'}}
+                >
+                  Entrar
+                </Button>
+              </Grid>
+          </Container>
+        </div>
 
         <ComandaFooter/>
       </div>
