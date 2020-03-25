@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import './base.css';
 import ComandaHeader from './ComandaHeader';
 import ComandaFooter from './ComandaFooter';
-import Menu from '../menu/Menu';
+import Comanda from '../Comanda';
 
 class App extends Component {
     render(){
@@ -10,7 +10,7 @@ class App extends Component {
           <div className="Comanda">
             <ComandaHeader />
             <div className = "content">
-              <Menu />
+              <Comanda />
             </div>
             <ComandaFooter />
           </div>

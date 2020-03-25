@@ -13,7 +13,15 @@ html, body{
   background-color: blue;
   margin: 0px;
 }
+.Container_QRCode{
+  display: block;
+  float: left;
+}
 
+.Container_PIN{
+  display: block;
+  float: left;
+}
 .textheader {
   color: white;
   margin: 0;

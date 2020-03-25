@@ -1,11 +1,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
-import Comanda from './Comanda';
+import App from './layout/App';
 
 ReactDOM.render(
   <React.StrictMode>
-    <Comanda/>
+    <App/>
   </React.StrictMode>,
   document.getElementById('root')
 );
