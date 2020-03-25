@@ -5,24 +5,31 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid } from '@material-ui/core';
-
+import ComandaHeader from '../layout/ComandaHeader';
+import ComandaFooter from '../layout/ComandaFooter';
 
 export default function SignIn() {
  
   return (
+      <div style={{height:"100%"}} ><ComandaHeader/>
+
         <Container component="main" maxWidth = "xs" style={{height:"100%"}}>
           <CssBaseline/>
             
+
             <Grid
               container
               style={{height:"100%"}}
               spacing={0}
-              align="center"
               justify="center"
               direction="column"
             >
 
-              <Typography component="h1" variant="h5">
+              <Typography 
+                component="h1" 
+                variant="h5"  
+                align="center"
+              >
                 Bem Vindo!
               </Typography>
 
@@ -35,15 +42,20 @@ export default function SignIn() {
                 label="Nome"
                 name="name"
                 autoComplete="name"
-                autoFocus
+                autoFocus  
               />
 
-              <Button variant="contained" color="primary">
+              <Button 
+                variant="contained" 
+                style={{ background: '#2d9bf0', color: 'white'}}
+              >
                 Entrar
               </Button>
 
             </Grid>
-            
         </Container>
+
+        <ComandaFooter/>
+      </div>
     );
 }
