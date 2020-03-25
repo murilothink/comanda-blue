@@ -9,6 +9,14 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import IconButton from '@material-ui/core/IconButton';
+import TextField from '@material-ui/core/TextField';
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import TextareaAutosize from '@material-ui/core/TextareaAutosize';
+
 import './style.css';
 
 //icones
@@ -36,6 +44,36 @@ const rows = [
 export default function DenseTable() {
   const classes = useStyles();
 
+  const [open, setOpen] = React.useState(false);
+
+  const handleKeyPress = event =>{
+    if(event.key === 'Enter'){
+        handleClose();
+    }
+  }
+
+  const handleChange = (e) => {
+    const nick = e.target.value.trim();
+    console.log(nick);
+  }
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    setOpen(false);
+  };
+  
+  function subtrai(quant) {
+    quant--;
+  }
+
+  function soma(quant) {
+    quant++;
+    return Boolean(true);
+  }
+
   return (
     <div>
     <TableContainer component={Paper}>
@@ -58,14 +96,17 @@ export default function DenseTable() {
               <TableCell align="center">{row.precoUni}</TableCell>
 
               <TableCell align="center">
-               <IconButton>
+               <IconButton onClick={() => { subtrai(row.quant); }}>
                 <RemoveCircleOutlineRoundedIcon />
-               </IconButton> {row.quant}
+               </IconButton> {subtrai(row.quant) ? --row.quant : ++row.quant}
                 <IconButton>
                 <AddCircleOutlineRoundedIcon />
                 </IconButton>  </TableCell>
 
-              <TableCell align="center">{(row.precoUni)*(row.quant)}&nbsp;<Button variant="outlined" color="primary">Obs.</Button></TableCell>
+              <TableCell align="center">{(row.precoUni)*(row.quant)}&nbsp;
+              <Button variant="outlined" 
+                      color="primary"
+                      onClick={handleClickOpen}>Obs.</Button></TableCell>
             </TableRow>
           ))}
         </TableBody>
@@ -75,6 +116,32 @@ export default function DenseTable() {
     <Button className="botaoMesmo" variant="contained" color="primary" width="100%" display="block"> Pedir </Button>
     <br></br>
     <Button className="botaoMesmo" variant="contained" color="secondary"> Cancelar </Button>
+
+    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+        <DialogTitle id="form-dialog-title">Observação</DialogTitle>
+        <DialogContent>
+          <DialogContentText>
+           Insira sua observação, se deseja retirar alguma coisa, ponto da carne, ...
+          </DialogContentText>
+          <TextareaAutosize
+                style={{width: "100%"}}
+                rowsMin={5}
+                rowsMax={5}
+                aria-label="Observações"
+                placeholder="Digite suas observações..."
+                onKeyPress={handleKeyPress} onChange={handleChange}
+            />
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancelar
+          </Button>
+          <Button onClick={handleClose} color="primary">
+            Enviar
+          </Button>
+        </DialogActions>
+      </Dialog>
+
     </div>
   );
 }
