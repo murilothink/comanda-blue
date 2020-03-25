@@ -26,7 +26,7 @@ import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
+    minWidth: "1cm",
   },
 });
 
@@ -35,6 +35,18 @@ function createData(item, precoUni, quant, precoTotal) {
 }
 
 const rows = [
+  createData('Arroz com feijão', 12.00, 2, 24.00),
+  createData('Batata frita', 20.00, 3, 60.00),
+  createData('File Mignon', 36.50, 5, 183.25),
+  createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
+  createData('Arroz com feijão', 12.00, 2, 24.00),
+  createData('Batata frita', 20.00, 3, 60.00),
+  createData('File Mignon', 36.50, 5, 183.25),
+  createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
+  createData('Arroz com feijão', 12.00, 2, 24.00),
+  createData('Batata frita', 20.00, 3, 60.00),
+  createData('File Mignon', 36.50, 5, 183.25),
+  createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
   createData('Arroz com feijão', 12.00, 2, 24.00),
   createData('Batata frita', 20.00, 3, 60.00),
   createData('File Mignon', 36.50, 5, 183.25),
@@ -75,47 +87,46 @@ export default function DenseTable() {
   }
 
   return (
-    <div>
-    <TableContainer component={Paper}>
-      <Table className={classes.table} size="small" aria-label="a dense table">
-        <TableHead>
-          <TableRow bgcolor="#1976d2">
-            <TableCell class="ajustaTabela" align="center">Item</TableCell>
-            <TableCell id="ajustaTabela" align="center">Preço Unitário</TableCell>
-            <TableCell id="ajustaTabela" align="center">Quantidade</TableCell>
-            <TableCell id="ajustaTabela" align="center">Total</TableCell>
-          </TableRow>
-        </TableHead>
+    <div className="itens-border">
+      <div className="itensTitle">
+        <h1>ITENS</h1>
+      </div>
+      <TableContainer className="content" component={Paper}>
+      <Table size="small" aria-label="a dense table">
         <TableBody>
           {rows.map(row => (
-            <TableRow key={row.item}>
-              <TableCell align="center" component="th" scope="row">
+            <TableRow className="tableRow" key={row.item}>
+              <TableCell className="ajustaTabela" component="th" scope="row">
                 {row.item}
               </TableCell>
 
-              <TableCell align="center">{row.precoUni}</TableCell>
+              <TableCell className="ajustaTabela">
+                R$ {row.precoUni}
+              </TableCell>
 
-              <TableCell align="center">
-               <IconButton onClick={() => { subtrai(row.quant); }}>
-                <RemoveCircleOutlineRoundedIcon />
-               </IconButton> {subtrai(row.quant) ? --row.quant : ++row.quant}
-                <IconButton>
-                <AddCircleOutlineRoundedIcon />
+              <TableCell className="ajustaTabela">
+               <IconButton className="iconButton" onClick={() => { subtrai(row.quant); }}>
+                <RemoveCircleOutlineRoundedIcon className="vermelho"/>
+               </IconButton> 
+                  {subtrai(row.quant) ? --row.quant : ++row.quant}
+                <IconButton className="iconButton">
+                <AddCircleOutlineRoundedIcon className="verde"/>
                 </IconButton>  </TableCell>
-
-              <TableCell align="center">{(row.precoUni)*(row.quant)}&nbsp;
-              <Button variant="outlined" 
-                      color="primary"
-                      onClick={handleClickOpen}>Obs.</Button></TableCell>
-            </TableRow>
-          ))}
+                
+                <TableCell className="ajustaTabela">
+                  <Button variant="outlined" color="primary" className="gold" onClick={handleClickOpen}> OBS </Button>
+                </TableCell>
+              
+            </TableRow>))}
         </TableBody>
       </Table>
     </TableContainer>
     
-    <Button className="botaoMesmo" variant="contained" color="primary" width="100%" display="block"> Pedir </Button>
-    <br></br>
-    <Button className="botaoMesmo" variant="contained" color="secondary"> Cancelar </Button>
+      <div className="buttonBox">
+        <Button className="botaoMesmo" variant="contained" color="primary" width="100%" display="block"> Pedir </Button>
+        <br></br>
+        <Button className="botaoMesmo" variant="contained" color="secondary"> Cancelar </Button>
+      </div>
 
     <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Observação</DialogTitle>

@@ -3,11 +3,11 @@ import "./css/Menu.css";
 
 export default function MenuList(){
     return (
-            <div>
+            <div className="container">
                 <div className="MenuList">
-                    <div className="product-categoria">
+                    <h1 className="product-categoria">
                         1 - BEBIDAS
-                    </div>
+                    </h1>
                     <ul>
                         <li className="line">
                             <img className="product-image" src="
@@ -192,9 +192,9 @@ export default function MenuList(){
                 </div>
 
                 <div className="MenuList">
-                    <div className="product-categoria">
+                    <h1 className="product-categoria">
                         2 - SALGADOS
-                    </div>
+                    </h1>
                     <ul className="coll">
                         <li className="line">
                             <img className="product-image" src="

@@ -1,7 +1,7 @@
 .MenuList {
     width: 100%;
     height: 100%;
-    overflow-y: auto;
+    position: relative;
 }
 
 .line {
@@ -9,6 +9,7 @@
     float: left;
     width: 400px;
     height: 180px;
+    position: relative;
 }
 
 .product-image {
@@ -64,4 +65,14 @@
     padding: 5px;
     background-color: #2d9bf0;
     color: #ffffff;
+    height: 30px;
+    width: 96%;
+    display: inline-block;
+}
+
+.container {
+    overflow-y: auto;
+    height: 500px;
+    position: relative;
+    margin-top: 15px;
 }
