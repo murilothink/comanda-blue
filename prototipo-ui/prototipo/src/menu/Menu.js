@@ -9,7 +9,7 @@ export default function Menu(){
     return (
     <div class="wrapper">
         <div class="main_collumn">
-            <h1>
+            <h1 class="estabelecimento_title">
                 Estabelecimento X
             </h1>
             <div class="row_1">
