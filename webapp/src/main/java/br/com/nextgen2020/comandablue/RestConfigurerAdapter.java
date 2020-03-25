@@ -1,12 +1,13 @@
 package br.com.nextgen2020.comandablue;
 
-import br.com.nextgen2020.comandablue.model.User;
+import javax.persistence.EntityManager;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.rest.core.config.RepositoryRestConfiguration;
 import org.springframework.data.rest.webmvc.config.RepositoryRestConfigurerAdapter;
 
-import javax.persistence.EntityManager;
+import br.com.nextgen2020.comandablue.model.entidade.Usuario;
 
 @Configuration
 public class RestConfigurerAdapter extends RepositoryRestConfigurerAdapter {
@@ -16,6 +17,6 @@ public class RestConfigurerAdapter extends RepositoryRestConfigurerAdapter {
 
     @Override
     public void configureRepositoryRestConfiguration(RepositoryRestConfiguration config) {
-        config.exposeIdsFor(User.class);
+        config.exposeIdsFor(Usuario.class);
     }
 }
