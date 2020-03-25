@@ -25,134 +25,143 @@ import RemoveCircleOutlineRoundedIcon from '@material-ui/icons/RemoveCircleOutli
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 const useStyles = makeStyles({
-  table: {
-    minWidth: "1cm",
-  },
+    table: {
+        minWidth: "1cm",
+    },
 });
 
 function createData(item, precoUni, quant, precoTotal) {
-  return { item, precoUni, quant, precoTotal};
+    return { item, precoUni, quant, precoTotal};
 }
 
 const rows = [
-  createData('Arroz com feijão', 12.00, 2, 24.00),
-  createData('Batata frita', 20.00, 3, 60.00),
-  createData('File Mignon', 36.50, 5, 183.25),
-  createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
-  createData('Arroz com feijão', 12.00, 2, 24.00),
-  createData('Batata frita', 20.00, 3, 60.00),
-  createData('File Mignon', 36.50, 5, 183.25),
-  createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
-  createData('Arroz com feijão', 12.00, 2, 24.00),
-  createData('Batata frita', 20.00, 3, 60.00),
-  createData('File Mignon', 36.50, 5, 183.25),
-  createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
-  createData('Arroz com feijão', 12.00, 2, 24.00),
-  createData('Batata frita', 20.00, 3, 60.00),
-  createData('File Mignon', 36.50, 5, 183.25),
-  createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
+    createData('Arroz com feijão', 12.00, 2, 24.00),
+    createData('Batata frita', 20.00, 3, 60.00),
+    createData('File Mignon', 36.50, 5, 183.25),
+    createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
+    createData('Arroz com feijão', 12.00, 2, 24.00),
+    createData('Batata frita', 20.00, 3, 60.00),
+    createData('File Mignon', 36.50, 5, 183.25),
+    createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
+    createData('Arroz com feijão', 12.00, 2, 24.00),
+    createData('Batata frita', 20.00, 3, 60.00),
+    createData('File Mignon', 36.50, 5, 183.25),
+    createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
+    createData('Arroz com feijão', 12.00, 2, 24.00),
+    createData('Batata frita', 20.00, 3, 60.00),
+    createData('File Mignon', 36.50, 5, 183.25),
+    createData('Sorvete do Luciano', 1000.00, 1, 1000.00),
 ];
 
 export default function DenseTable() {
-  const classes = useStyles();
+    const classes = useStyles();
 
-  const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = React.useState(false);
 
-  const handleKeyPress = event =>{
-    if(event.key === 'Enter'){
-        handleClose();
+    const handleKeyPress = event =>{
+        if(event.key === 'Enter'){
+            handleClose();
+        }
     }
-  }
 
-  const handleChange = (e) => {
-    const nick = e.target.value.trim();
-    console.log(nick);
-  }
+    const handleChange = (e) => {
+        const nick = e.target.value.trim();
+        console.log(nick);
+    }
 
-  const handleClickOpen = () => {
-    setOpen(true);
-  };
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
-  
-  function subtrai(quant) {
-    quant--;
-  }
+    const handleClose = () => {
+        setOpen(false);
+    };
 
-  function soma(quant) {
-    quant++;
-    return Boolean(true);
-  }
+    function subtrai(quant) {
+        quant--;
+    }
 
-  return (
-    <div className="itens-border">
-      <div className="itensTitle">
-        <h1>ITENS</h1>
-      </div>
-      <TableContainer className="content" component={Paper}>
-      <Table size="small" aria-label="a dense table">
-        <TableBody>
-          {rows.map(row => (
-            <TableRow className="tableRow" key={row.item}>
-              <TableCell className="ajustaTabela" component="th" scope="row">
-                {row.item}
-              </TableCell>
+    function soma(quant) {
+        quant++;
+        return Boolean(true);
+    }
 
-              <TableCell className="ajustaTabela">
-                R$ {row.precoUni}
-              </TableCell>
+    return (
+        <div className="itens-border">
 
-              <TableCell className="ajustaTabela">
-               <IconButton className="iconButton" onClick={() => { subtrai(row.quant); }}>
-                <RemoveCircleOutlineRoundedIcon className="vermelho"/>
-               </IconButton> 
-                  {subtrai(row.quant) ? --row.quant : ++row.quant}
-                <IconButton className="iconButton">
-                <AddCircleOutlineRoundedIcon className="verde"/>
-                </IconButton>  </TableCell>
-                
-                <TableCell className="ajustaTabela">
-                  <Button variant="outlined" color="primary" className="gold" onClick={handleClickOpen}> OBS </Button>
-                </TableCell>
-              
-            </TableRow>))}
-        </TableBody>
-      </Table>
-    </TableContainer>
-    
-      <div className="buttonBox">
-        <Button className="botaoMesmo" variant="contained" color="primary" width="100%" display="block"> Pedir </Button>
-        <br></br>
-        <Button className="botaoMesmo" variant="contained" color="secondary"> Cancelar </Button>
-      </div>
+            <div className="itensTitle">
+                <h1>ITENS</h1>
+            </div>
 
-    <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Observação</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-           Insira sua observação, se deseja retirar alguma coisa, ponto da carne, ...
-          </DialogContentText>
-          <TextareaAutosize
-                style={{width: "100%"}}
-                rowsMin={5}
-                rowsMax={5}
-                aria-label="Observações"
-                placeholder="Digite suas observações..."
-                onKeyPress={handleKeyPress} onChange={handleChange}
-            />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancelar
-          </Button>
-          <Button onClick={handleClose} color="primary">
-            Enviar
-          </Button>
-        </DialogActions>
-      </Dialog>
+            <TableContainer className="content" component={Paper}>
+                <Table size="small" aria-label="a dense table">
+                    <TableBody>
+                        {rows.map(row => (
+                            <TableRow className="tableRow" key={row.item}>
+                                
+                                <TableCell className="ajustaTabela" component="th" scope="row">
+                                    {row.item}
+                                </TableCell>
 
-    </div>
-  );
+                                <TableCell className="ajustaTabela">
+                                    R$ {row.precoUni}
+                                </TableCell>
+
+                                <TableCell className="ajustaTabela">
+
+                                    <IconButton className="iconButton" onClick={() => { subtrai(row.quant); }}>
+                                        <RemoveCircleOutlineRoundedIcon className="vermelho"/>
+                                    </IconButton> 
+                                    
+                                    {subtrai(row.quant) ? --row.quant : ++row.quant}
+
+                                    <IconButton className="iconButton">
+                                        <AddCircleOutlineRoundedIcon className="verde"/>
+                                    </IconButton> 
+
+                                </TableCell>
+                                
+                                <TableCell className="ajustaTabela">
+                                    <Button variant="outlined" color="primary" className="gold" onClick={handleClickOpen}> OBS </Button>
+                                </TableCell>
+                            
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+            
+            <div className="buttonBox">
+                <Button className="botaoMesmo" variant="contained" color="primary" width="100%" display="block"> Pedir </Button>
+                <br></br>
+                <Button className="botaoMesmo" variant="contained" color="secondary"> Cancelar </Button>
+            </div>
+
+            <Dialog open={open} onClose={handleClose} aria-labelledby="form-dialog-title">
+                <DialogTitle id="form-dialog-title">Observação</DialogTitle>
+                <DialogContent>
+                <DialogContentText>
+                Insira sua observação, se deseja retirar alguma coisa, ponto da carne, ...
+                </DialogContentText>
+                <TextareaAutosize
+                        style={{width: "100%"}}
+                        rowsMin={5}
+                        rowsMax={5}
+                        aria-label="Observações"
+                        placeholder="Digite suas observações..."
+                        onKeyPress={handleKeyPress} onChange={handleChange}
+                    />
+                </DialogContent>
+                <DialogActions>
+                <Button onClick={handleClose} color="primary">
+                    Cancelar
+                </Button>
+                <Button onClick={handleClose} color="primary">
+                    Enviar
+                </Button>
+                </DialogActions>
+            </Dialog>
+
+        </div>
+    );
 }
