@@ -1,8 +1,6 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -13,13 +11,10 @@ import javax.validation.constraints.NotEmpty;
 @Table(uniqueConstraints = { @UniqueConstraint(columnNames = {"email"}) } )
 public class Usuario {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
     @NotEmpty
     private String nome;
 
+    @Id
     @NotEmpty
     @Email
     private String email;
@@ -35,10 +30,6 @@ public class Usuario {
         this.email = email;
         this.nome = nome;
         this.senha = senha;
-    }
-
-    public Integer getId() {
-        return id;
     }
 
     public String getEmail() {
@@ -67,7 +58,7 @@ public class Usuario {
 
     @Override
     public String toString(){
-        return String.format("id: {}, email: {}, nome: {}", this.id, this.email, this.nome);
+        return String.format("id: {}, email: {}, nome: {}", this.email, this.nome);
     }
 
 }

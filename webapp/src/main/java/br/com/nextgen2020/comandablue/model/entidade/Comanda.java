@@ -1,8 +1,15 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+import javax.validation.constraints.NotNull;
 
 @Entity
 public class Comanda {
@@ -29,6 +36,8 @@ public class Comanda {
     @OneToMany // varios pagamentos para 1 comanda
     private List<Pagamento> pagamentos;
 
+    //ToDo
+    //Criar enum para o status (Aberta e Fechada)
     private String status;
 
     public Long getId() {
