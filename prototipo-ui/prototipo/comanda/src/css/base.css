@@ -1,0 +1,31 @@
+/*Extra css*/
+html, body{
+    height: 100%;
+    margin: 0;
+}
+/*---------*/
+#root{
+    height: 100%;
+}
+
+.header {
+  height: 60px;
+  background-color: blue;
+  margin: 0;
+}
+
+.content {
+    width: 100%;
+    overflow-y: auto;
+    margin-bottom: 80px;
+    display: block;
+}
+  
+.footer {
+  position: fixed;
+  height: 80px;
+  bottom: 0px;
+  background-color: blue;
+  width: 100%;
+  margin: 0;
+}
