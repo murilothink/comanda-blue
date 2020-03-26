@@ -1,14 +1,10 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
+import br.com.nextgen2020.comandablue.model.enums.StatusComanda;
+
 import java.util.List;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -36,9 +32,22 @@ public class Comanda {
     @OneToMany // varios pagamentos para 1 comanda
     private List<Pagamento> pagamentos;
 
-    //ToDo
-    //Criar enum para o status (Aberta e Fechada)
-    private String status;
+    @Enumerated(EnumType.STRING)
+    private StatusComanda status;
+
+    public Comanda(){
+
+    }
+
+    public Comanda(@NotNull Estabelecimento estabelecimento,
+                   @NotNull Mesa mesa,
+                   @NotNull List<Usuario> usuarios) {
+
+        this.estabelecimento = estabelecimento;
+        this.mesa = mesa;
+        this.usuarios = usuarios;
+        this.status = StatusComanda.ABERTO;
+    }
 
     public Long getId() {
         return id;
@@ -84,11 +93,11 @@ public class Comanda {
         this.pagamentos = pagamentos;
     }
 
-    public String getStatus() {
+    public StatusComanda getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(StatusComanda status) {
         this.status = status;
     }
 }
