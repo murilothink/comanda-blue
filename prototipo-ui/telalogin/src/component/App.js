@@ -5,45 +5,56 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid } from '@material-ui/core';
-
+import ComandaHeader from '../layout/ComandaHeader';
+import ComandaFooter from '../layout/ComandaFooter';
 
 export default function SignIn() {
  
   return (
-        <Container component="main" maxWidth = "xs" style={{height:"100%"}}>
-          <CssBaseline/>
-            
-            <Grid
-              container
-              style={{height:"100%"}}
-              spacing={0}
-              align="center"
-              justify="center"
-              direction="column"
-            >
+      <div className = 'Comanda'>
+        <ComandaHeader/>
+        <div className='content'>
+          <Container component="main" maxWidth = "xs" style={{height:"100%"}}>
+            <CssBaseline/>
+              <Grid
+                container
+                style={{height:"100%"}}
+                spacing={0}
+                justify="center"
+                direction="column"
+              >
 
-              <Typography component="h1" variant="h5">
-                Bem Vindo!
-              </Typography>
+                <Typography 
+                  component="h1" 
+                  variant="h5"  
+                  align="center"
+                >
+                  Bem Vindo!
+                </Typography>
 
-              <TextField
-                variant="outlined"
-                margin="normal"
-                required
-                fullWidth
-                id="name"
-                label="Nome"
-                name="name"
-                autoComplete="name"
-                autoFocus
-              />
+                <TextField
+                  variant="outlined"
+                  margin="normal"
+                  required
+                  fullWidth
+                  id="name"
+                  label="Nome"
+                  name="name"
+                  autoComplete="name"
+                  autoFocus  
+                />
 
-              <Button variant="contained" color="primary">
-                Entrar
-              </Button>
+                <Button 
+                  variant="contained" 
+                  style={{ background: '#2d9bf0', color: 'white'}}
+                >
+                  Entrar
+                </Button>
+              </Grid>
+          </Container>
+        </div>
 
-            </Grid>
-            
-        </Container>
+        <ComandaFooter/>
+      </div>
     );
 }

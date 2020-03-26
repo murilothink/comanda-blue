@@ -1,5 +1,6 @@
 package br.com.nextgen2020.comandablue;
 
+
 import br.com.nextgen2020.comandablue.model.entidade.*;
 import br.com.nextgen2020.comandablue.repository.UsuarioRepository;
 import org.junit.jupiter.api.Test;
@@ -38,5 +39,6 @@ class ComandablueApplicationTests {
 		// then
 		assertThat(found.getNome()).isEqualTo(zeze.getNome());
 	}
+
 
 }
