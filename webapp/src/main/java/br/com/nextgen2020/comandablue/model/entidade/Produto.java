@@ -11,10 +11,14 @@ public class Produto {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
+    @ManyToOne // varios produtos para 1 estabelecimento
+    private Estabelecimento estabelecimento;
+
     @NotEmpty
     private String nome;
 
-    @NotEmpty
+    @NotNull
     private Double valor;
 
     @NotEmpty
@@ -27,8 +31,27 @@ public class Produto {
     @ManyToOne // varios produtos para 1 categoria
     private CategoriaProduto categoriaProduto;
 
-    @NotEmpty
     private String imagemDoProduto;
+
+    public Produto() {
+        // Necessita de construtor para metodos embutidos do ProdutoRepository
+    }
+
+    public Produto(@NotEmpty Estabelecimento estabelecimento,
+                   @NotEmpty String nome,
+                   @NotEmpty Double valor,
+                   @NotEmpty String descricao,
+                   @NotEmpty String unidade,
+                   @NotNull CategoriaProduto categoriaProduto,
+                   @NotEmpty String imagemDoProduto) {
+        this.estabelecimento = estabelecimento;
+        this.nome = nome;
+        this.valor = valor;
+        this.descricao = descricao;
+        this.unidade = unidade;
+        this.categoriaProduto = categoriaProduto;
+        this.imagemDoProduto = imagemDoProduto;
+    }
 
     public Long getId() {
         return id;

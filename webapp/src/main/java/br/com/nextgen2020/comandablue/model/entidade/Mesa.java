@@ -12,18 +12,28 @@ public class Mesa {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @ManyToOne // varias mesas para 1 estabelecimento
+    private Estabelecimento estabelecimento;
+
     @NotEmpty
     private String nome;
 
-    // TODO pesquisar como gerar pin e qrcode. Por eqto usar id_estabelecimento-id_mesa
-    @NotEmpty
+    // TODO Gerar pin e qrcode -> Por eqto usar idEstabelecimento-idMesa
     private String pin;
 
-    @NotEmpty
     private String qrCode;
 
-    @ManyToOne // varias mesas para 1 estabelecimento
-    private Estabelecimento estabelecimento;
+    public Mesa(){
+        // Necessita de construtor para metodos embutidos do MesaRepository
+    }
+
+    public Mesa(Estabelecimento estabelecimento,
+                @NotEmpty String nome) {
+        this.estabelecimento = estabelecimento;
+        this.nome = nome;
+        this.pin="";
+        this.qrCode="";
+    }
 
     public Long getId() {
         return id;
@@ -41,8 +51,8 @@ public class Mesa {
         return pin;
     }
 
-    public void setPin(String pin) {
-        this.pin = pin;
+    public void setPin() {
+        this.pin = String.valueOf(estabelecimento.getId()) + "-" + String.valueOf(this.getId());
     }
 
     public String getQrCode() {

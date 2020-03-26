@@ -1,13 +1,10 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
 import java.sql.Timestamp;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
-
-import org.springframework.data.annotation.Id;
-
 import com.sun.istack.NotNull;
+
 @Entity
 public class Pedido {
 
@@ -20,7 +17,7 @@ public class Pedido {
     private Usuario clienteSolicitante;
 
     @NotNull
-    @OneToMany // varios produtos para 1 pedido
+    @ManyToOne // varios pedidos para 1 produto
     private Produto produto;
 
     private String observacao;
@@ -28,10 +25,10 @@ public class Pedido {
     @NotEmpty
     private Integer quantidade;
 
-    @NotEmpty
+    @NotNull
     private Double valorUnitario;
 
-    @NotEmpty
+    @NotNull
     private Double valorTotal;
 
     @Column(columnDefinition  = "timestamp default current_timestamp")

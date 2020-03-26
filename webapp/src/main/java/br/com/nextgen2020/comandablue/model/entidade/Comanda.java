@@ -1,7 +1,5 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
-import org.springframework.data.annotation.Id;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
@@ -33,7 +31,8 @@ public class Comanda {
 
     private String status;
 
-    public Long getId() {        return id;
+    public Long getId() {
+        return id;
     }
 
     public Estabelecimento getEstabelecimento() {

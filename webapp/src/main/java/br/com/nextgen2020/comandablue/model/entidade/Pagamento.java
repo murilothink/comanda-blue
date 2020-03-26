@@ -20,6 +20,7 @@ public class Pagamento {
     @ManyToOne // varios pagamentos para 1 comanda
     private Comanda comanda;
 
+    @NotNull
     private Double valorPago;
 
     @Enumerated(EnumType.STRING)

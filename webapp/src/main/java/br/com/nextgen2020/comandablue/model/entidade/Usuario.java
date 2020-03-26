@@ -18,20 +18,20 @@ public class Usuario {
     private Integer id;
 
     @NotEmpty
-    @Email
-    private String email;
+    private String nome;
 
     @NotEmpty
-    private String nome;
+    @Email
+    private String email;
 
     @NotEmpty
     private String senha;
 
     public Usuario(){
-        // Necessita de construtor para metodos embutidos do UserRepository
+        // Necessita de construtor para metodos embutidos do UsuarioRepository
     }
 
-    public Usuario(String email, String nome, String senha){
+    public Usuario(@NotEmpty String nome, @NotEmpty @Email String email, @NotEmpty String senha) {
         this.email = email;
         this.nome = nome;
         this.senha = senha;
