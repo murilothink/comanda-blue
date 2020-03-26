@@ -1,0 +1,74 @@
+/*#ajustaTabela { padding: 0 750px 0 0px; }*/
+.divOcupa { 
+    width: 100%; 
+}
+
+.botaoMesmo { 
+    width: 100%; 
+}
+
+.ajustaTabela {
+    padding: 5px !important;
+    font-size: 14px !important;
+}
+
+.buttonBox {
+    height: auto !important;
+    width: 100% !important;
+    bottom: 0 !important;
+}
+
+.iconButton {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+}
+
+.tableRow {
+    padding: 0;
+    height: 10px;
+}
+
+.itensTitle {
+    background-color: #2d9bf0;
+    padding: 1px;
+    padding-left: 4cm;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    
+}
+
+.itens-border {
+    border-left: 2px solid gray;
+    border-right: 2px solid gray;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.content {
+    margin: 0 auto !important;
+    overflow: auto;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 0;
+}
+
+.vermelho {
+    background-color: red !important;
+    border-radius: 100%;
+    color: white;
+}
+
+.verde {
+    background-color: green !important;
+    border-radius: 100%;
+    color: white;
+}
+
+.gold {
+    background-color: #fac710 !important;
+    color: white !important;
+    font-weight: bold !important;
+}
