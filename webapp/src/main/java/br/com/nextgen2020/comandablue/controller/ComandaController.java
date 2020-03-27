@@ -18,7 +18,7 @@ public class ComandaController {
 
     @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/abrir", consumes = "application/json", produces = "application/json")
     @Transactional
-        public Comanda abrir(@PathVariable(value="idEstabelecimento") Long idEstabelecimento, @PathVariable(value="idMesa") Long idMesa, @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailCliente){
+    public Comanda abrir(@PathVariable(value="idEstabelecimento") Long idEstabelecimento, @PathVariable(value="idMesa") Long idMesa, @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailCliente){
 
         return comandaService.abrir(idEstabelecimento, idMesa, emailCliente);
     }
@@ -29,5 +29,4 @@ public class ComandaController {
 
         return comandaService.fazerPedido(idComanda, itemPedido, emailCliente);
     }
-
 }
