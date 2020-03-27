@@ -64,13 +64,14 @@ export default function Login({history}){
         // faz POST com json contendo email e senha para o servidor no endpoint /usuario/logar
         const response = await api.post('/usuario/logar', { email: values.email, senha: values.password, nome:values.name });
         
-        console.log(response.status, response.data.comandaBlueCliente);
+        console.log(response.status, response.data.comandaBlueCliente, response);
         
-        // Se login foi bem sucedido, servidor retorna uma string e react guarda no local storage, na chave COMANDA-BLUE-CLIENTE
-        // Verificar o localstorage pelo inspecionar elemento
-        // localStorage.setItem('COMANDA-BLUE-CLIENTE', response.data.comandaBlueCliente);
-
-        setUserLogin(response.data.comandaBlueCliente);
+        // Se login foi bem sucedido, servidor retorna uma string e react guarda no userLogin state
+        // o nome e comandaBlueCliente (que eh o email do cliente criptografado)
+        setUserLogin({
+          nome: response.data.nome,
+          comandaBlueCliente: response.data.comandaBlueCliente,
+        });
 
         // Login OK, enviar usuario para tela de comanda
         // TODO nao seria melhor tela chamar ABRIRCOMANDA ?

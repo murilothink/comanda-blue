@@ -15,6 +15,17 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    public String getUsuarioNome(String email){
+
+        Usuario usuario = usuarioRepository.findByEmail(email);
+
+        if(usuario != null){
+            return usuario.getNome();
+        }
+
+        return "";
+    }
+
     public boolean verificaUsuarioSenha(String email, String senha, String nome){
 
         Usuario usuario = usuarioRepository.findByEmail(email);

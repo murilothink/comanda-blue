@@ -1,5 +1,7 @@
 import React, { Component, useContext } from 'react';
 import { UserContext } from '../../UserContext';
+import api from '../../services/api';
+
 import img from '../../imgs/qrcode.png'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -19,33 +21,39 @@ export default function Comanda({history}){
     // Para acessar contexto de login usuario
     const { userLogin, setUserLogin } = useContext(UserContext);
 
-    // state para saber se login falhou ou nao
+    // state para saber se pin falhou ou nao
     const [status, setStatus] = React.useState("");
 
     const [values, setValues] = React.useState({
-        PIN:'',
-        });
+        pin:'',
+    });
 
     const handleChange = prop => event => {
         setValues({ ...values, [prop]: event.target.value });
         console.log(values);
     };
 
-    // Funcao assincrona para pedir login do usuario. É assincrona pois deve aguardar (await) o api.post
-    async function handleLogarUsuario() {
+    // Funcao assincrona para verificacao do pin. É assincrona pois deve aguardar (await) o api.post
+    async function handleValidarPin() {
       
-        // Limpa state status para nova tentativa de login
+        // Limpa state status para nova tentativa de verificar pin
         setStatus("");
     
         try{
-            // faz POST com json contendo email e senha para o servidor no endpoint /usuario/logar
-            const response = await api.post('/mesa/validatepin', { PIN: values.PIN});
+            // faz POST com json contendo pin para o servidor no endpoint /mesa/validatepin
+            const response = await api.post('/mesa/validatepin', { pin: values.pin});
             
-            console.log(response.status, response.data);
+            console.log("PIN sent=" + values.pin, response.status, response.data);
             
-            // Login OK, enviar usuario para tela de comanda
-            // TODO nao seria melhor tela chamar ABRIRCOMANDA ?
-            history.push('/Menu');
+            // Com o pin validado, extrair idEstabelecimento e idMesa
+
+            setUserLogin({
+                idEstabelecimento: values.pin.split("-")[0],
+                idMesa: values.pin.split("-")[1]
+            })
+
+            console.log(userLogin);
+            //history.push('/Menu');
         }
         catch (error) {
             console.log(error);
@@ -72,8 +80,9 @@ export default function Comanda({history}){
                     direction="column" item xs={12} sm={6} className="comanda-bemvindo"
                 >
                     <div className="comanda-saudacao">
-                        <h1>Olá, seja bem vindo!</h1><br />
-                        Leia o QRCode ou insira o pin da sua mesa
+                        <h1>Olá {userLogin.nome}, seja bem vindo!</h1><br />
+                        Leia o QRCode ou insira o pin da sua mesa<br />
+                        token: {userLogin.comandaBlueCliente}
                     </div>
                 </Grid>
 
@@ -111,8 +120,8 @@ export default function Comanda({history}){
                         <OutlinedInput
                         id="input-PIN"
                         type='PIN'
-                        value={values.PIN}
-                        onChange={handleChange('PIN')}                      
+                        value={values.pin}
+                        onChange={handleChange('pin')}                      
                         labelWidth={70}
                         />
                     </FormControl>
@@ -122,7 +131,7 @@ export default function Comanda({history}){
                         style={{ top: '72px', background: '#2d9bf0', color: 'white' }} 
                         variant="contained" 
                         color="primary"
-                        onClick={() => handleLogarUsuario()}>
+                        onClick={() => handleValidarPin()}>
                             Confirmar PIN
                         </Button>
                     </p>

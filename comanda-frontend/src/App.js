@@ -7,7 +7,12 @@ import './css/base.css';
 
 export default function App(){
 
-    const [userLogin, setUserLogin] = useState(null); // inicia como null, pois nao temos user
+    const [userLogin, setUserLogin] = useState({
+        nome: '',
+        comandaBlueCliente: '',
+        idEstabelecimento: '',
+        idMesa: ''       
+    }); 
 
     // Toda vez que userLogin mudar, atualiza providerUserLogin 
     const providerUserLogin = useMemo(() => ({userLogin, setUserLogin}), [userLogin, setUserLogin]);

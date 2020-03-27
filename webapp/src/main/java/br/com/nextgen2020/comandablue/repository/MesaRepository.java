@@ -10,6 +10,7 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "mesa", path = "mesa")
 public interface MesaRepository extends CrudRepository<Mesa, Long> {
-     public Mesa findByPIN(String PIN);
+
+     public Mesa findByPin(String Pin);
 
 }

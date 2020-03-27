@@ -1,7 +1,5 @@
 package br.com.nextgen2020.comandablue.controller;
 
-import br.com.nextgen2020.comandablue.model.entidade.Usuario;
-import br.com.nextgen2020.comandablue.repository.UsuarioRepository;
 import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
 import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
@@ -35,6 +33,7 @@ public class UsuarioController {
                 EncryptDecrypt ed = new EncryptDecrypt();
                 JSONObject json = new JSONObject();
                 json.put("comandaBlueCliente", ed.encrypt(form.getEmail()));
+                json.put("nome", usuarioService.getUsuarioNome(form.getEmail()));
                 return ResponseEntity.ok(json);
             }
 

@@ -1,18 +1,15 @@
 package br.com.nextgen2020.comandablue.controller;
 
 import br.com.nextgen2020.comandablue.Service.MesaService;
-import br.com.nextgen2020.comandablue.form.ValidatePINForm;
-import br.com.nextgen2020.comandablue.model.entidade.Usuario;
-import br.com.nextgen2020.comandablue.repository.UsuarioRepository;
-import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
-import net.minidev.json.JSONObject;
+import br.com.nextgen2020.comandablue.form.ValidatePinForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import br.com.nextgen2020.comandablue.Service.UsuarioService;
-import br.com.nextgen2020.comandablue.form.LogarUsuarioForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 
@@ -28,23 +25,20 @@ public class MesaController {
 
     @PostMapping(path= "/mesa/validatepin", consumes = "application/json", produces = "application/json")
     @Transactional
-    public ResponseEntity<?> validarPIN(@RequestBody ValidatePINForm form) {
+    public ResponseEntity<?> validatepin(@RequestBody ValidatePinForm form) {
 
         logger.info(form.toString());
 
         try{
-            if(mesaService.verificaPIN(form.getPIN())){
-                EncryptDecrypt ed = new EncryptDecrypt();
-                JSONObject json = new JSONObject();
-                json.put("comandaBlueCliente", ed.encrypt(form.getPIN()));
-                return ResponseEntity.ok(json);
+            if(mesaService.verificaPin(form.getPin())){
+                return ResponseEntity.ok().build();
             }
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        return ResponseEntity.badRequest().build();
+        return ResponseEntity.ok().build();
     }
 
 }
