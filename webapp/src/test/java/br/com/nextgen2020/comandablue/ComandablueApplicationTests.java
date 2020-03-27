@@ -3,6 +3,7 @@ package br.com.nextgen2020.comandablue;
 import br.com.nextgen2020.comandablue.model.entidade.*;
 import br.com.nextgen2020.comandablue.repository.CategoriaProdutoRepository;
 import br.com.nextgen2020.comandablue.repository.UsuarioRepository;
+import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ class ComandablueApplicationTests {
 		entityManager.flush();
 
 		// when
-		Usuario found = usuarioRepository.findByNome(zeze.getNome());
+		Usuario found = usuarioRepository.findByEmail(zeze.getEmail());
 
 		// then
 		assertThat(found.getNome()).isEqualTo(zeze.getNome());
@@ -63,6 +64,27 @@ class ComandablueApplicationTests {
 
 		// then
 		assertThat(found.getCategoria()).isEqualTo(catSalgado.getCategoria());
+	}
+
+	@Test
+	public void whenEncrypt_thenDecrypt() {
+
+		try {
+			// given
+			String text = "The brown fox jumps over the lazy dog.";
+			EncryptDecrypt ed = new EncryptDecrypt();
+			String encryptedText = ed.encrypt(text);
+
+			// when
+			String decryptedText = ed.decrypt(encryptedText);
+
+			// then
+			assertThat(text).isEqualTo(decryptedText);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+
 	}
 
 }

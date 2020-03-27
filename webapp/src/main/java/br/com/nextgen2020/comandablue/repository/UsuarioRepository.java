@@ -7,11 +7,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 
 import java.util.List;
 
-@CrossOrigin(origins = "http://localhost:3000")
 @RepositoryRestResource(collectionResourceRel = "user", path = "user")
 public interface UsuarioRepository extends CrudRepository<Usuario, Long> {
 
-    public Usuario findByNome(String nome);
+    public List<Usuario> findByNome(String nome);
     public Usuario findByEmail(String email);
 
 }

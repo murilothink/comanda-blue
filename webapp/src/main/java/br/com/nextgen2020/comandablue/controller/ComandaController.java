@@ -25,7 +25,6 @@ public class ComandaController {
     public Comanda abrir(@PathVariable(value="idEstabelecimento") Long idEstabelecimento, @PathVariable(value="idMesa") Long idMesa,
                     @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailCliente){
 
-
         return comandaService.abrir(idEstabelecimento, idMesa, emailCliente);
     }
 
