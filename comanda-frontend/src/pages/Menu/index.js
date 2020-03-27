@@ -16,7 +16,7 @@ export default class Menu extends React.Component{
                 <span style={{fontSize: "25px"}}>Menu:</span>
                 <Button size="small" className="btn_extrato" variant="contained" color="primary">Exibir Extrato</Button>
                 </div>  
-                <MenuList />
+                <MenuList idCategoria={-1} idEstabelecimento={1}/> 
                 
             </div>
             <aside class="lista_itens_wrapper">
