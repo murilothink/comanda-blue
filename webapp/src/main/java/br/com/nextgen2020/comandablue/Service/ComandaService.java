@@ -3,14 +3,13 @@ package br.com.nextgen2020.comandablue.Service;
 import java.util.ArrayList;
 import java.util.List;
 
-import br.com.nextgen2020.comandablue.model.entidade.Pedido;
-import br.com.nextgen2020.comandablue.model.entidade.Usuario;
+import br.com.nextgen2020.comandablue.model.entidade.*;
 import br.com.nextgen2020.comandablue.model.enums.StatusComanda;
 import br.com.nextgen2020.comandablue.repository.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 
 @Service
 public class ComandaService {
@@ -25,6 +24,7 @@ public class ComandaService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
+    private static final Logger log = LoggerFactory.getLogger(ComandaService.class);
 
     /**
      * Método que busca a mesa pelo id do estabelecimento, e abrir uma comanda para a mesa
@@ -68,12 +68,30 @@ public class ComandaService {
      * @param emailCliente
      * @return comanda atualizada
      */
-    public Comanda fazerPedido(Long idComanda, List<Pedido> itemPedido, String emailCliente){
+    public Comanda fazerPedido(Long idComanda,
+                               List<Pedido> itemPedido,
+                               String emailCliente,
+                               Long idEstabelecimento,
+                               Long idMesa){
+
         Comanda comanda = comandaRepository.findById(idComanda).get();
+
+        Estabelecimento estabelecimento = estabelecimentoRepository.findById(idEstabelecimento).get();
+
+        Mesa mesa = mesaRepository.findById(idMesa).get();
+
+        List<Usuario> listaUsuario = comanda.getUsuarios();
+
         List<Pedido> listaPedido = comanda.getItemPedido();
         listaPedido.addAll(itemPedido);
+
+        comanda.setEstabelecimento(estabelecimento);
+        comanda.setMesa(mesa);
+        comanda.setUsuarios(listaUsuario);
         comanda.setItemPedido(listaPedido);
         comandaRepository.save(comanda);
+
+        log.info(comanda.toString());
         return comanda;
     }
 }
