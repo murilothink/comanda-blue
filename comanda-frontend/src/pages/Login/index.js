@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { UserContext } from '../../UserContext';
 import api from '../../services/api';
 
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import { Grid } from '@material-ui/core';
@@ -23,6 +23,9 @@ import './style.css';
 
 // No foi possivel utilizar HOOKS com: export default class Login extends React.Component
 export default function Login({history}){
+
+    // Para acessar contexto de login usuario
+    const { userLogin, setUserLogin } = useContext(UserContext);
 
     // state para saber se login falhou ou nao
     const [status, setStatus] = React.useState("");
@@ -64,11 +67,13 @@ export default function Login({history}){
         
         // Se login foi bem sucedido, servidor retorna uma string e react guarda no local storage, na chave COMANDA-BLUE-CLIENTE
         // Verificar o localstorage pelo inspecionar elemento
-        localStorage.setItem('COMANDA-BLUE-CLIENTE', response.data.comandaBlueCliente);
+        // localStorage.setItem('COMANDA-BLUE-CLIENTE', response.data.comandaBlueCliente);
+
+        setUserLogin(response.data.comandaBlueCliente);
 
         // Login OK, enviar usuario para tela de comanda
         // TODO nao seria melhor tela chamar ABRIRCOMANDA ?
-        history.push('/Comanda');
+        history.push('/comanda');
       }
       catch (error) {
         console.log(error);
