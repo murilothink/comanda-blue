@@ -11,4 +11,5 @@ import java.util.List;
 @RepositoryRestResource(collectionResourceRel = "produto", path = "produto")
 public interface ProdutoRepository extends CrudRepository<Produto, Long> {
     List<Produto> findByEstabelecimentoId (Long idEstabelecimento);
+    List<Produto> findByEstabelecimentoIdAndCategoriaProdutoId (Long idEstabelecimento, Long idCategoria);
 }

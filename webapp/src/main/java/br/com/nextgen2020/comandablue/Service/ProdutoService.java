@@ -13,9 +13,16 @@ public class ProdutoService {
     @Autowired
     private ProdutoRepository produtoRepository;
 
-    public List<Produto> listarProdutos (Long idEstabelecimento){
-        List<Produto> produtoMenu = produtoRepository.findByEstabelecimentoId(idEstabelecimento);
+    public List<Produto> listarProdutos (Long idEstabelecimento, Long idCategoria){
+        List<Produto> produtoMenu;
+        if(idCategoria==null) {
+            produtoMenu = produtoRepository.findByEstabelecimentoId(idEstabelecimento);
+        }else {
+            produtoMenu = produtoRepository.findByEstabelecimentoIdAndCategoriaProdutoId(idEstabelecimento, idCategoria);
+        }
+
         return produtoMenu;
+
     }
 
 }

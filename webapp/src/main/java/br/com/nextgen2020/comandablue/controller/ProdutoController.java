@@ -20,6 +20,14 @@ public class ProdutoController {
     public ResponseEntity<List<Produto>> listarProdutos (
             @PathVariable(value = "idEstabelecimento")Long idEstabelecimento) {
 
-        return ResponseEntity.ok(produtoService.listarProdutos(idEstabelecimento));
+        return ResponseEntity.ok(produtoService.listarProdutos(idEstabelecimento,null));
+    }
+
+    @GetMapping("/estabelecimento/{idEstabelecimento}/cardapio/produtos/categoria/{idCategoria}")
+    public ResponseEntity<List<Produto>> listarProdutos (
+            @PathVariable(value = "idEstabelecimento")Long idEstabelecimento,
+            @PathVariable(value = "idCategoria")Long idCategoria) {
+
+        return ResponseEntity.ok(produtoService.listarProdutos(idEstabelecimento,idCategoria));
     }
 }
