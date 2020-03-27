@@ -3,6 +3,7 @@ package br.com.nextgen2020.comandablue.Service;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.nextgen2020.comandablue.model.entidade.Pedido;
 import br.com.nextgen2020.comandablue.model.entidade.Usuario;
 import br.com.nextgen2020.comandablue.model.enums.StatusComanda;
 import br.com.nextgen2020.comandablue.repository.EstabelecimentoRepository;
@@ -57,4 +58,8 @@ public class ComandaService {
         return comanda;
     }
 
+
+    public Comanda fazerPedido(Long idComanda, List<Pedido> itemPedido, String emailCliente){
+        return null;
+    }
 }
