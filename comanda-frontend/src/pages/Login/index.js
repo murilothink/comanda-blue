@@ -29,6 +29,7 @@ export default function Login({history}){
 
     // states para recuperar email e password da pagina
     const [values, setValues] = React.useState({
+      name:'',
       email: '',
       password: '',
       showPassword: false,
@@ -58,7 +59,7 @@ export default function Login({history}){
 
       try{
         // faz POST com json contendo email e senha para o servidor no endpoint /usuario/logar
-        const response = await api.post('/usuario/logar', { email: values.email, senha: values.password });
+        const response = await api.post('/usuario/logar', { email: values.email, senha: values.password, nome:values.name });
         
         console.log(response.status, response.data.comandaBlueCliente);
         
@@ -95,6 +96,17 @@ export default function Login({history}){
           >
             Bem Vindo!
           </Typography>
+
+          <FormControl variant="outlined" style={{marginTop: "10px"}}>            
+            <InputLabel htmlFor="input-name">Nome</InputLabel>
+            <OutlinedInput
+              id="input-name"
+              type='name'
+              value={values.name}
+              onChange={handleChange('name')}                      
+              labelWidth={70}
+            />
+          </FormControl>
 
           <FormControl variant="outlined" style={{marginTop: "10px"}}>            
             <InputLabel htmlFor="input-email">E-mail</InputLabel>

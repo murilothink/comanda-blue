@@ -6,6 +6,7 @@ public class LogarUsuarioForm {
 
     private String email;
     private String senha;
+    private String nome;
 
     public String getEmail() {
         return email;
@@ -23,8 +24,16 @@ public class LogarUsuarioForm {
         this.senha = senha;
     }
 
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
     @Override
     public String toString(){
-        return String.format("email=%s, senha=%s", this.email, this.senha);
+        return String.format("email=%s, senha=%s, nome=%s", this.email, this.senha, this.nome);
     }
 }

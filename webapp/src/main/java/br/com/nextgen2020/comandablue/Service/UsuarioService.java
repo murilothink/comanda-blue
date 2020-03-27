@@ -15,7 +15,7 @@ public class UsuarioService {
     @Autowired
     private UsuarioRepository usuarioRepository;
 
-    public boolean verificaUsuarioSenha(String email, String senha){
+    public boolean verificaUsuarioSenha(String email, String senha, String nome){
 
         Usuario usuario = usuarioRepository.findByEmail(email);
 
@@ -23,8 +23,14 @@ public class UsuarioService {
             if(usuario.getSenha().equals(senha)){
                 return true;
             }
+        }else{
+            if(nome.equals(null)){
+                return false;
+            }else{
+                this.usuarioRepository.save(new Usuario(nome,email,senha));
+                return true;
+            }
         }
-
         return false;
     }
 
