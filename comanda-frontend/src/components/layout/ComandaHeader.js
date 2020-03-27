@@ -1,7 +1,7 @@
 import AppBar from '@material-ui/core/AppBar'
 import React, { Component } from 'react';
 import Toolbar from '@material-ui/core/Toolbar';
-import imageLogo from '../../imgs/logo.png'
+import imageLogo from '../../imgs/CI&T.png'
 
 
 export default class ComandaHeader extends Component{
@@ -10,8 +10,8 @@ export default class ComandaHeader extends Component{
           <div className="header">     
             <AppBar position="static" style={{ background: '#2d9bf0'}}>
               <Toolbar style={{ height: '60px'}}>
-                <img src={imageLogo} alt="Logo cit" height="60px" width="60px" />
-                <h2 className="textheader">Comanda - BLUE</h2>
+                <img src={imageLogo} alt="Logo cit" className="logo-cit" />
+                <h2 className="textheader">ComandaBlue</h2>
               </Toolbar>
             </AppBar>
           </div>

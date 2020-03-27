@@ -22,6 +22,11 @@ public class UsuarioController {
     @Autowired
     private UsuarioService usuarioService;
 
+    /**
+     * Faz o login do usuário na aplicação
+     * @param form Formulario com e-mail, senha e nome do usuário
+     * @return 200 se autenticacao OK, 400 se falhou
+     */
     @PostMapping(path= "/usuario/logar", consumes = "application/json", produces = "application/json")
     @Transactional
     public ResponseEntity<?> logar(@RequestBody LogarUsuarioForm form) {

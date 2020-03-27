@@ -17,12 +17,20 @@ public class EncryptDecrypt{
     private byte[] decodedKey;
     SecretKey secretKey;
 
+    /**
+     * Construtor da classe EncryptDecrypt. Key nao é gerada automaticamente!
+     */
     public EncryptDecrypt() throws Exception {
         decodedKey = "969DF80BAC981429EAA5D9FF6E094FAF".getBytes();
         secretKey = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
         cipher = javax.crypto.Cipher.getInstance("AES");
     }
 
+    /**
+     * Encripta texto
+     * @param plainText Texto a ser encriptado
+     * @return Texto encriptado
+     */
     public String encrypt(String plainText)
             throws Exception {
         byte[] plainTextByte = plainText.getBytes();
@@ -33,6 +41,11 @@ public class EncryptDecrypt{
         return encryptedText;
     }
 
+    /**
+     * Desencripta texto
+     * @param encryptedText Texto encriptado
+     * @return Texto desencriptado
+     */
     public String decrypt(String encryptedText)
             throws Exception {
         Base64.Decoder decoder = Base64.getDecoder();

@@ -23,22 +23,22 @@ public class MesaController {
     @Autowired
     private MesaService mesaService;
 
+    /**
+     * Faz a verificacao do pin da mesa
+     * @param form Formulário com pin da mesa
+     * @return 200 se OK, 400 se falhou
+     */
     @PostMapping(path= "/mesa/validatepin", consumes = "application/json", produces = "application/json")
     @Transactional
     public ResponseEntity<?> validatepin(@RequestBody ValidatePinForm form) {
 
         logger.info(form.toString());
 
-        try{
-            if(mesaService.verificaPin(form.getPin())){
-                return ResponseEntity.ok().build();
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
+        if(mesaService.verificaPin(form.getPin())){
+            return ResponseEntity.ok().build();
         }
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.notFound().build();
     }
 
 }
