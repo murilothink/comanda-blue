@@ -59,7 +59,24 @@ public class ComandaService {
     }
 
 
+    /**
+     * Método que faz um pedido de acordo com o id da comanda e o email do cliente passado.
+     * Adiciona na lista de pedidos da comanda o novo pedido.
+     * @param idComanda
+     * @param itemPedido
+     * @param emailCliente
+     * @return comanda atualizada
+     */
     public Comanda fazerPedido(Long idComanda, List<Pedido> itemPedido, String emailCliente){
-        return null;
+        Comanda comanda = comandaRepository.findById(idComanda).get();
+        List<Pedido> listaPedido = comanda.getItemPedido();
+
+        itemPedido.forEach((pedido -> {
+            listaPedido.add(pedido);
+        }));
+
+        comanda.setItemPedido(listaPedido);
+        comandaRepository.save(comanda);
+        return comanda;
     }
 }
