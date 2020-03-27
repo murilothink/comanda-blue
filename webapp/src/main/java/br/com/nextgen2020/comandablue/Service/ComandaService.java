@@ -6,14 +6,12 @@ import java.util.List;
 import br.com.nextgen2020.comandablue.model.entidade.Pedido;
 import br.com.nextgen2020.comandablue.model.entidade.Usuario;
 import br.com.nextgen2020.comandablue.model.enums.StatusComanda;
-import br.com.nextgen2020.comandablue.repository.EstabelecimentoRepository;
-import br.com.nextgen2020.comandablue.repository.MesaRepository;
-import br.com.nextgen2020.comandablue.repository.UsuarioRepository;
+import br.com.nextgen2020.comandablue.repository.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import br.com.nextgen2020.comandablue.model.entidade.Comanda;
-import br.com.nextgen2020.comandablue.repository.ComandaRepository;
+
 @Service
 public class ComandaService {
     @Autowired
@@ -24,6 +22,9 @@ public class ComandaService {
     private EstabelecimentoRepository estabelecimentoRepository;
     @Autowired
     private MesaRepository mesaRepository;
+    @Autowired
+    private ProdutoRepository produtoRepository;
+
 
     /**
      * Método que busca a mesa pelo id do estabelecimento, e abrir uma comanda para a mesa
@@ -59,7 +60,20 @@ public class ComandaService {
     }
 
 
+    /**
+     * Método que faz um pedido de acordo com o id da comanda e o email do cliente passado.
+     * Adiciona na lista de pedidos da comanda o novo pedido.
+     * @param idComanda
+     * @param itemPedido
+     * @param emailCliente
+     * @return comanda atualizada
+     */
     public Comanda fazerPedido(Long idComanda, List<Pedido> itemPedido, String emailCliente){
-        return null;
+        Comanda comanda = comandaRepository.findById(idComanda).get();
+        List<Pedido> listaPedido = comanda.getItemPedido();
+        listaPedido.addAll(itemPedido);
+        comanda.setItemPedido(listaPedido);
+        comandaRepository.save(comanda);
+        return comanda;
     }
 }
