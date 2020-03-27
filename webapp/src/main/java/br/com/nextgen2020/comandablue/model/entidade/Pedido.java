@@ -3,6 +3,9 @@ package br.com.nextgen2020.comandablue.model.entidade;
 import java.sql.Timestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 @Entity
