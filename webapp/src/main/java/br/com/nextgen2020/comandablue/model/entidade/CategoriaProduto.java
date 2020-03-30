@@ -27,6 +27,18 @@ public class CategoriaProduto {
         this.categoria = categoria;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Estabelecimento getEstabelecimento() {
+        return estabelecimento;
+    }
+
+    public void setEstabelecimento(Estabelecimento estabelecimento) {
+        this.estabelecimento = estabelecimento;
+    }
+
     public Long getId() {
         return id;
     }
