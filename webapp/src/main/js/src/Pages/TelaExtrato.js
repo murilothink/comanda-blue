@@ -1,182 +1,284 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import api from '../Services/api';
-import '../style.css';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import ClickAwayListener from '@material-ui/core/ClickAwayListener';
-import Grow from '@material-ui/core/Grow';
-import Paper from '@material-ui/core/Paper';
-import Popper from '@material-ui/core/Popper';
-import MenuItem from '@material-ui/core/MenuItem';
-import MenuList from '@material-ui/core/MenuList';
-import PropTypes from 'prop-types';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import { FixedSizeList } from 'react-window';
+
 import { makeStyles } from '@material-ui/core/styles';
-import Container from '@material-ui/core/Container';
-import { Grid } from '@material-ui/core';
-import FormControlLabel from '@material-ui/core/FormControlLabel';
-// Para utilizar inputs. Cada FormControl pode ter 1 input
+import Grid from '@material-ui/core/Grid';
+import Button from '@material-ui/core/Button';
 
+// Para alertas
+import MessageAlert from '../Components/MessageAlert';
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-      width: '100%',
-      height: 400,
-      maxWidth: 300,
-      backgroundColor: theme.palette.background.paper,
+// Para utilizar tabela, ref: https://material-ui.com/components/tables/
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
+// Para utilizar select
+import InputLabel from '@material-ui/core/InputLabel';
+import MenuItem from '@material-ui/core/MenuItem';
+import FormControl from '@material-ui/core/FormControl';
+import Select from '@material-ui/core/Select';
+
+import '../style.css';
+
+const useStyles = makeStyles({
+  table: {
+    minWidth: 700,
+  },
+});
+
+// Converte valor para R$XX.XX
+function ccyFormat(num) {
+    return `R${num.toFixed(2)}`;
+}
+
+// Calcula valor total linha
+function priceRow(qtde, valorUnitario) {
+    return qtde * valorUnitario;
+}
+
+// Cria linha baseado nos parametros fornecidos
+function createRow(idPedido, cliente, item, qtde, valorUnitario) {
+    const valorTotal = priceRow(valorUnitario, qtde);
+    return { idPedido, cliente, item, qtde, valorUnitario, valorTotal };
+}
+
+// Calcula o total, baseado na tabela
+// TODO entender melhor o reduce
+function subtotal(items) {
+    return items.map(({ valorTotal }) => valorTotal).reduce((sum, i) => sum + i, 0);
+}
+
+// Para criar linhas
+// const rows = [
+//     createRow(1, 'Danilo', 'Bavaria lata', 1, 3.6, 3.6),
+//     createRow(2, 'Luciano', 'Coca-cola lata', 2, 3.5),
+//     createRow(3, 'Tiago', 'Caldinho', 1, 12)
+// ];
+
+const rows = [];
+
+// exemplo de retorno json do servidor
+const jsonComanda = {
+    id: 1,
+    estabelecimento: {
+        id: 1,
+        cnpj: 12345678901234,
+        nome: 'Bar do zé',
+        endereco: 'Rua da Santa Missa, 840, Centro, Leme/SP', 
+        descricao: 'Desde 1978 servindo cerveja gelada e o melhor torresmo de Leme'
     },
-  }));
-  
-  function renderRow(props) {
-    const { index, style } = props;
-  
-    return (
-      <ListItem button style={style} key={index}>
-        <ListItemText primary={`Item ${index + 1}`} />
-      </ListItem>
-    );
-  }
-  
-  renderRow.propTypes = {
-    index: PropTypes.number.isRequired,
-    style: PropTypes.object.isRequired,
-  };
+    mesa: {
+        id: 1,
+        nome: 'Deck lago 3'
+    },
+    usuarios:[
+        {nome: 'Danilo de Nadai Sicari', email: 'denadai.sicari@gmail.com'},
+        {nome: 'Erik Kenzo Oura Carlini Valle', email: 'erik@ciandt.com'}
+    ],
+    itemPedido:[
+        {
+            id: 1, 
+            clienteSolicitante:{
+                nome: 'Danilo de Nadai Sicari', 
+                email: 'denadai.sicari@gmail.com'
+            },
+            produto:{
+                id: 1,
+                nome: 'Torresmo frito',
+                valor: 12.50,
+                descricao: "Torresmo frito no óleo, acompanha molho especial",
+                unidade: 'unidade',
+                categoria:{
+                    id: 1,
+                    categoria: 'Salgados'
+                }
+            },
+            observacao: 'capricha na capa da gordura',
+            quantidade: 2,
+            valorUnitario: 12.5,
+            valorTotal: 25.0
+        },
+        {
+            id: 2, 
+            clienteSolicitante:{
+                nome: 'Erik Kenzo Oura Carlini Valle', 
+                email: 'erik@ciandt.com'
+            },
+            produto:{
+                id: 2,
+                nome: 'Bavaria',
+                valor: 3,
+                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
+                unidade: 'lata',
+                categoria:{
+                    id: 2,
+                    categoria: 'Bebidas'
+                }
+            },
+            observacao: 'copo sujo',
+            quantidade: 3,
+            valorUnitario: 3,
+            valorTotal: 9
+        }
+    ],
+    status: 'Comanda Aberta'
+};
 
-export default function TelaExtrato(props){
+// Para cada itemPedido do json retornado do servidor, adicione em rows
+// rows sera mapeada na tabela
+jsonComanda.itemPedido.forEach(item => {
+    console.log(item);
+    rows.push(createRow(item.id, item.clienteSolicitante.nome, item.produto.nome, item.quantidade, item.valorUnitario));
+});
+
+const invoiceSubtotal = subtotal(rows);
+const invoiceTotal = invoiceSubtotal;
+
+export default function TelaExtrato(props) {
 
     const classes = useStyles();
-    const [open, setOpen] = React.useState(false);
-    const anchorRef = React.useRef(null);
-    const handleToggle = () => {
-        setOpen((prevOpen) => !prevOpen);
-    };
-    const handleClose = (event) => {
-        if (anchorRef.current && anchorRef.current.contains(event.target)) {
-        return;
-        }
 
-        setOpen(false);
-    };
-    function handleListKeyDown(event) {
-        if (event.key === 'Tab') {
-        event.preventDefault();
-        setOpen(false);
-        }
-    }
+    // Para acessar contexto de login usuario
+    const { userLogin, setUserLogin } = useContext(props.userContext);
 
-    return(
-          <div
-          container
-          style={{height:"100%"}}
-          spacing={0}
-          justify="center"
-          direction="column"
-          >
+    // Evento ao selecionar item no selectCliente
+    const handleChangeSelectCliente = (event) => {
+        console.log("Cliente selecionado=" + cliente)
+        setCliente(event.target.value);
+    };
+
+    const [ cliente, setCliente ] = useState('');
+
+    return (
+    <Grid id="telaExtrato">        
+        <Grid
+            container style={{ height: "10%" }}
+            direction="row"
+            spacing={0}
+            align="center"
+            justify="center" 
+        >
             <Grid
-                container style={{ height: "30%" }}
-                direction="row"
+                container                    
                 spacing={0}
                 align="center"
                 justify="center"
+                direction="column" item xs={12} sm={6} id="titulo"
             >
+                <h1>EXTRATO</h1>
+            </Grid>
+        </Grid>
 
-            <Grid
-            container                    
+        <Grid
+            container style={{ height: "5%" }}
+            direction="row"
             spacing={0}
-            align="left"
+            align="center"
             justify="center"
-            direction="column" item xs={'auto'} sm={6}
-            >
-                <Button 
-                style={{ top: '72px', background: '#2d9bf0', color: 'white' }}
-                align="left" 
-                variant="contained" 
-                color="primary"
+        >
+             <Grid
+                container                    
+                spacing={0}
+                align="center"
+                justify="center"
+                direction="column" item xs={12} sm={6}>
+                <Button variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white'}}
                 >
-                Voltar ao Menu
+                    Voltar ao menu
                 </Button>
             </Grid>
 
             <Grid
-            container                    
+                container
+                spacing={0}
+                justify="center"
+                direction="column" item xs={12} sm={6}
+            >
+
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="labelSelectCliente">Cliente</InputLabel>
+                    <Select
+                        labelId="labelSelectCliente"
+                        id="selectCliente"
+                        value={cliente}
+                        onChange={handleChangeSelectCliente}
+                        label="Cliente"
+                    >
+                        <MenuItem key="all" value="all"><em>Todos</em></MenuItem>
+                        
+                        {jsonComanda.usuarios.map((cliente) => (
+                            <MenuItem key={cliente.email} value={cliente.email}>{cliente.nome}</MenuItem>
+                        ))}
+
+                    </Select>
+                </FormControl>
+            </Grid>
+        </Grid>
+
+        <Grid
+            container
+            style={{ height: "85%" }}
+            direction="row"
             spacing={0}
             align="center"
             justify="center"
-            direction="column" item xs={12} sm={6} className="extrato"
-            >
-                <Typography 
-                component="h1" 
-                variant="h5"  
-                align="center"
-                >
-                    Extrato:
-                </Typography>
-            </Grid>  
+        >  
 
             <Grid
-            container                    
-            spacing={0}
-            align="right"
-            direction="column" item xs={12} sm={6}
+                container                    
+                spacing={0}
+                align="center"
+                justify="center"
+                direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
             >
-                    <Button style={{background: '#2d9bf0', color: 'white' }}
-                    ref={anchorRef}
-                    aria-controls={open ? 'menu-list-grow' : undefined}
-                    aria-haspopup="true"
-                    onClick={handleToggle}
-                    align="right"
-                    >
-                    Filtrar
-                    </Button>
-                    <Popper open={open} anchorEl={anchorRef.current} role={undefined} transition disablePortal>
-                    {({ TransitionProps, placement }) => (
-                        <Grow
-                        {...TransitionProps}
-                        style={{ transformOrigin: placement === 'bottom' ? 'center top' : 'center bottom' }}
-                        >
-                        <Paper>
-                            <ClickAwayListener onClickAway={handleClose}>
-                            <MenuList autoFocusItem={open} id="menu-list-grow" onKeyDown={handleListKeyDown}>
-                                <MenuItem onClick={handleClose}>Mesa</MenuItem>
-                                <MenuItem onClick={handleClose}>Nome</MenuItem>
-                            </MenuList>
-                            </ClickAwayListener>
-                        </Paper>
-                        </Grow>
-                    )}
-                    </Popper>
-                </Grid>
-            </Grid>
 
-                <div> 
-                    <FixedSizeList height={400} width={"100%"} itemSize={46} itemCount={200}>
-                    {renderRow}
-                    </FixedSizeList>
-                </div>
+                <TableContainer>
+                    <Table className={classes.table} aria-label="tabela extrato">
 
-                <div>
-                        <Typography 
-                        component="h1" 
-                        variant="h5"  
-                        align="center"
-                        >
-                            Total:
-                        </Typography>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell><b>Cliente</b></TableCell>
+                                <TableCell><b>Item</b></TableCell>
+                                <TableCell align="right"><b>Quantidade</b></TableCell>
+                                <TableCell align="right"><b>Valor Unitário (R$)</b></TableCell>
+                                <TableCell align="right"><b>Valor Total (R$)</b></TableCell>
+                            </TableRow>
+                        </TableHead>
 
-                        <Button 
-                        style={{ top: '72px', background: '#2d9bf0', color: 'white' }} 
-                        variant="contained" 
-                        color="primary"
-                        >
-                            Pagar
-                        </Button>
-                </div>
+                        <TableBody>
 
-        </div>     
-          
-  
-    )
+                            {rows.map((row) => (
+                                <TableRow key={row.idPedido}>
+                                    <TableCell>{row.cliente}</TableCell>
+                                    <TableCell>{row.item}</TableCell>
+                                    <TableCell align="right">{row.qtde}</TableCell>
+                                    <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(row.valorTotal)}</TableCell>
+                                </TableRow>
+                            ))}
+
+                            <TableRow>
+                                <TableCell colSpan={4}><b>Subtotal</b></TableCell>
+                                <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                            </TableRow>
+
+                            <TableRow>
+                                <TableCell colSpan={4}><b>Total Mesa</b></TableCell>
+                                <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+                            </TableRow>
+
+                        </TableBody>
+
+                    </Table>
+                </TableContainer>
+
+            </Grid>   
+
+        </Grid>
+
+    </Grid>
+  );
 }

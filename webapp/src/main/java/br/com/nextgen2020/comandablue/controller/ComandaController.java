@@ -29,13 +29,19 @@ public class ComandaController {
     @Transactional
     public ResponseEntity<Comanda>  abrir(@PathVariable(value="pinMesa") String pinMesa, @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailClienteCriptografado){
 
+        log.info("Abrir comanda recebido, pinMesa=" + pinMesa + ", emailClienteCriptografado=" + emailClienteCriptografado);
+
         try{
-            return new ResponseEntity<>(comandaService.abrir(pinMesa, emailClienteCriptografado), HttpStatus.OK);
+            Comanda comanda = comandaService.abrir(pinMesa, emailClienteCriptografado);
+            if(comanda != null){
+                log.info("Comanda aberta, id=" + comanda.getId() + ", idMesa=" + comanda.getMesa().getId() + ", idEstabelecimento=" + comanda.getEstabelecimento().getId());
+                return new ResponseEntity<>(comanda, HttpStatus.OK);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-            return ResponseEntity.badRequest().build();
         }
 
+        return ResponseEntity.badRequest().build();
     }
 
     @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/{idComanda}/pedir", consumes = "application/json", produces = "application/json")

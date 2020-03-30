@@ -31,7 +31,7 @@ public class UsuarioController {
     @Transactional
     public ResponseEntity<?> logar(@RequestBody LogarUsuarioForm form) {
 
-        logger.info(form.toString());
+        logger.info("Logar usuario recebido, " + form.toString());
 
         try{
             if(usuarioService.verificaUsuarioSenha(form.getEmail(), form.getSenha(),form.getNome())){
@@ -39,6 +39,7 @@ public class UsuarioController {
                 JSONObject json = new JSONObject();
                 json.put("comandaBlueCliente", ed.encrypt(form.getEmail()));
                 json.put("nome", usuarioService.getUsuarioNome(form.getEmail()));
+                logger.info("Logar usuario OK, emailEnctriptado(comandaBlueCliente)=" + json.getAsString("comandaBlueCliente"));
                 return ResponseEntity.ok(json);
             }
 

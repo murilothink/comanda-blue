@@ -51,14 +51,15 @@ public class ComandaService {
 
             for (Comanda comanda : listaComanda){
                 if (comanda.getStatus() == StatusComanda.ABERTO){
+                    log.info("Encontrada comanda aberta para requisicao pinMesa=" + pinMesa + ", adicionando usuario...");
                     List<Usuario> listaUsuarios = comanda.getUsuarios();
                     listaUsuarios.add(usuarioRepository.findByEmail(emailCliente));
                     comanda.setUsuarios(listaUsuarios);
-
                     return comanda;
                 }
             }
 
+            log.info("Nao encontrada comanda aberta para requisicao pinMesa=" + pinMesa + ", criando comanda e adicionando usuario...");
             List<Usuario> listaUsuario = new ArrayList<Usuario>();
             listaUsuario.add(usuarioRepository.findByEmail(emailCliente));
 
@@ -71,6 +72,8 @@ public class ComandaService {
             comandaRepository.save(comanda);
             return comanda;
         }
+
+        log.info("Mesa nao encontrada ao processar pinMesa=" + pinMesa);
 
         return null;
     }

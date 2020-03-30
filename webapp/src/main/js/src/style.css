@@ -2,6 +2,9 @@
 @import url('https://fonts.googleapis.com/css?family=Caveat:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:100,200,300,400,500,600,700,800,900&display=swap');
 
+/* Material Icons para material-table */
+@import url('https://fonts.googleapis.com/icon?family=Material+Icons');
+
 /*Extra css*/
 html, body{
   height: 100%;
@@ -84,11 +87,38 @@ html, body{
   flex-direction: column;
 }
 
+#telaAbrirComanda #comandaSaudacao,
+#telaScanQrcode #titulo,
+#telaExtrato #titulo {
+  font-family: 'Roboto Slab';
+}
+
+/* ----------- TELA LOGIN ----------- */
+
 #telaLogin #password-input{
   margin-top: 10px !important;
   margin-bottom: 10px !important;
 }
 
-#telaAbrirComanda .comanda-saudacao{
-  font-family: 'Roboto Slab';
+/* ----------- TELA ABRIR COMANDA ----------- */
+
+#telaAbrirComanda #rowQRCodePin{
+  margin-top: 50px;
+}
+
+/* ----------- TELA SCAN QRCODE ----------- */
+
+#telaScanQrcode #rowButtonReturnAbrirComanda{
+  margin-top: 20px;
+}
+
+
+/* ----------- TELA EXTRATO----------- */
+
+#telaExtrato #tabelaExtrato{
+  margin-top: 2vw;
+}
+
+#telaExtrato #selectCliente{
+  min-width: 200px;
 }

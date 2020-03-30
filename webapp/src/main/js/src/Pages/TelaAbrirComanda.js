@@ -69,7 +69,7 @@ export default function TelaAbrirComanda(props){
     }
 
     return (
-        <>
+        <Grid id="telaAbrirComanda">
             <Grid
                 container style={{ height: "30%" }}
                 direction="row"
@@ -84,7 +84,7 @@ export default function TelaAbrirComanda(props){
                     justify="center"
                     direction="column" item xs={12} sm={6} className="comanda-bemvindo"
                 >
-                    <div className="comanda-saudacao">
+                    <div id="comandaSaudacao">
                         <h1>Olá {userLogin.nome}, seja bem vindo!</h1><br />
                         Leia o QRCode ou insira o pin da sua mesa<br />
                         token: {userLogin.comandaBlueCliente}
@@ -100,6 +100,7 @@ export default function TelaAbrirComanda(props){
                 spacing={0}
                 align="center"
                 justify="center"
+                id="rowQRCodePin"
             >        
                 <Grid
                     container                    
@@ -149,6 +150,6 @@ export default function TelaAbrirComanda(props){
                 }
 
             </Grid>
-        </>
+        </Grid>
     )    
 }
