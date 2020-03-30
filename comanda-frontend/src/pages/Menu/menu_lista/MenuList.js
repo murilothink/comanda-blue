@@ -10,16 +10,21 @@ function Categoria(props){
         </h1>
         <ul id={props.id}>
             {props.produtos.map((item, key)=>{
-            return(
-            <li className="line">
-                <img className="product-image" src={item.imagemDoProduto}/>
-                <button className="product-button">+</button>
+                const handleClick = () =>{
+                    props.OnItemClick(item);
+                }
 
-                <h1 className="product-title">{item.nome}</h1>
-                <p className="product-descricao">{item.descricao}</p>
-                <h2 className="product-valor">R${item.valor.toFixed(2)}</h2>
-            </li>
-            )})}
+                return(
+                <li className="line">
+                    <img className="product-image" src={item.imagemDoProduto}/>
+                    <button onClick={handleClick} className="product-button">+</button>
+
+                    <h1 className="product-title">{item.nome}</h1>
+                    <p className="product-descricao">{item.descricao}</p>
+                    <h2 className="product-valor">R${item.valor.toFixed(2)}</h2>
+                </li>
+                );
+            })}
         
         </ul>
         </>
@@ -51,7 +56,7 @@ export default class MenuList extends React.Component{
     render(){
         const produtos=this.state.listaProduto.slice();
         produtos.sort(
-                (a,b) => (a.categoriaProduto.id > b.categoriaProduto.id) ? 1:-1
+            (a,b) => (a.categoriaProduto.id > b.categoriaProduto.id) ? 1:-1
         );
 
         let idCategoriaAtual = -1;
@@ -67,7 +72,7 @@ export default class MenuList extends React.Component{
                     <Categoria id={item.categoriaProduto.id}
                                categoria={item.categoriaProduto.categoria}
                                produtos={produtosDaCategoria}
-
+                               OnItemClick={(produto) =>{this.props.OnAddItem(produto)}}
                     />
                 );
                 i++;
@@ -77,6 +82,7 @@ export default class MenuList extends React.Component{
                 categorias[i] = <Categoria id={item.categoriaProduto.id}
                                            categoria={item.categoriaProduto.categoria}
                                            produtos={produtosDaCategoria}
+                                           OnItemClick={(produto) =>{this.props.OnAddItem(produto)}}
                                 />;
             }
         });
