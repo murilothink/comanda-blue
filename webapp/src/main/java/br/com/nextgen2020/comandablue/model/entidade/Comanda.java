@@ -15,21 +15,21 @@ public class Comanda {
     private Long id;
 
     @NotNull
-    @ManyToOne // varias comandas para 1 estabelecimento
+    @ManyToOne(cascade = CascadeType.ALL) // varias comandas para 1 estabelecimento
     private Estabelecimento estabelecimento;
 
     @NotNull
-    @OneToOne // 1 comanda para 1 mesa
+    @OneToOne(cascade = CascadeType.ALL) // 1 comanda para 1 mesa
     private Mesa mesa;
 
     @NotNull
-    @OneToMany // varios usuarios para 1 comanda
+    @OneToMany(cascade = CascadeType.ALL) // varios usuarios para 1 comanda
     private List<Usuario> usuarios;
 
-    @OneToMany // varios pedidos para 1 comanda
+    @OneToMany(cascade = CascadeType.ALL) // varios pedidos para 1 comanda
     private List<Pedido> itemPedido;
 
-    @OneToMany // varios pagamentos para 1 comanda
+    @OneToMany(cascade = CascadeType.ALL) // varios pagamentos para 1 comanda
     private List<Pagamento> pagamentos;
 
     @Enumerated(EnumType.STRING)
@@ -47,6 +47,10 @@ public class Comanda {
         this.mesa = mesa;
         this.usuarios = usuarios;
         this.status = StatusComanda.ABERTO;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public Long getId() {
