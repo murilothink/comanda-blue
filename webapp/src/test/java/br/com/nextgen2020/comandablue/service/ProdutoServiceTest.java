@@ -65,7 +65,7 @@ public class ProdutoServiceTest {
 
         Mockito.when(produtoRepository.findByEstabelecimentoId(estabelecimento.getId())).thenReturn(this.todosProdutos);
         Mockito.when(produtoRepository.findByEstabelecimentoIdAndCategoriaProdutoId(estabelecimento.getId(), categoriaProduto1)).thenReturn(this.produtosCategoria1);
-        Mockito.when(produtoRepository.findByEstabelecimentoIdAndCategoriaProdutoId(estabelecimento.getId(), categoriaProduto2)).thenReturn(this.produtosCategoria2);
+        Mockito.when(produtoRepository.findByEstabelecimentoIdAndCategoriaProdutoId(estabelecimento.getId(), categoriaProduto2)).thenReturn(produtosCategoria2);
     }
 
     private Produto createProduto(Estabelecimento estabelecimento, long idCategoria){

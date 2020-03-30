@@ -49,6 +49,10 @@ public class Comanda {
         this.status = StatusComanda.ABERTO;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public Long getId() {
         return id;
     }

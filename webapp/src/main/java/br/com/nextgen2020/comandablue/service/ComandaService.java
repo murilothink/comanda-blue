@@ -1,19 +1,18 @@
-package br.com.nextgen2020.comandablue.service;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+package br.com.nextgen2020.comandablue.Service;
 
 import br.com.nextgen2020.comandablue.form.PedidoForm;
 import br.com.nextgen2020.comandablue.model.entidade.*;
 import br.com.nextgen2020.comandablue.model.enums.StatusComanda;
 import br.com.nextgen2020.comandablue.repository.*;
+import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ComandaService {
@@ -30,38 +29,52 @@ public class ComandaService {
 
     private static final Logger log = LoggerFactory.getLogger(ComandaService.class);
 
+    private EncryptDecrypt encryptDecrypt;
+
+    public ComandaService() throws Exception {
+        encryptDecrypt = new EncryptDecrypt();
+    }
+
     /**
-     * Método que busca a mesa pelo id do estabelecimento, e abrir uma comanda para a mesa
+     * Método que busca a mesa pelo pin {id_estabelecimento}-{id_mesa}, e abre uma comanda para a mesa
      * Verifica se há comanda aberta, se houver add o usário na comanda, senão cria uma comanda e add o usuário
-     * @param idEstabelecimento
-     * @param idMesa
-     * @return
+     * @param pinMesa
+     * @param emailClienteCriptografado
+     * @return Comanda aberta ou null caso pin nao seja valido
      */
-    @Transactional
-    public Comanda abrir(Long idEstabelecimento, Long idMesa, String emailCliente){
-        List<Comanda> listaComanda = comandaRepository.findByMesaIdAndEstabelecimentoId(idMesa, idEstabelecimento);
+    public Comanda abrir(String pinMesa, String emailClienteCriptografado) throws Exception{
 
-        for (Comanda comanda : listaComanda){
-            if (comanda.getStatus() == StatusComanda.ABERTO){
-                List<Usuario> listaUsuarios = comanda.getUsuarios();
-                listaUsuarios.add(usuarioRepository.findByEmail(emailCliente));
-                comanda.setUsuarios(listaUsuarios);
+        String emailCliente = encryptDecrypt.decrypt(emailClienteCriptografado);
 
-                return comanda;
+        Mesa mesa = mesaRepository.findByPin(pinMesa);
+
+        if(mesa != null){
+            List<Comanda> listaComanda = comandaRepository.findByMesaIdAndEstabelecimentoId(mesa.getId(), mesa.getEstabelecimento().getId());
+
+            for (Comanda comanda : listaComanda){
+                if (comanda.getStatus() == StatusComanda.ABERTO){
+                    List<Usuario> listaUsuarios = comanda.getUsuarios();
+                    listaUsuarios.add(usuarioRepository.findByEmail(emailCliente));
+                    comanda.setUsuarios(listaUsuarios);
+
+                    return comanda;
+                }
             }
+
+            List<Usuario> listaUsuario = new ArrayList<Usuario>();
+            listaUsuario.add(usuarioRepository.findByEmail(emailCliente));
+
+            Comanda comanda = new Comanda(
+                    mesa.getEstabelecimento(),
+                    mesa,
+                    listaUsuario
+            );
+
+            comandaRepository.save(comanda);
+            return comanda;
         }
 
-        List<Usuario> listaUsuario = new ArrayList<Usuario>();
-        listaUsuario.add(usuarioRepository.findByEmail(emailCliente));
-
-        Comanda comanda = new Comanda(
-                estabelecimentoRepository.findById(idEstabelecimento).get(),
-                mesaRepository.findById(idMesa).get(),
-                listaUsuario
-        );
-
-        comandaRepository.save(comanda);
-        return comanda;
+        return null;
     }
 
 
