@@ -2,11 +2,34 @@ import React from "react";
 import "./Menu.css";
 import api from "../../../services/api";
 
+function Categoria(props){
+    return(
+        <>             
+        <h1 className="product-categoria">
+            {props.categoria}
+        </h1>
+        <ul id={props.id}>
+            {props.produtos.map((item, key)=>{
+            return(
+            <li className="line">
+                <img className="product-image" src={item.imagemDoProduto}/>
+                <button className="product-button">+</button>
+
+                <h1 className="product-title">{item.nome}</h1>
+                <p className="product-descricao">{item.descricao}</p>
+                <h2 className="product-valor">R${item.valor.toFixed(2)}</h2>
+            </li>
+            )})}
+        
+        </ul>
+        </>
+    );
+}
+
 export default class MenuList extends React.Component{
     constructor(props){
         super(props);
         this.state={listaProduto:[]}
-        console.log("CONSTRUTOR");
     }
 
     componentDidMount(){
@@ -17,9 +40,8 @@ export default class MenuList extends React.Component{
         api.get(url)
         .then(response => {
             this.setState({
-                listaProduto:response.data
-            });
-            console.log(this.state.listaProduto);    
+                listaProduto: response.data
+            });  
         })
         .catch(error => {
             console.log(error);
@@ -27,36 +49,44 @@ export default class MenuList extends React.Component{
     }
 
     render(){
-        const produtos=this.state.listaProduto.slice()
-            .sort(
-                (a,b) => (a.categoriaProduto.id > b.categoriaProduto.id) ? 1:-1);
+        const produtos=this.state.listaProduto.slice();
+        produtos.sort(
+                (a,b) => (a.categoriaProduto.id > b.categoriaProduto.id) ? 1:-1
+        );
 
         let idCategoriaAtual = -1;
+        let categorias = [];
+        let produtosDaCategoria;
+        let i = -1;
 
+        produtos.forEach((item, key) => {
+            if(item.categoriaProduto.id != idCategoriaAtual){
+                idCategoriaAtual = item.categoriaProduto.id;
+                produtosDaCategoria = [item];
+                categorias.push(
+                    <Categoria id={item.categoriaProduto.id}
+                               categoria={item.categoriaProduto.categoria}
+                               produtos={produtosDaCategoria}
+
+                    />
+                );
+                i++;
+            }
+            else{
+                produtosDaCategoria.push(item);
+                categorias[i] = <Categoria id={item.categoriaProduto.id}
+                                           categoria={item.categoriaProduto.categoria}
+                                           produtos={produtosDaCategoria}
+                                />;
+            }
+        });
 
         return (
-                <div className="container">
-                    <div className="MenuList">
-                        {produtos.map((item,key) => {
-                            return(<>
-                                <h1 className="product-categoria">
-                                    {item.categoriaProduto.categoria}
-                                 </h1>
-                                <ul>
-                                <li className="line">
-                                    <img className="product-image" src={item.imagemDoProduto}/>
-                                    <button className="product-button">+</button>
-
-                                    <h1 className="product-title">{item.nome}</h1>
-                                    <p className="product-descricao">{item.descricao}</p>
-                                    <h2 className="product-valor">R${item.valor.toFixed(2)}</h2>
-                                </li>
-                                </ul>
-                                </>
-                            );
-                        })}
-                    </div>
+            <div className="container">
+                <div className="MenuList">
+                    {categorias}
                 </div>
-            );
+            </div>
+        );
     }    
 }
