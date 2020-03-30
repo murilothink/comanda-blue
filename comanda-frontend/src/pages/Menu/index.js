@@ -12,24 +12,28 @@ export default function Menu(){
         categorias: [],
         estabelecimento: {
             id: 1,
-            nome: "Bar do zé"
+            nome: null
         }
     });
 
+
+    //Entra em loop componentDidMount componentDidUpdate
     useEffect(()=> {
         const url = "/estabelecimento/"+state.estabelecimento.id+"/categorias"
         
-        api.get(url)
-        .then(response => {
-            this.setState({
-                ... state,
-                categorias: response.data.categorias,
-                estabelecimento: response.data.estabelecimento
-            });  
-        })
-        .catch(error => {
-            console.log(error);
-        });
+        if(!state.estabelecimento.nome){
+            api.get(url)
+            .then(response => {
+                setState({
+                    ... state,
+                    categorias: response.data.categorias,
+                    estabelecimento: response.data.estabelecimento
+                });  
+            })
+            .catch(error => {
+                console.log(error);
+            });
+        }
     });
 
     //todo

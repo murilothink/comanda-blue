@@ -20,7 +20,6 @@ export default function Routes(){
                 <Route path="/scanqrcode" component={ScanQrcode} />
                 <Route path="/users" component={Users} />
                 <Route path="/newuser" component={NewUser} />
-                <Route path="/extrato" component = {Extrato}/>
             </Switch>
         </BrowserRouter>
     );
