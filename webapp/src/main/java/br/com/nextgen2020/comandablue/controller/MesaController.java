@@ -1,6 +1,6 @@
 package br.com.nextgen2020.comandablue.controller;
 
-import br.com.nextgen2020.comandablue.Service.MesaService;
+import br.com.nextgen2020.comandablue.service.MesaService;
 import br.com.nextgen2020.comandablue.form.ValidatePinForm;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

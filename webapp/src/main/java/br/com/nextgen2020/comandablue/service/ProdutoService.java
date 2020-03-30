@@ -1,4 +1,4 @@
-package br.com.nextgen2020.comandablue.Service;
+package br.com.nextgen2020.comandablue.service;
 
 import br.com.nextgen2020.comandablue.model.entidade.Produto;
 import br.com.nextgen2020.comandablue.repository.ProdutoRepository;

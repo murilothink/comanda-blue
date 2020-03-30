@@ -1,6 +1,6 @@
 package br.com.nextgen2020.comandablue.controller;
 
-import br.com.nextgen2020.comandablue.Service.ComandaService;
+import br.com.nextgen2020.comandablue.service.ComandaService;
 import br.com.nextgen2020.comandablue.model.entidade.Pedido;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

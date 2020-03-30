@@ -4,7 +4,7 @@ import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
 import net.minidev.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import br.com.nextgen2020.comandablue.Service.UsuarioService;
+import br.com.nextgen2020.comandablue.service.UsuarioService;
 import br.com.nextgen2020.comandablue.form.LogarUsuarioForm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
