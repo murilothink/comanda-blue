@@ -1,13 +1,10 @@
-package br.com.nextgen2020.comandablue.Service;
+package br.com.nextgen2020.comandablue.service;
 
 
 import br.com.nextgen2020.comandablue.model.entidade.Usuario;
 import br.com.nextgen2020.comandablue.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class UsuarioService {

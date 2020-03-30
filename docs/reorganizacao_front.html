@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+ <meta name="Author" content="Made by 'tree'">
+ <meta name="GENERATOR" content="$Version: $ tree v1.7.0 (c) 1996 - 2014 by Steve Baker, Thomas Moore, Francesc Rocher, Florian Sesser, Kyosuke Tokoro $">
+ <title>Directory Tree</title>
+ <style type="text/css">
+  <!-- 
+  BODY { font-family : ariel, monospace, sans-serif; }
+  P { font-weight: normal; font-family : ariel, monospace, sans-serif; color: black; background-color: transparent;}
+  B { font-weight: normal; color: black; background-color: transparent;}
+  A:visited { font-weight : normal; text-decoration : none; background-color : transparent; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  A:link    { font-weight : normal; text-decoration : none; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  A:hover   { color : #000000; font-weight : normal; text-decoration : underline; background-color : yellow; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  A:active  { color : #000000; font-weight: normal; background-color : transparent; margin : 0px 0px 0px 0px; padding : 0px 0px 0px 0px; display: inline; }
+  .VERSION { font-size: small; font-family : arial, sans-serif; }
+  .NORM  { color: black;  background-color: transparent;}
+  .FIFO  { color: purple; background-color: transparent;}
+  .CHAR  { color: yellow; background-color: transparent;}
+  .DIR   { color: blue;   background-color: transparent;}
+  .BLOCK { color: yellow; background-color: transparent;}
+  .LINK  { color: aqua;   background-color: transparent;}
+  .SOCK  { color: fuchsia;background-color: transparent;}
+  .EXEC  { color: green;  background-color: transparent;}
+  -->
+  .excluir { color: red !important; background-color: #ffe0cc;}
+  .adicionar { color: green !important; background-color: #ccffcc;}
+ </style>
+</head>
+<body>
+	<h1>Directory Tree</h1><p>
+	<a href="/">/</a><br>
+        <div class="excluir">
+	├── <a href="//comanda-frontend/">comanda-frontend</a><br>
+	│   ├── <a href="//comanda-frontend/package.json">package.json</a><br>
+	│   ├── <a href="//comanda-frontend/package-lock.json">package-lock.json</a><br>
+	│   ├── <a href="//comanda-frontend/public/">public</a><br>
+	│   │   ├── <a href="//comanda-frontend/public/favicon.ico">favicon.ico</a><br>
+	│   │   ├── <a href="//comanda-frontend/public/index.html">index.html</a><br>
+	│   │   ├── <a href="//comanda-frontend/public/logo192.png">logo192.png</a><br>
+	│   │   ├── <a href="//comanda-frontend/public/logo512.png">logo512.png</a><br>
+	│   │   ├── <a href="//comanda-frontend/public/manifest.json">manifest.json</a><br>
+	│   │   └── <a href="//comanda-frontend/public/robots.txt">robots.txt</a><br>
+	│   ├── <a href="//comanda-frontend/README.md">README.md</a><br>
+	│   ├── <a href="//comanda-frontend/src/">src</a><br>
+	│   │   ├── <a href="//comanda-frontend/src/App.js">App.js</a><br>
+	│   │   ├── <a href="//comanda-frontend/src/components/">components</a><br>
+	│   │   │   ├── <a href="//comanda-frontend/src/components/layout/">layout</a><br>
+	│   │   │   │   ├── <a href="//comanda-frontend/src/components/layout/ComandaFooter.js">ComandaFooter.js</a><br>
+	│   │   │   │   └── <a href="//comanda-frontend/src/components/layout/ComandaHeader.js">ComandaHeader.js</a><br>
+	│   │   │   └── <a href="//comanda-frontend/src/components/MessageAlert.js">MessageAlert.js</a><br>
+	│   │   ├── <a href="//comanda-frontend/src/css/">css</a><br>
+	│   │   │   └── <a href="//comanda-frontend/src/css/base.css">base.css</a><br>
+	│   │   ├── <a href="//comanda-frontend/src/imgs/">imgs</a><br>
+	│   │   │   ├── <a href="//comanda-frontend/src/imgs/CI&amp;T.png">CI&amp;T.png</a><br>
+	│   │   │   ├── <a href="//comanda-frontend/src/imgs/Logo_CI&amp;T_RGB.png">Logo_CI&amp;T_RGB.png</a><br>
+	│   │   │   ├── <a href="//comanda-frontend/src/imgs/logo.png">logo.png</a><br>
+	│   │   │   └── <a href="//comanda-frontend/src/imgs/qrcode.png">qrcode.png</a><br>
+	│   │   ├── <a href="//comanda-frontend/src/index.js">index.js</a><br>
+	│   │   ├── <a href="//comanda-frontend/src/pages/">pages</a><br>
+	│   │   │   ├── <a href="//comanda-frontend/src/pages/Comanda/">Comanda</a><br>
+	│   │   │   │   ├── <a href="//comanda-frontend/src/pages/Comanda/fluxo.md">fluxo.md</a><br>
+	│   │   │   │   ├── <a href="//comanda-frontend/src/pages/Comanda/index.js">index.js</a><br>
+	│   │   │   │   └── <a href="//comanda-frontend/src/pages/Comanda/style.css">style.css</a><br>
+	│   │   │   ├── <a href="//comanda-frontend/src/pages/Login/">Login</a><br>
+	│   │   │   │   ├── <a href="//comanda-frontend/src/pages/Login/fluxo.md">fluxo.md</a><br>
+	│   │   │   │   ├── <a href="//comanda-frontend/src/pages/Login/index.js">index.js</a><br>
+	│   │   │   │   └── <a href="//comanda-frontend/src/pages/Login/style.css">style.css</a><br>
+	│   │   │   ├── <a href="//comanda-frontend/src/pages/Menu/">Menu</a><br>
+	│   │   │   │   ├── <a href="//comanda-frontend/src/pages/Menu/index.js">index.js</a><br>
+	│   │   │   │   ├── <a href="//comanda-frontend/src/pages/Menu/item_lista/">item_lista</a><br>
+	│   │   │   │   │   ├── <a href="//comanda-frontend/src/pages/Menu/item_lista/style.css">style.css</a><br>
+	│   │   │   │   │   └── <a href="//comanda-frontend/src/pages/Menu/item_lista/TabelaItems.js">TabelaItems.js</a><br>
+	│   │   │   │   ├── <a href="//comanda-frontend/src/pages/Menu/menu_context.js">menu_context.js</a><br>
+	│   │   │   │   ├── <a href="//comanda-frontend/src/pages/Menu/menu_lista/">menu_lista</a><br>
+	│   │   │   │   │   ├── <a href="//comanda-frontend/src/pages/Menu/menu_lista/Menu.css">Menu.css</a><br>
+	│   │   │   │   │   └── <a href="//comanda-frontend/src/pages/Menu/menu_lista/MenuList.js">MenuList.js</a><br>
+	│   │   │   │   └── <a href="//comanda-frontend/src/pages/Menu/style.css">style.css</a><br>
+	│   │   │   ├── <a href="//comanda-frontend/src/pages/NewUser/">NewUser</a><br>
+	│   │   │   │   └── <a href="//comanda-frontend/src/pages/NewUser/index.js">index.js</a><br>
+	│   │   │   └── <a href="//comanda-frontend/src/pages/User/">User</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; ├── <a href="//comanda-frontend/src/pages/User/index.js">index.js</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; └── <a href="//comanda-frontend/src/pages/User/style.css">style.css</a><br>
+	│   │   ├── <a href="//comanda-frontend/src/routes.js">routes.js</a><br>
+	│   │   ├── <a href="//comanda-frontend/src/services/">services</a><br>
+	│   │   │   └── <a href="//comanda-frontend/src/services/api.js">api.js</a><br>
+	│   │   └── <a href="//comanda-frontend/src/UserContext.js">UserContext.js</a><br>
+	│   └── <a href="//comanda-frontend/yarn.lock">yarn.lock</a><br>
+          </div>
+	├── <a href="//LICENSE">LICENSE</a><br>
+<div class="excluir">
+	├── <a href="//prototipo/">prototipo</a><br>
+	│   └── <a href="//prototipo/src/">src</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo/src/css/">css</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo/src/css/base.css">base.css</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href="//prototipo/src/layout/">layout</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo/src/layout/ComandaFooter.js">ComandaFooter.js</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo/src/layout/ComandaHeader.js">ComandaHeader.js</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo/src/layout/download.png">download.png</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//prototipo/src/layout/layout.js">layout.js</a><br>
+</div>
+<div class="excluir">
+	├── <a href="//prototipo-ui/">prototipo-ui</a><br>
+	│   ├── <a href="//prototipo-ui/add-prototype-here">add-prototype-here</a><br>
+	│   ├── <a href="//prototipo-ui/css/">css</a><br>
+	│   │   └── <a href="//prototipo-ui/css/base.css">base.css</a><br>
+	│   ├── <a href="//prototipo-ui/front-login/">front-login</a><br>
+	│   │   ├── <a href="//prototipo-ui/front-login/package.json">package.json</a><br>
+	│   │   ├── <a href="//prototipo-ui/front-login/package-lock.json">package-lock.json</a><br>
+	│   │   ├── <a href="//prototipo-ui/front-login/public/">public</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/front-login/public/favicon.ico">favicon.ico</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/front-login/public/index.html">index.html</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/front-login/public/logo192.png">logo192.png</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/front-login/public/logo512.png">logo512.png</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/front-login/public/manifest.json">manifest.json</a><br>
+	│   │   │   └── <a href="//prototipo-ui/front-login/public/robots.txt">robots.txt</a><br>
+	│   │   ├── <a href="//prototipo-ui/front-login/README.md">README.md</a><br>
+	│   │   └── <a href="//prototipo-ui/front-login/src/">src</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/comanda/">comanda</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/front-login/src/comanda/Comanda.js">Comanda.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/components/">components</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/front-login/src/components/App.js">App.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/css/">css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/front-login/src/css/base.css">base.css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/imgs/">imgs</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/front-login/src/imgs/download.png">download.png</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/front-login/src/imgs/qrcode.png">qrcode.png</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/index.css">index.css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/index.js">index.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/layout/">layout</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/front-login/src/layout/ComandaFooter.js">ComandaFooter.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/front-login/src/layout/ComandaHeader.js">ComandaHeader.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/login/">login</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/front-login/src/login/login.js">login.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; └── <a href="//prototipo-ui/front-login/src/menu/">menu</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/menu/item_lista/">item_lista</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/front-login/src/menu/item_lista/style.css">style.css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/front-login/src/menu/item_lista/TabelaItems.js">TabelaItems.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/menu/MenuApp.js">MenuApp.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/menu/Menu.js">Menu.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/menu/menu_lista/">menu_lista</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/front-login/src/menu/menu_lista/css/">css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   └── <a href="//prototipo-ui/front-login/src/menu/menu_lista/css/Menu.css">Menu.css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/front-login/src/menu/menu_lista/MenuList.js">MenuList.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/front-login/src/menu/modal_observacoes/">modal_observacoes</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/front-login/src/menu/modal_observacoes/txt">txt</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//prototipo-ui/front-login/src/menu/style.css">style.css</a><br>
+	│   ├── <a href="//prototipo-ui/layout/">layout</a><br>
+	│   │   ├── <a href="//prototipo-ui/layout/App.js">App.js</a><br>
+	│   │   ├── <a href="//prototipo-ui/layout/base.css">base.css</a><br>
+	│   │   ├── <a href="//prototipo-ui/layout/ComandaFooter.js">ComandaFooter.js</a><br>
+	│   │   ├── <a href="//prototipo-ui/layout/ComandaHeader.js">ComandaHeader.js</a><br>
+	│   │   ├── <a href="//prototipo-ui/layout/download.png">download.png</a><br>
+	│   │   └── <a href="//prototipo-ui/layout/layout.js">layout.js</a><br>
+	│   ├── <a href="//prototipo-ui/prototipo/">prototipo</a><br>
+	│   │   ├── <a href="//prototipo-ui/prototipo/comanda/">comanda</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/prototipo/comanda/package.json">package.json</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/prototipo/comanda/package-lock.json">package-lock.json</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/prototipo/comanda/public/">public</a><br>
+	│   │   │   │   ├── <a href="//prototipo-ui/prototipo/comanda/public/favicon.ico">favicon.ico</a><br>
+	│   │   │   │   ├── <a href="//prototipo-ui/prototipo/comanda/public/index.html">index.html</a><br>
+	│   │   │   │   ├── <a href="//prototipo-ui/prototipo/comanda/public/logo192.png">logo192.png</a><br>
+	│   │   │   │   ├── <a href="//prototipo-ui/prototipo/comanda/public/logo512.png">logo512.png</a><br>
+	│   │   │   │   ├── <a href="//prototipo-ui/prototipo/comanda/public/manifest.json">manifest.json</a><br>
+	│   │   │   │   └── <a href="//prototipo-ui/prototipo/comanda/public/robots.txt">robots.txt</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/prototipo/comanda/README.md">README.md</a><br>
+	│   │   │   └── <a href="//prototipo-ui/prototipo/comanda/src/">src</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/comanda/src/Comanda.js">Comanda.js</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/comanda/src/css/">css</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/prototipo/comanda/src/css/base.css">base.css</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/comanda/src/index.css">index.css</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/comanda/src/index.js">index.js</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/comanda/src/layout/">layout</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/comanda/src/layout/App.js">App.js</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/comanda/src/layout/base.css">base.css</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/comanda/src/layout/ComandaFooter.js">ComandaFooter.js</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/comanda/src/layout/ComandaHeader.js">ComandaHeader.js</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/prototipo/comanda/src/layout/download.png">download.png</a><br>
+	│   │   │   &nbsp;&nbsp;&nbsp; └── <a href="//prototipo-ui/prototipo/comanda/src/qrcode.png">qrcode.png</a><br>
+	│   │   ├── <a href="//prototipo-ui/prototipo/package.json">package.json</a><br>
+	│   │   ├── <a href="//prototipo-ui/prototipo/package-lock.json">package-lock.json</a><br>
+	│   │   ├── <a href="//prototipo-ui/prototipo/public/">public</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/prototipo/public/favicon.ico">favicon.ico</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/prototipo/public/index.html">index.html</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/prototipo/public/logo192.png">logo192.png</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/prototipo/public/logo512.png">logo512.png</a><br>
+	│   │   │   ├── <a href="//prototipo-ui/prototipo/public/manifest.json">manifest.json</a><br>
+	│   │   │   └── <a href="//prototipo-ui/prototipo/public/robots.txt">robots.txt</a><br>
+	│   │   ├── <a href="//prototipo-ui/prototipo/README.md">README.md</a><br>
+	│   │   └── <a href="//prototipo-ui/prototipo/src/">src</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/src/css/">css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/prototipo/src/css/base.css">base.css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/src/index.js">index.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/src/layout/">layout</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/src/layout/App.js">App.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/src/layout/base.css">base.css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/src/layout/ComandaFooter.js">ComandaFooter.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/src/layout/ComandaHeader.js">ComandaHeader.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/prototipo/src/layout/download.png">download.png</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; └── <a href="//prototipo-ui/prototipo/src/menu/">menu</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/src/menu/item_lista/">item_lista</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/src/menu/item_lista/style.css">style.css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/prototipo/src/menu/item_lista/TabelaItems.js">TabelaItems.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/src/menu/MenuApp.js">MenuApp.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/src/menu/Menu.js">Menu.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/src/menu/menu_lista/">menu_lista</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/prototipo/src/menu/menu_lista/css/">css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   └── <a href="//prototipo-ui/prototipo/src/menu/menu_lista/css/Menu.css">Menu.css</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/prototipo/src/menu/menu_lista/MenuList.js">MenuList.js</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/prototipo/src/menu/modal_observacoes/">modal_observacoes</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/prototipo/src/menu/modal_observacoes/txt">txt</a><br>
+	│   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//prototipo-ui/prototipo/src/menu/style.css">style.css</a><br>
+	│   └── <a href="//prototipo-ui/telalogin/">telalogin</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/package.json">package.json</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/package-lock.json">package-lock.json</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/public/">public</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/telalogin/public/favicon.ico">favicon.ico</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/telalogin/public/index.html">index.html</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/telalogin/public/logo192.png">logo192.png</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/telalogin/public/logo512.png">logo512.png</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   ├── <a href="//prototipo-ui/telalogin/public/manifest.json">manifest.json</a><br>
+	│   &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/telalogin/public/robots.txt">robots.txt</a><br>
+	│   &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/README.md">README.md</a><br>
+	│   &nbsp;&nbsp;&nbsp; └── <a href="//prototipo-ui/telalogin/src/">src</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/src/component/">component</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/telalogin/src/component/App.js">App.js</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/src/css/">css</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//prototipo-ui/telalogin/src/css/base.css">base.css</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/src/index.css">index.css</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/src/index.js">index.js</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//prototipo-ui/telalogin/src/layout/">layout</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/src/layout/App.js">App.js</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/src/layout/base.css">base.css</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/src/layout/ComandaFooter.js">ComandaFooter.js</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/src/layout/ComandaHeader.js">ComandaHeader.js</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//prototipo-ui/telalogin/src/layout/download.png">download.png</a><br>
+	│   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//prototipo-ui/telalogin/src/layout/layout.js">layout.js</a><br>
+</div>	
+	├── <a href="//README.md">README.md</a><br>
+	└── <a href="//webapp/">webapp</a><br>
+	&nbsp;&nbsp;&nbsp; ├── <a href="//webapp/mvnw">mvnw</a><br>
+	&nbsp;&nbsp;&nbsp; ├── <a href="//webapp/mvnw.cmd">mvnw.cmd</a><br>
+	&nbsp;&nbsp;&nbsp; ├── <a href="//webapp/package.json">package.json</a><br>
+	&nbsp;&nbsp;&nbsp; ├── <a href="//webapp/package-lock.json">package-lock.json</a><br>
+	&nbsp;&nbsp;&nbsp; ├── <a href="//webapp/pom.xml">pom.xml</a><br>
+	&nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/">src</a><br>
+	&nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/">main</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/">java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   └── <a href="//webapp/src/main/java/br/">br</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/java/br/com/">com</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/java/br/com/nextgen2020/">nextgen2020</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/">comandablue</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/ComandablueApplication.java">ComandablueApplication.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/controller/">controller</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/controller/ComandaController.java">ComandaController.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/controller/HomeController.java">HomeController.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/controller/MesaController.java">MesaController.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/controller/ProdutoController.java">ProdutoController.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/controller/UsuarioController.java">UsuarioController.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/DatabaseLoader.java">DatabaseLoader.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/form/">form</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/form/LogarUsuarioForm.java">LogarUsuarioForm.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/form/ValidatePinForm.java">ValidatePinForm.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/">model</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/">entidade</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/CategoriaProduto.java">CategoriaProduto.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/Cliente.java">Cliente.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/Comanda.java">Comanda.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/Estabelecimento.java">Estabelecimento.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/Funcionario.java">Funcionario.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/Mesa.java">Mesa.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/Pagamento.java">Pagamento.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/Pedido.java">Pedido.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/Produto.java">Produto.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   │   └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/entidade/Usuario.java">Usuario.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/enums/">enums</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/enums/StatusComanda.java">StatusComanda.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/model/enums/TipoPagamentoEnum.java">TipoPagamentoEnum.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/repository/">repository</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/repository/CategoriaProdutoRepository.java">CategoriaProdutoRepository.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/repository/ComandaRepository.java">ComandaRepository.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/repository/EstabelecimentoRepository.java">EstabelecimentoRepository.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/repository/MesaRepository.java">MesaRepository.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/repository/ProdutoRepository.java">ProdutoRepository.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/repository/UsuarioRepository.java">UsuarioRepository.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/RestConfigurerAdapter.java">RestConfigurerAdapter.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/security/">security</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; │   └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/security/EncryptDecrypt.java">EncryptDecrypt.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/Service/">Service</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/Service/ComandaService.java">ComandaService.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/Service/MesaService.java">MesaService.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/Service/ProdutoService.java">ProdutoService.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/java/br/com/nextgen2020/comandablue/Service/UsuarioService.java">UsuarioService.java</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/js/">js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   ├── <a href="//webapp/src/main/js/App.js">App.js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   ├── <a href="//webapp/src/main/js/index.js">index.js</a><br>
+<div class="excluir">
+	&nbsp;&nbsp;&nbsp; │   │   │   ├── <a href="//webapp/src/main/js/routes.js">routes.js</a><br>
+</div>
+<div class="adicionar">
+	&nbsp;&nbsp;&nbsp; │   │   │   ├── <a href="//webapp/src/main/js/style.css">style.css</a><br>
+</div>	
+	&nbsp;&nbsp;&nbsp; │   │   │   ├── <a href="//webapp/src/main/js/Pages/">Pages</a><br>
+<div class="adicionar">
+	&nbsp;&nbsp;&nbsp; │   │   │   │   ├── <a href="//webapp/src/main/js/Pages/TelaLogin.js">TelaLogin.js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   │   ├── <a href="//webapp/src/main/js/Pages/TelaAberturaComanda.js">TelaAberturaComanda.js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   │   ├── <a href="//webapp/src/main/js/Pages/TelaCardapio.js">TelaCardapio.js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   │   ├── <a href="//webapp/src/main/js/Pages/TelaExtratoComanda.js">TelaExtratoComanda.js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   │   ├── <a href="//webapp/src/main/js/Pages/TelaSaldoAPagar.js">TelaSaldoAPagar.js</a><br>
+</div>	
+<div class="excluir">
+	&nbsp;&nbsp;&nbsp; │   │   │   │   ├── <a href="//webapp/src/main/js/pages/NewUser/">NewUser</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   │   │   └── <a href="//webapp/src/main/js/pages/NewUser/index.js">index.js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   │   └── <a href="//webapp/src/main/js/pages/Users/">Users</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   │   &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/js/pages/Users/index.js">index.js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   │   &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/js/pages/Users/style.css">style.css</a><br>
+</div>	
+&nbsp;&nbsp;&nbsp; │   │   │   └── <a href="//webapp/src/main/js/services/">services</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   │   &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/js/services/api.js">api.js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   └── <a href="//webapp/src/main/resources/">resources</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/resources/application.properties">application.properties</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; ├── <a href="//webapp/src/main/resources/static/">static</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; │   ├── <a href="//webapp/src/main/resources/static/built/">built</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; │   │   ├── <a href="//webapp/src/main/resources/static/built/bundle.js">bundle.js</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; │   │   └── <a href="//webapp/src/main/resources/static/built/bundle.js.map">bundle.js.map</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; │   └── <a href="//webapp/src/main/resources/static/main.css">main.css</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/resources/templates/">templates</a><br>
+	&nbsp;&nbsp;&nbsp; │   │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/main/resources/templates/index.html">index.html</a><br>
+	&nbsp;&nbsp;&nbsp; │   └── <a href="//webapp/src/test/">test</a><br>
+	&nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/test/java/">java</a><br>
+	&nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/test/java/br/">br</a><br>
+	&nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/test/java/br/com/">com</a><br>
+	&nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/test/java/br/com/nextgen2020/">nextgen2020</a><br>
+	&nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/test/java/br/com/nextgen2020/comandablue/">comandablue</a><br>
+	&nbsp;&nbsp;&nbsp; │   &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp; └── <a href="//webapp/src/test/java/br/com/nextgen2020/comandablue/ComandablueApplicationTests.java">ComandablueApplicationTests.java</a><br>
+	&nbsp;&nbsp;&nbsp; └── <a href="//webapp/webpack.config.js">webpack.config.js</a><br>
+	<br><br>
+	</p>
+	<p>
+
+89 directories, 196 files
+	<br><br>
+	</p>
+	<hr>
+	<p class="VERSION">
+		 tree v1.7.0 © 1996 - 2014 by Steve Baker and Thomas Moore <br>
+		 HTML output hacked and copyleft © 1998 by Francesc Rocher <br>
+		 JSON output hacked and copyleft © 2014 by Florian Sesser <br>
+		 Charsets / OS/2 support © 2001 by Kyosuke Tokoro
+	</p>
+</body>
+</html>

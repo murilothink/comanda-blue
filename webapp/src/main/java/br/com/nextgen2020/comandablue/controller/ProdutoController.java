@@ -1,6 +1,6 @@
 package br.com.nextgen2020.comandablue.controller;
 
-import br.com.nextgen2020.comandablue.Service.ProdutoService;
+import br.com.nextgen2020.comandablue.service.ProdutoService;
 import br.com.nextgen2020.comandablue.model.entidade.Produto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
