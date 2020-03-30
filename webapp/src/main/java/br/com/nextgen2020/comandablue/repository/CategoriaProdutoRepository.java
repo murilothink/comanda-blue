@@ -6,10 +6,14 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 import org.springframework.web.bind.annotation.CrossOrigin;
 
+import java.util.List;
+import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:3000")
 @RepositoryRestResource(collectionResourceRel = "categoriaproduto", path = "categoriaproduto")
 public interface CategoriaProdutoRepository extends CrudRepository<CategoriaProduto, Long> {
 
     public CategoriaProduto findByCategoriaAndEstabelecimento(String categoria, Estabelecimento estabelecimento);
 
+    List<CategoriaProduto> findByEstabelecimento(Estabelecimento estabelecimento);
 }

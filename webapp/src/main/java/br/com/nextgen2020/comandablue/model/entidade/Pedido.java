@@ -1,11 +1,10 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
 import java.sql.Timestamp;
+import java.util.Optional;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.sun.istack.NotNull;
 
 @Entity
@@ -25,7 +24,7 @@ public class Pedido {
 
     private String observacao;
 
-    @NotEmpty
+    @NotNull
     private Integer quantidade;
 
     @NotNull
@@ -35,7 +34,7 @@ public class Pedido {
     private Double valorTotal;
 
     @Column(columnDefinition  = "timestamp default current_timestamp")
-    @NotNull
+    //@NotNull
     private Timestamp dataHora = new Timestamp(System.currentTimeMillis());
 
     public Long getId() {

@@ -1,8 +1,6 @@
-package br.com.nextgen2020.comandablue.service;
+package br.com.nextgen2020.comandablue.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
+import br.com.nextgen2020.comandablue.form.PedidoForm;
 import br.com.nextgen2020.comandablue.model.entidade.*;
 import br.com.nextgen2020.comandablue.model.enums.StatusComanda;
 import br.com.nextgen2020.comandablue.repository.*;
@@ -11,6 +9,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ComandaService {
@@ -83,34 +85,28 @@ public class ComandaService {
      * Método que faz um pedido de acordo com o id da comanda e o email do cliente passado.
      * Adiciona na lista de pedidos da comanda o novo pedido.
      * @param idComanda
-     * @param itemPedido
      * @param emailCliente
      * @return comanda atualizada
      */
-    public Comanda fazerPedido(Long idComanda,
-                               List<Pedido> itemPedido,
-                               String emailCliente,
-                               Long idEstabelecimento,
-                               Long idMesa){
+    @Transactional
+    public Comanda fazerPedido(Long idComanda, String emailCliente, List<PedidoForm> itemPedido, Long idEstabelecimento, Long idMesa){
 
         Comanda comanda = comandaRepository.findById(idComanda).get();
-
+        Usuario usuario = usuarioRepository.findByEmail(emailCliente);
         Estabelecimento estabelecimento = estabelecimentoRepository.findById(idEstabelecimento).get();
-
         Mesa mesa = mesaRepository.findById(idMesa).get();
 
-        List<Usuario> listaUsuario = comanda.getUsuarios();
-
-        List<Pedido> listaPedido = comanda.getItemPedido();
-        listaPedido.addAll(itemPedido);
+        //Pega lista de pedidos ja cadastrada da comanda e adiciona os pedidos novos a mais chegados do parametro 'itemPedido'
+        List<Pedido> pedidos = comanda.getItemPedido();
+        itemPedido.forEach(pedidoForm -> {
+            pedidos.add(pedidoForm.converter(usuario, estabelecimento));
+        });
 
         comanda.setEstabelecimento(estabelecimento);
         comanda.setMesa(mesa);
-        comanda.setUsuarios(listaUsuario);
-        comanda.setItemPedido(listaPedido);
-        comandaRepository.save(comanda);
+        comanda.setItemPedido(pedidos);
 
-        log.info(comanda.toString());
+        comandaRepository.save(comanda);
         return comanda;
     }
 }
