@@ -13,6 +13,7 @@ import AppBar from '@material-ui/core/AppBar';
 
 import TelaLogin from './Pages/TelaLogin';
 import TelaAbrirComanda from './Pages/TelaAbrirComanda';
+import TelaExtrato from './Pages/TelaExtrato';
 
 // Criar contexto para login do usuario em memoria REACT
 const UserContext = createContext(null);
@@ -22,7 +23,8 @@ function Routes(){
         <BrowserRouter>
             <Switch>
                 <Route path="/" exact component={(props) => <TelaLogin {...props} userContext={UserContext} />} />
-                <Route path="/abrircomanda" exact component={(props) => <TelaAbrirComanda {...props} userContext={UserContext} />} />                
+                <Route path="/abrircomanda"  component={(props) => <TelaAbrirComanda {...props} userContext={UserContext} />} /> 
+                <Route path="/extrato"  component={(props) => <TelaExtrato {...props} userContext={UserContext} />} />              
             </Switch>
         </BrowserRouter>
     );
