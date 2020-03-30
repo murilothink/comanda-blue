@@ -1,8 +1,7 @@
 import React, { useContext } from 'react';
-import { UserContext } from '../../UserContext';
-import api from '../../services/api';
+import api from '../Services/api';
 
-import img from '../../imgs/qrcode.png'
+import img from '../static/img/qrcode.png'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 // Para utilizar inputs. Cada FormControl pode ter 1 input
@@ -11,14 +10,14 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import OutlinedInput from '@material-ui/core/OutlinedInput';
 // Para alertas
-import MessageAlert from '../../components/MessageAlert';
+import MessageAlert from '../Components/MessageAlert';
 
-import './style.css';
+import '../style.css';
 
-export default function Comanda({history}){
+export default function TelaAbrirComanda(props){
 
     // Para acessar contexto de login usuario
-    const { userLogin, setUserLogin } = useContext(UserContext);
+    const { userLogin, setUserLogin } = useContext(props.userContext);
 
     // state para saber se pin falhou ou nao
     const [status, setStatus] = React.useState("");
@@ -40,7 +39,11 @@ export default function Comanda({history}){
     
         try{
             // faz POST com json contendo pin para o servidor no endpoint /mesa/validatepin
-            const response = await api.post('/mesa/validatepin', { pin: values.pin});
+            const options = {
+                headers: {'COMANDA-BLUE-CLIENTE': userLogin.comandaBlueCliente }
+            };
+
+            const response = await api.post('/estabelecimento/mesas/' + values.pin + '/comandas/abrir', null, options);
             
             console.log("PIN sent=" + values.pin, response.status, response.data);
             
@@ -51,7 +54,7 @@ export default function Comanda({history}){
                 idMesa: values.pin.split("-")[1]
             })
 
-            history.push('/menu');
+            props.history.push('/menu');
         }
         catch (error) {
             console.log(error);
@@ -62,7 +65,7 @@ export default function Comanda({history}){
     }
 
     function clickScanQrcode() {
-        history.push('/scanqrcode');
+        props.history.push('/scanqrcode');
     }
 
     return (

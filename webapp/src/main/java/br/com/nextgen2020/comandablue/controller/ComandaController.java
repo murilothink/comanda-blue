@@ -1,10 +1,13 @@
 package br.com.nextgen2020.comandablue.controller;
 
+import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
 import br.com.nextgen2020.comandablue.service.ComandaService;
 import br.com.nextgen2020.comandablue.model.entidade.Pedido;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import br.com.nextgen2020.comandablue.model.entidade.Comanda;
@@ -12,20 +15,27 @@ import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 import javax.transaction.Transactional;
 import java.util.List;
 
+
 @RestController
 public class ComandaController {
 
     @Autowired
     private ComandaService comandaService;
 
-
     private static final Logger log = LoggerFactory.getLogger(ComandaService.class);
 
-    @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/abrir", consumes = "application/json", produces = "application/json")
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    @PostMapping(path= "/estabelecimento/mesas/{pinMesa}/comandas/abrir", consumes = "application/x-www-form-urlencoded", produces = "application/json")
     @Transactional
-    public Comanda abrir(@PathVariable(value="idEstabelecimento") Long idEstabelecimento, @PathVariable(value="idMesa") Long idMesa, @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailCliente){
+    public ResponseEntity<Comanda>  abrir(@PathVariable(value="pinMesa") String pinMesa, @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailClienteCriptografado){
 
-        return comandaService.abrir(idEstabelecimento, idMesa, emailCliente);
+        try{
+            return new ResponseEntity<>(comandaService.abrir(pinMesa, emailClienteCriptografado), HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/{idComanda}/pedir", consumes = "application/json", produces = "application/json")
