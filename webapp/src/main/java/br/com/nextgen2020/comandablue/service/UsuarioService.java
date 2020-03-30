@@ -1,4 +1,4 @@
-package br.com.nextgen2020.comandablue.Service;
+package br.com.nextgen2020.comandablue.service;
 
 
 import br.com.nextgen2020.comandablue.model.entidade.Usuario;
@@ -6,15 +6,17 @@ import br.com.nextgen2020.comandablue.repository.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Service
 public class UsuarioService {
 
     @Autowired
     private UsuarioRepository usuarioRepository;
 
+    /**
+     * Busca usuário pelo e-mail
+     * @param email E-mail do usuário
+     * @return Nome do usuário
+     */
     public String getUsuarioNome(String email){
 
         Usuario usuario = usuarioRepository.findByEmail(email);
@@ -26,6 +28,14 @@ public class UsuarioService {
         return "";
     }
 
+    /**
+     * Verifica se a senha fornecida pelo usuario é válida.
+     * Se usuário fornecer nome + e-mail + senha, criar novo usuário
+     * @param email E-mail do usuário
+     * @param senha Senha do usuário
+     * @param nome Nome do usuário
+     * @return Se senha usuário estiver OK ou usuário foi criado, retorna true
+     */
     public boolean verificaUsuarioSenha(String email, String senha, String nome){
 
         Usuario usuario = usuarioRepository.findByEmail(email);

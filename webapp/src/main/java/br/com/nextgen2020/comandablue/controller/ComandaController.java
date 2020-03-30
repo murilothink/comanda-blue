@@ -1,9 +1,7 @@
 package br.com.nextgen2020.comandablue.controller;
 
-import br.com.nextgen2020.comandablue.Service.ComandaService;
 import br.com.nextgen2020.comandablue.form.PedidoForm;
-import br.com.nextgen2020.comandablue.model.entidade.Pedido;
-import org.hibernate.annotations.CascadeType;
+import br.com.nextgen2020.comandablue.service.ComandaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
 @RestController
@@ -22,7 +19,7 @@ public class ComandaController {
     private ComandaService comandaService;
 
 
-    private static final Logger log = LoggerFactory.getLogger(ComandaService.class);
+    private static final Logger log = LoggerFactory.getLogger(ComandaController.class);
 
     @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/abrir", consumes = "application/json", produces = "application/json")
     public Comanda abrir(@PathVariable(value="idEstabelecimento") Long idEstabelecimento, @PathVariable(value="idMesa") Long idMesa, @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailCliente){

@@ -1,4 +1,5 @@
 /* Fontes */
+@import url('https://fonts.googleapis.com/css?family=Caveat:400,700&display=swap');
 @import url('https://fonts.googleapis.com/css?family=Roboto+Slab:100,200,300,400,500,600,700,800,900&display=swap');
 
 /*Extra css*/
@@ -16,6 +17,13 @@ html, body{
   background-color: blue;
   margin: 0px;
 }
+
+.logo-cit{
+  height: 60%;
+  /* -webkit-filter: drop-shadow(2px 2px 1px rgb(44, 44, 44));
+  filter: drop-shadow(2px 2px 1px rgb(44, 44, 44)); */
+}
+
 .Container_QRCode{
   display: block;
   float: left;
@@ -25,12 +33,14 @@ html, body{
   display: block;
   float: left;
 }
+
 .textheader {
+  font-family: 'Caveat', cursive;
   color: white;
   margin: 0;
-  font-size: 30px;
+  font-size: 42px;
   padding: 20px;
-  font-weight: normal;
+  font-weight: 700;
 }
 
 .content {
@@ -49,6 +59,7 @@ html, body{
 }
 
 .textfooter {
+  font-family: 'Caveat', cursive;
   text-align: center;
   color: white;
   font-size: 35px;
@@ -57,14 +68,16 @@ html, body{
 }
 
 .textcopy {
-  font-size: 17.5px;
+  font-family: 'Roboto Slab';
+  font-size: 15px;
   height: 0;
-  font-weight: normal;
+  font-weight: 300;
   margin-top: 0;
   text-align: right;
   color: white;
   padding: 0 20px;
 }
+
 .Comanda {
   height: 100%;
   display: flex;

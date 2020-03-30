@@ -7,6 +7,7 @@ import './css/base.css';
 
 export default function App(){
 
+    // Estados a serem guardados para login usuario
     const [userLogin, setUserLogin] = useState({
         nome: '',
         comandaBlueCliente: '',
@@ -17,6 +18,7 @@ export default function App(){
     // Toda vez que userLogin mudar, atualiza providerUserLogin 
     const providerUserLogin = useMemo(() => ({userLogin, setUserLogin}), [userLogin, setUserLogin]);
 
+    // envolver <Routes /> com UserContext para utilizarmos como forma de login em memoria REACT
     return(
         <div className="Comanda">
             <ComandaHeader />

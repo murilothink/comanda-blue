@@ -1,11 +1,10 @@
-import React, { Component, useContext } from 'react';
+import React, { useContext } from 'react';
 import { UserContext } from '../../UserContext';
 import api from '../../services/api';
 
 import img from '../../imgs/qrcode.png'
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 // Para utilizar inputs. Cada FormControl pode ter 1 input
 import FormControl from '@material-ui/core/FormControl';
 // Password visbility, inputs
@@ -52,14 +51,13 @@ export default function Comanda({history}){
                 idMesa: values.pin.split("-")[1]
             })
 
-            console.log(userLogin);
-            //history.push('/Menu');
+            history.push('/menu');
         }
         catch (error) {
             console.log(error);
 
-            // Se login foi mal sucedido, estado status muda para "loginError" e assim aciona snackbar
-            setStatus("PINerror");
+            // Se verificacao pin foi mal sucedido, estado status muda para "pinError" e assim aciona snackbar
+            setStatus("pinError");
         }     
     }
 
@@ -136,11 +134,11 @@ export default function Comanda({history}){
                         </Button>
                     </p>
                 </Grid>
-            { 
-            // Se estado Status tiver qualquer conteudo, como "erroLogin", mostrar snackbar
-            // caso contrario, é igual nulo, entao nao mostra nada
-            status ? <MessageAlert severity="error" message="PIN incorreto/invalido" /> : null
-            }
+                { 
+                    // Se estado Status tiver qualquer conteudo, como "erroLogin", mostrar snackbar
+                    // caso contrario, é igual nulo, entao nao mostra nada
+                    status ? <MessageAlert severity="error" message="PIN incorreto/invalido" /> : null
+                }
 
             </Grid>
         </>

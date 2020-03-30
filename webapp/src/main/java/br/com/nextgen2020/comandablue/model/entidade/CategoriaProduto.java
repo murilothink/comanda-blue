@@ -27,10 +27,6 @@ public class CategoriaProduto {
         this.categoria = categoria;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Estabelecimento getEstabelecimento() {
         return estabelecimento;
     }
@@ -41,6 +37,10 @@ public class CategoriaProduto {
 
     public Long getId() {
         return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
     }
 
     public String getCategoria() {

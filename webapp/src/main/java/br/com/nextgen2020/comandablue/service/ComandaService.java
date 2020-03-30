@@ -1,4 +1,4 @@
-package br.com.nextgen2020.comandablue.Service;
+package br.com.nextgen2020.comandablue.service;
 
 import java.util.ArrayList;
 import java.util.List;
