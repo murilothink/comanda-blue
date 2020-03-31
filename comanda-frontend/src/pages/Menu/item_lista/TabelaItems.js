@@ -96,11 +96,11 @@ export default class TabelaItems extends React.Component{
                                 <TableRow className="tableRow" key={key}>
                                     
                                     <TableCell className="ajustaTabela" component="th" scope="row">
-                                        {row.item}
+                                        {row.produto.nome}
                                     </TableCell>
 
                                     <TableCell className="ajustaTabela">
-                                        R$ {row.precoUni}
+                                        R$ {row.valorUnitario}
                                     </TableCell>
 
                                     <TableCell className="ajustaTabela">
@@ -109,7 +109,7 @@ export default class TabelaItems extends React.Component{
                                             <RemoveCircleOutlineRoundedIcon onClick={()=>this.props.OnDecrementItem(key)} className="vermelho"/>
                                         </IconButton> 
                                         
-                                        {row.quant}
+                                        {row.quantidade}
 
                                         <IconButton className="iconButton">
                                             <AddCircleOutlineRoundedIcon onClick={()=>this.props.OnIncrementItem(key)} className="verde"/>

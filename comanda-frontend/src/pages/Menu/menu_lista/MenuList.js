@@ -1,6 +1,5 @@
 import React from "react";
 import "./Menu.css";
-import api from "../../../services/api";
 
 function Categoria(props){
     return(

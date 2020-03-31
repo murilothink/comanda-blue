@@ -5,8 +5,8 @@ import MenuList from './menu_lista/MenuList';
 import ItemList from './item_lista/TabelaItems';
 import api from "../../services/api";
 
-function createData(item, precoUni, quant, precoTotal) {
-    return { item, precoUni, quant, precoTotal};
+function createData(produto, observacao, quantidade, valorUnitario, valorTotal) {
+    return { produto, observacao, quantidade, valorUnitario, valorTotal};
 }
 
 export default class Menu extends React.Component{
@@ -70,7 +70,7 @@ export default class Menu extends React.Component{
     //adicione produto no state carrinho
     handleAddItem = (item) =>{
         let newCarrinho = this.state.carrinho.slice();
-        newCarrinho.push(createData(item.nome, item.valor, 1, 1*item.valor))
+        newCarrinho.push(createData(item, "", 1, item.valor, 1*item.valor))
         this.setState({
             ...this.state,
             carrinho: newCarrinho
@@ -80,8 +80,8 @@ export default class Menu extends React.Component{
     handleIncrementItem = (i) =>{
         console.log(i);
         const rows = this.state.carrinho.slice();
-        rows[i].quant++;
-        rows[i].precoTotal = rows[i].quant*rows[i].precoUni;
+        rows[i].quantidade++;
+        rows[i].valorTotal = rows[i].quantidade*rows[i].valorUnitario;
         console.log(rows)
         
         this.setState({
@@ -92,12 +92,12 @@ export default class Menu extends React.Component{
     
     handleDecrementItem = (i) =>{
         const rows = this.state.carrinho.slice();
-        rows[i].quant--;
-        if(rows[i].quant==0){
+        rows[i].quantidade--;
+        if(rows[i].quantidade==0){
             rows.splice(i, 1);
         }
         else{
-            rows[i].precoTotal = rows[i].quant*rows[i].precoUni;
+            rows[i].valorTotal = rows[i].quantidade*rows[i].valorUnitario;
         }
 
         this.setState({
@@ -124,7 +124,6 @@ export default class Menu extends React.Component{
     }
 
     render(){
-        console.log("teste");
         return (
             <div class="wrapper">
                 <div class="main_collumn">
