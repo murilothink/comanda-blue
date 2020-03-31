@@ -34,11 +34,13 @@ function Categoria(props){
 export default class MenuList extends React.Component{
     constructor(props){
         super(props);
-        this.state={listaProduto:[]}
+        this.state={
+            listaProduto:[]
+        }
     }
 
-    componentDidMount(){
-        const url = (this.props.idCategoria===-1)?
+    getMenu(){
+        const url = (this.props.idCategoria==-1)?
         "/estabelecimento/"+this.props.idEstabelecimento+"/cardapio/produtos":
         "/estabelecimento/"+this.props.idEstabelecimento+"/cardapio/produtos/categoria/"+this.props.idCategoria;
 
@@ -51,6 +53,14 @@ export default class MenuList extends React.Component{
         .catch(error => {
             console.log(error);
         });
+    }
+
+    componentDidMount(){
+        this.getMenu();
+    }
+
+    componentDidUpdate(){
+        this.getMenu();
     }
 
     render(){
@@ -90,7 +100,7 @@ export default class MenuList extends React.Component{
         return (
             <div className="container">
                 <div className="MenuList">
-                    {categorias}
+                    {categorias.length===0?<span>Não há itens para serem listados</span>:categorias}
                 </div>
             </div>
         );

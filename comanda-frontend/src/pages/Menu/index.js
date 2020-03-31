@@ -38,13 +38,12 @@ export default class Menu extends React.Component{
     
     }
 
-    //todo
     handleChange = event => {
         this.setState({
           ...this.state,
           idCategoriaAtual: event.target.value,
         });
-    };
+    }
 
     //adicione produto no state carrinho
     handleAddItem = (produto) =>{
@@ -58,9 +57,11 @@ export default class Menu extends React.Component{
     }
 
     renderMenuList(){
-        alert(this.state.idCategoriaAtual)
         return(
-            <MenuList OnAddItem={this.handleAddItem} idCategoria={this.state.idCategoriaAtual} idEstabelecimento={this.state.estabelecimento.id} />
+            <MenuList OnAddItem={this.handleAddItem} 
+                      idCategoria={this.state.idCategoriaAtual}
+                      idEstabelecimento={this.state.estabelecimento.id}
+            />
         )
     }
 
