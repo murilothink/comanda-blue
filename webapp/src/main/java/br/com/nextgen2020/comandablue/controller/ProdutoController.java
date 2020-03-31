@@ -17,7 +17,6 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/estabelecimento/{idEstabelecimento}/cardapio/produtos")
     public ResponseEntity<List<Produto>> listarProdutos (
             @PathVariable(value = "idEstabelecimento")Long idEstabelecimento) {
@@ -25,7 +24,6 @@ public class ProdutoController {
         return ResponseEntity.ok(produtoService.listarProdutos(idEstabelecimento,null));
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/estabelecimento/{idEstabelecimento}/cardapio/produtos/categoria/{idCategoria}")
     public ResponseEntity<List<Produto>> listarProdutos (
             @PathVariable(value = "idEstabelecimento")Long idEstabelecimento,

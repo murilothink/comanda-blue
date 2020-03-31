@@ -12,8 +12,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
 
-
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class UsuarioController {
 

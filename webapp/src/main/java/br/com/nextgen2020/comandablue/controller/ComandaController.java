@@ -25,10 +25,12 @@ public class ComandaController {
 
     private static final Logger log = LoggerFactory.getLogger(ComandaService.class);
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping(path= "/estabelecimento/mesas/{pinMesa}/comandas/abrir", consumes = "application/x-www-form-urlencoded", produces = "application/json")
+    @PostMapping(path= "/estabelecimento/mesas/{pinMesa}/comandas/abrir",
+            consumes = "application/x-www-form-urlencoded",
+            produces = "application/json")
     @Transactional
-    public ResponseEntity<Comanda>  abrir(@PathVariable(value="pinMesa") String pinMesa, @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailClienteCriptografado){
+    public ResponseEntity<Comanda> abrir(@PathVariable(value="pinMesa") String pinMesa,
+                                         @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailClienteCriptografado){
 
         log.info("Abrir comanda recebido, pinMesa=" + pinMesa + ", emailClienteCriptografado=" + emailClienteCriptografado);
 
@@ -51,7 +53,9 @@ public class ComandaController {
      * Passa os parametros para o metodo 'fazerPedido' do Classe 'ComandaService'
      *
      **/
-    @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/{idComanda}/pedir", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/{idComanda}/pedir",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public Comanda fazerPedido(
             @PathVariable(value="idEstabelecimento") Long idEstabelecimento,
             @PathVariable(value="idMesa") Long idMesa,
@@ -62,7 +66,6 @@ public class ComandaController {
         return comandaService.fazerPedido(idComanda, emailCliente, itemPedido, idEstabelecimento, idMesa);
     }
 
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("/estabelecimento/{id-estabelecimento}/mesas/{id-mesa}/comandas/{id-comanda}/pedidos")
     public ResponseEntity<List<Pedido>> listarPedidos(
             @PathVariable(value = "id-estabelecimento") Long idEstabelecimento,
