@@ -5,6 +5,10 @@ import MenuList from './menu_lista/MenuList';
 import ItemList from './item_lista/TabelaItems';
 import api from "../../services/api";
 
+function createData(item, precoUni, quant, precoTotal) {
+    return { item, precoUni, quant, precoTotal};
+}
+
 export default class Menu extends React.Component{
     constructor(props){
         super(props);
@@ -19,8 +23,6 @@ export default class Menu extends React.Component{
         };
     }
 
-
-    //Entra em loop componentDidMount componentDidUpdate
     componentDidMount(){
         const url = "/estabelecimento/"+this.state.estabelecimento.id+"/categorias"
         
@@ -45,15 +47,44 @@ export default class Menu extends React.Component{
         });
     }
 
+
     //adicione produto no state carrinho
-    handleAddItem = (produto) =>{
+    handleAddItem = (item) =>{
         let newCarrinho = this.state.carrinho.slice();
-        newCarrinho.push(produto)
+        newCarrinho.push(createData(item.nome, item.valor, 1, 1*item.valor))
         this.setState({
             ...this.state,
             carrinho: newCarrinho
         })
-               
+    }
+
+    handleIncrementItem = (i) =>{
+        console.log(i);
+        const rows = this.state.carrinho.slice();
+        rows[i].quant++;
+        rows[i].precoTotal = rows[i].quant*rows[i].precoUni;
+        console.log(rows)
+        
+        this.setState({
+            ...this.state,
+            carrinho: rows
+        });
+    }
+    
+    handleDecrementItem = (i) =>{
+        const rows = this.state.carrinho.slice();
+        rows[i].quant--;
+        if(rows[i].quant==0){
+            rows.splice(i, 1);
+        }
+        else{
+            rows[i].precoTotal = rows[i].quant*rows[i].precoUni;
+        }
+        
+        this.setState({
+            ...this.state,
+            carrinho: rows
+        });
     }
 
     renderMenuList(){
@@ -61,6 +92,15 @@ export default class Menu extends React.Component{
             <MenuList OnAddItem={this.handleAddItem} 
                       idCategoria={this.state.idCategoriaAtual}
                       idEstabelecimento={this.state.estabelecimento.id}
+            />
+        )
+    }
+
+    renderItemList(){
+        return(
+            <ItemList OnIncrementItem={this.handleIncrementItem}
+                      OnDecrementItem={this.handleDecrementItem}
+                      carrinho={this.state.carrinho} 
             />
         )
     }
@@ -79,7 +119,7 @@ export default class Menu extends React.Component{
                         <Select native label="Categoria"
                         value={this.state.idCategoriaAtual}
                         onChange={this.handleChange}>
-                            <option aria-label="None" value={-1} />
+                            <option aria-label="None" value={-1}>Todas</option>
                             {this.state.categorias.map((item, key) => {
                                 return(
                                 <option value={item.id}>{item.categoria}</option>
@@ -95,7 +135,7 @@ export default class Menu extends React.Component{
                     
                 </div>
                 <aside class="lista_itens_wrapper">
-                        {<ItemList carrinho={this.state.carrinho} />}
+                    {this.renderItemList()}
                 </aside>
             </div>
         );

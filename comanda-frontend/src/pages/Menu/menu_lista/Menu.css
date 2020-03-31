@@ -30,7 +30,7 @@
     background-color: rgb(113, 250, 95);
     font-size: 20px;
     position: absolute;
-    margin: 124px;
+    margin: 124px 0 0 124px;
 }
 
 .product-title {

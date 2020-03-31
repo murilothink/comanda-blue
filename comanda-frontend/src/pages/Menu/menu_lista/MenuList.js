@@ -65,6 +65,7 @@ export default class MenuList extends React.Component{
 
     render(){
         const produtos=this.state.listaProduto.slice();
+        
         produtos.sort(
             (a,b) => (a.categoriaProduto.id > b.categoriaProduto.id) ? 1:-1
         );
@@ -100,7 +101,10 @@ export default class MenuList extends React.Component{
         return (
             <div className="container">
                 <div className="MenuList">
-                    {categorias.length===0?<span>Não há itens para serem listados</span>:categorias}
+                    {categorias.length===0?
+                        <span>Não há itens para serem listados</span>:
+                        categorias
+                    }
                 </div>
             </div>
         );
