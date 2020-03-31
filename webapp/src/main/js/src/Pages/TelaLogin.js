@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, {useState} from 'react';
 import api from '../Services/api';
 
 import Button from '@material-ui/core/Button';
@@ -24,9 +24,6 @@ import '../style.css';
 export default function TelaLogin(props){
 
     console.log(props);
-
-    // Para acessar contexto de login usuario
-    const { userLogin, setUserLogin } = useContext(props.userContext);
 
     // state para saber se login falhou ou nao
     const [status, setStatus] = React.useState("");
@@ -69,10 +66,14 @@ export default function TelaLogin(props){
         
         // Se login foi bem sucedido, servidor retorna uma string e react guarda no userLogin state
         // o nome e comandaBlueCliente (que eh o email do cliente criptografado)
-        setUserLogin({
+        props.OnSendUserLogin({
           nome: response.data.nome,
           comandaBlueCliente: response.data.comandaBlueCliente,
+          idEstabelecimento: '',
+          idMesa: ''          
         });
+
+
 
         // Login OK, enviar usuario para tela de comanda
         // TODO nao seria melhor tela chamar ABRIRCOMANDA ?

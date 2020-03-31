@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import api from '../Services/api';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -140,9 +140,6 @@ const invoiceTotal = invoiceSubtotal;
 export default function TelaExtrato(props) {
 
     const classes = useStyles();
-
-    // Para acessar contexto de login usuario
-    const { userLogin, setUserLogin } = useContext(props.userContext);
 
     // Evento ao selecionar item no selectCliente
     const handleChangeSelectCliente = (event) => {
