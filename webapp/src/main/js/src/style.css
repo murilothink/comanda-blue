@@ -122,3 +122,8 @@ html, body{
 #telaExtrato #selectCliente{
   min-width: 200px;
 }
+
+.floatLeft {
+  display: block !important;
+  float: left !important;
+}

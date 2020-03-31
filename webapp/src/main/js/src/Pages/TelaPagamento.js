@@ -20,8 +20,29 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 import '../style.css';
+
+
+
+export default function TelaPagamento(){
+    return (
+    <div class="wrapper">
+        <div class="main_collumn">
+            
+            <ComponenteExtrato />
+        </div>
+        <aside class="lista_itens_wrapper">
+            <ComponentePagamento />
+        </aside>
+    </div>
+    )
+}
+
+
+
 
 const useStyles = makeStyles({
   table: {
@@ -58,7 +79,40 @@ function subtotal(items) {
 //     createRow(3, 'Tiago', 'Caldinho', 1, 12)
 // ];
 
-const rows = [];
+const rowsComanda = [];
+const rowsPagamento = [];
+
+const jsonPagamento = {
+    pagamentos:[
+        {
+            id: 1, 
+            clienteSolicitante:{
+                nome: 'Danilo de Nadai Sicari', 
+                email: 'denadai.sicari@gmail.com'
+            },
+            valorPago: 43.00,
+            quantidade: 2,
+        },
+        {
+            id: 2, 
+            clienteSolicitante:{
+                nome: 'Cristiano Andrade de Aguiar', 
+                email: 'aguiar@ciandt.com'
+            },
+            valorPago: 43.00,
+            quantidade: 2,
+        },
+        {
+            id: 3, 
+            clienteSolicitante:{
+                nome: 'Cristiano Andrade de Aguiar', 
+                email: 'aguiar@ciandt.com'
+            },
+            valorPago: 43.00,
+            quantidade: 2,
+        }
+    ]
+};
 
 // exemplo de retorno json do servidor
 const jsonComanda = {
@@ -129,15 +183,19 @@ const jsonComanda = {
 
 // Para cada itemPedido do json retornado do servidor, adicione em rows
 // rows sera mapeada na tabela
-jsonComanda.itemPedido.forEach(item => {
+
+jsonPagamento.pagamentos.forEach(item => {
     console.log(item);
-    rows.push(createRow(item.id, item.clienteSolicitante.nome, item.produto.nome, item.quantidade, item.valorUnitario));
+    rowsPagamento.push(createRow(item.id, item.clienteSolicitante.nome, item.valorPago, item.quantidade));
 });
 
-const invoiceSubtotal = subtotal(rows);
-const invoiceTotal = invoiceSubtotal;
+jsonComanda.itemPedido.forEach(item => {
+    console.log(item);
+    rowsComanda.push(createRow(item.id, item.clienteSolicitante.nome, item.produto.nome, item.quantidade, item.valorUnitario));
+});
 
-export default function TelaExtrato(props) {
+
+function ComponentePagamento(props) {
 
     const classes = useStyles();
 
@@ -163,37 +221,38 @@ export default function TelaExtrato(props) {
                 spacing={0}
                 align="center"
                 justify="center"
-                direction="column" item xs={12} sm={6} id="titulo"
+                direction="column" item xs={12} sm={2} id="titulo"
             >
                 <h1>PAGAMENTO</h1>
             </Grid>
         </Grid>
 
         <Grid
-            container style={{ height: "5%" }}
+            container style={{ height: "10%" }}
             direction="row"
             spacing={0}
             align="center"
-            justify="center"
+            justify="center" 
         >
-             <Grid
+            <Grid
                 container                    
                 spacing={0}
                 align="center"
                 justify="center"
-                direction="column" item xs={12} sm={6}>
-                <Button variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white'}}
-                >
-                    Voltar ao Extrato
-                </Button>
-            </Grid>
-
-            <Grid
-                container
-                spacing={0}
-                justify="center"
-                direction="column" item xs={12} sm={6}
+                direction="column" item xs={12} sm={2} id="titulo"
             >
+                <div className="floatLeft">
+                    <FormControl className="floatLeft" variant="outlined" style={{marginTop: "10px"}}>            
+                        <InputLabel htmlFor="input-email">VALOR</InputLabel>
+                        <OutlinedInput id="input-email" type='email' labelWidth={70}/>
+                    </FormControl>
+
+                    <Button className="floatLeft"variant="contained" style={{ background: '#00DD00', color: 'white'}}>
+                        PAGAR
+                    </Button> 
+                </div>
+
+
             </Grid>
         </Grid>
 
@@ -219,32 +278,171 @@ export default function TelaExtrato(props) {
 
                         <TableHead>
                             <TableRow>
-                                <TableCell><b>Cliente</b></TableCell>
-                                <TableCell align="right"><b>Já Pagou</b></TableCell>
-                                <TableCell align="right"><b>Valor (R$)</b></TableCell>
+                                <TableCell width="50px"><b>Cliente</b></TableCell>
+                                <TableCell width="50px"><b>Valor Pago (R$)</b></TableCell>
                             </TableRow>
                         </TableHead>
 
                         <TableBody>
 
-                            {rows.map((row) => (
+                            {rowsPagamento.map((row) => (
                                 <TableRow key={row.idPedido}>
-                                    <TableCell>{row.cliente}</TableCell>
-                                    <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
-                                    <TableCell align="right">
-                                         <Button variant="contained" color="primary" style={{background: '#009900', color: 'white'}}>pagar</Button>
-                                    </TableCell>
+                                    <TableCell width="50px">{row.cliente}</TableCell>
+                                    <TableCell width="50px">{row.valorPago}</TableCell>
                                 </TableRow>
                             ))}
 
                             <TableRow>
-                                <TableCell colSpan={2}><b>Subtotal</b></TableCell>
-                                <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                                <TableCell width="200px"><b>Total Pago</b></TableCell>
+                                <TableCell >R$ 43,00</TableCell>
                             </TableRow>
 
                             <TableRow>
-                                <TableCell colSpan={2}><b>Total Mesa</b></TableCell>
-                                <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+                                <TableCell width="200px"><b>Total a Pagar</b></TableCell>
+                                <TableCell>R$ 43,00</TableCell>
+                            </TableRow>
+
+                        </TableBody>
+
+                    </Table>
+                </TableContainer>
+
+            </Grid>   
+
+        </Grid>
+
+    </Grid>
+  );
+}
+
+function ComponenteExtrato(props) {
+
+    const classes = useStyles();
+    
+    // Evento ao selecionar item no selectCliente
+    const handleChangeSelectCliente = (event) => {
+        console.log("Cliente selecionado=" + cliente)
+        setCliente(event.target.value);
+    };
+
+    const [ cliente, setCliente ] = useState('');
+
+    return (
+    <Grid id="telaExtrato">        
+        <Grid
+            container style={{ height: "10%" }}
+            direction="row"
+            spacing={0}
+            align="center"
+            justify="center" 
+        >
+            <Grid
+                container                    
+                spacing={0}
+                align="center"
+                justify="center"
+                direction="column" item xs={12} sm={6} id="titulo"
+            >
+                <h1>EXTRATO</h1>
+            </Grid>
+        </Grid>
+
+        <Grid
+            container style={{ height: "5%" }}
+            direction="row"
+            spacing={0}
+            align="center"
+            justify="center"
+        >
+             <Grid
+                container                    
+                spacing={0}
+                align="center"
+                justify="center"
+                direction="column" item xs={12} sm={6}>
+                <Button variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white'}}
+                >
+                    Voltar ao menu
+                </Button>
+            </Grid>
+
+            <Grid
+                container
+                spacing={0}
+                justify="center"
+                direction="column" item xs={12} sm={6}
+            >
+
+                <FormControl variant="outlined" className={classes.formControl}>
+                    <InputLabel id="labelSelectCliente">Cliente</InputLabel>
+                    <Select
+                        labelId="labelSelectCliente"
+                        id="selectCliente"
+                        value={cliente}
+                        onChange={handleChangeSelectCliente}
+                        label="Cliente"
+                    >
+                        <MenuItem key="all" value="all"><em>Todos</em></MenuItem>
+                        
+                        {jsonComanda.usuarios.map((cliente) => (
+                            <MenuItem key={cliente.email} value={cliente.email}>{cliente.nome}</MenuItem>
+                        ))}
+
+                    </Select>
+                </FormControl>
+            </Grid>
+        </Grid>
+
+        <Grid
+            container
+            style={{ height: "85%" }}
+            direction="row"
+            spacing={0}
+            align="center"
+            justify="center"
+        >  
+
+            <Grid
+                container                    
+                spacing={0}
+                align="center"
+                justify="center"
+                direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
+            >
+
+                <TableContainer>
+                    <Table className={classes.table} aria-label="tabela extrato">
+
+                        <TableHead>
+                            <TableRow>
+                                <TableCell><b>Cliente</b></TableCell>
+                                <TableCell><b>Item</b></TableCell>
+                                <TableCell align="right"><b>Quantidade</b></TableCell>
+                                <TableCell align="right"><b>Valor Unitário (R$)</b></TableCell>
+                                <TableCell align="right"><b>Valor Total (R$)</b></TableCell>
+                            </TableRow>
+                        </TableHead>
+
+                        <TableBody>
+
+                            {rowsComanda.map((row) => (
+                                <TableRow key={row.idPedido}>
+                                    <TableCell>{row.cliente}</TableCell>
+                                    <TableCell>{row.item}</TableCell>
+                                    <TableCell align="right">{row.qtde}</TableCell>
+                                    <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(row.valorTotal)}</TableCell>
+                                </TableRow>
+                            ))}
+
+                            <TableRow>
+                                <TableCell colSpan={4}><b>Subtotal</b></TableCell>
+                                <TableCell align="right">R$ 43,00</TableCell>
+                            </TableRow>
+
+                            <TableRow>
+                                <TableCell colSpan={4}><b>Total Mesa</b></TableCell>
+                                <TableCell align="right">R$ 43,00</TableCell>
                             </TableRow>
 
                         </TableBody>
