@@ -14,16 +14,22 @@ export default class Menu extends React.Component{
         super(props);
         this.state={
             carrinho: [],
+            listaProduto: [],
             categorias: [],
             estabelecimento: {
                 id: 1,
                 nome: null
-            },
-            idCategoriaAtual: -1,
+            }
         };
     }
 
     componentDidMount(){
+        this.getCategoriasEstabelecimento();
+
+        this.getMenu(-1);    
+    }
+
+    getCategoriasEstabelecimento(){
         const url = "/estabelecimento/"+this.state.estabelecimento.id+"/categorias"
         
         api.get(url)
@@ -37,14 +43,27 @@ export default class Menu extends React.Component{
         .catch(error => {
             console.log(error);
         });
-    
+    }
+
+    getMenu(idCategoria){
+        const url = (idCategoria==-1)?
+        "/estabelecimento/"+this.state.estabelecimento.id+"/cardapio/produtos":
+        "/estabelecimento/"+this.state.estabelecimento.id+"/cardapio/produtos/categoria/"+idCategoria;
+
+        api.get(url)
+        .then(response => {
+            this.setState({
+                ...this.state,
+                listaProduto: response.data
+            })
+        })
+        .catch(error => {
+            console.log(error);
+        });
     }
 
     handleChange = event => {
-        this.setState({
-          ...this.state,
-          idCategoriaAtual: event.target.value,
-        });
+        this.getMenu(event.target.value);
     }
 
 
@@ -80,7 +99,7 @@ export default class Menu extends React.Component{
         else{
             rows[i].precoTotal = rows[i].quant*rows[i].precoUni;
         }
-        
+
         this.setState({
             ...this.state,
             carrinho: rows
@@ -90,8 +109,7 @@ export default class Menu extends React.Component{
     renderMenuList(){
         return(
             <MenuList OnAddItem={this.handleAddItem} 
-                      idCategoria={this.state.idCategoriaAtual}
-                      idEstabelecimento={this.state.estabelecimento.id}
+                      listaProduto={this.state.listaProduto}
             />
         )
     }
@@ -106,6 +124,7 @@ export default class Menu extends React.Component{
     }
 
     render(){
+        console.log("teste");
         return (
             <div class="wrapper">
                 <div class="main_collumn">

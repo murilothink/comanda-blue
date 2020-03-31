@@ -34,37 +34,10 @@ function Categoria(props){
 export default class MenuList extends React.Component{
     constructor(props){
         super(props);
-        this.state={
-            listaProduto:[]
-        }
-    }
-
-    getMenu(){
-        const url = (this.props.idCategoria==-1)?
-        "/estabelecimento/"+this.props.idEstabelecimento+"/cardapio/produtos":
-        "/estabelecimento/"+this.props.idEstabelecimento+"/cardapio/produtos/categoria/"+this.props.idCategoria;
-
-        api.get(url)
-        .then(response => {
-            this.setState({
-                listaProduto: response.data
-            });  
-        })
-        .catch(error => {
-            console.log(error);
-        });
-    }
-
-    componentDidMount(){
-        this.getMenu();
-    }
-
-    componentDidUpdate(){
-        this.getMenu();
     }
 
     render(){
-        const produtos=this.state.listaProduto.slice();
+        const produtos=this.props.listaProduto.slice();
         
         produtos.sort(
             (a,b) => (a.categoriaProduto.id > b.categoriaProduto.id) ? 1:-1
