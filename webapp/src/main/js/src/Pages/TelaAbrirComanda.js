@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import api from '../Services/api';
 
 import img from '../static/img/qrcode.png'
@@ -17,7 +17,7 @@ import '../style.css';
 export default function TelaAbrirComanda(props){
 
     // Para acessar contexto de login usuario
-    const { userLogin, setUserLogin } = useContext(props.userContext);
+    const { userLogin, setUserLogin } = React.useState(props.userLogin);
 
     // state para saber se pin falhou ou nao
     const [status, setStatus] = React.useState("");
@@ -49,7 +49,9 @@ export default function TelaAbrirComanda(props){
             
             // Com o pin validado, extrair idEstabelecimento e idMesa
 
-            setUserLogin({
+            props.OnSendUserLogin({
+                nome: userLogin.nome,
+                comandaBlueCliente: userLogin.comandaBlueCliente,
                 idEstabelecimento: values.pin.split("-")[0],
                 idMesa: values.pin.split("-")[1]
             })

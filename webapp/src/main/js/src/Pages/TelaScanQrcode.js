@@ -23,7 +23,7 @@ import MessageAlert from '../Components/MessageAlert';
 export default function TelaScanQrcode(props){
 
     // Para acessar contexto de login usuario
-    const { userLogin, setUserLogin } = useContext(props.userContext);
+    const { userLogin, setUserLogin } = React.useState(props.userState);
 
     const [ status, setStatus ] = useState("");
 
@@ -66,7 +66,9 @@ export default function TelaScanQrcode(props){
             
             // Com o pin validado, extrair idEstabelecimento e idMesa
 
-            setUserLogin({
+            props.OnSendUserLogin({
+                nome: userLogin.nome,
+                comandaBlueCliente: userLogin.comandaBlueCliente,
                 idEstabelecimento: pinColetado.split("-")[0],
                 idMesa: pinColetado.split("-")[1]
             })
