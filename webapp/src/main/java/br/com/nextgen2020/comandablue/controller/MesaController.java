@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.transaction.Transactional;
 
-
-@CrossOrigin(origins = "http://localhost:3000")
 @RestController
 public class MesaController {
 

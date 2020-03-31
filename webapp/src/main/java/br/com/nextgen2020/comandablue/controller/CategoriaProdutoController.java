@@ -15,8 +15,6 @@ public class CategoriaProdutoController {
     @Autowired
     private CategoriaProdutoService categoriaProdutoService;
 
-
-    @CrossOrigin(origins = "http://localhost:3000")
     @GetMapping("estabelecimento/{idEstabelecimento}/categorias")
     public ResponseEntity<CategoriasForm> listarCategorias(
             @PathVariable(name = "idEstabelecimento") Long idEstabelecimento

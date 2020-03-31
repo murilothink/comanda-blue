@@ -57,7 +57,7 @@ export default function TelaScanQrcode(props){
         try{
             // faz POST com json contendo pin para o servidor no endpoint /mesa/validatepin
             const options = {
-                headers: {'COMANDA-BLUE-CLIENTE': userLogin.comandaBlueCliente }
+                headers: {'COMANDA-BLUE-CLIENTE': props.userLogin.comandaBlueCliente }
             };
 
             const response = await api.post('/estabelecimento/mesas/' + pinColetado + '/comandas/abrir', null, options);
@@ -65,13 +65,11 @@ export default function TelaScanQrcode(props){
             console.log("PIN sent=" + pinColetado, response.status, response.data);
             
             // Com o pin validado, extrair idEstabelecimento e idMesa
-
             props.OnSendUserLogin({
-                nome: userLogin.nome,
-                comandaBlueCliente: userLogin.comandaBlueCliente,
                 idEstabelecimento: pinColetado.split("-")[0],
                 idMesa: pinColetado.split("-")[1]
             })
+
             props.history.push('/menu');
         }
         catch (error) {

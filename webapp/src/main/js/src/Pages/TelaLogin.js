@@ -68,12 +68,8 @@ export default function TelaLogin(props){
         // o nome e comandaBlueCliente (que eh o email do cliente criptografado)
         props.OnSendUserLogin({
           nome: response.data.nome,
-          comandaBlueCliente: response.data.comandaBlueCliente,
-          idEstabelecimento: '',
-          idMesa: ''          
+          comandaBlueCliente: response.data.comandaBlueCliente  
         });
-
-
 
         // Login OK, enviar usuario para tela de comanda
         // TODO nao seria melhor tela chamar ABRIRCOMANDA ?
