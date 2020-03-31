@@ -1,7 +1,8 @@
 package br.com.nextgen2020.comandablue.controller;
 
-import br.com.nextgen2020.comandablue.Service.ComandaService;
+import br.com.nextgen2020.comandablue.service.ComandaService;
 import br.com.nextgen2020.comandablue.form.PedidoForm;
+import br.com.nextgen2020.comandablue.model.entidade.Pedido;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,5 +60,26 @@ public class ComandaController {
             @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailCliente){
 
         return comandaService.fazerPedido(idComanda, emailCliente, itemPedido, idEstabelecimento, idMesa);
+    }
+
+    @CrossOrigin(origins = "http://localhost:3000")
+    @GetMapping("/estabelecimento/{id-estabelecimento}/mesas/{id-mesa}/comandas/{id-comanda}/pedidos")
+    public ResponseEntity<List<Pedido>> listarPedidos(
+            @PathVariable(value = "id-estabelecimento") Long idEstabelecimento,
+            @PathVariable(value = "id-mesa") Long idMesa,
+            @PathVariable(value = "id-comanda") Long idComanda,
+            @RequestParam(required = false) String clienteId) {
+
+        try{
+            List<Pedido> pedidosLista = comandaService.listarPedidos(idComanda, clienteId);
+
+            if(pedidosLista != null){
+                return new ResponseEntity<>(pedidosLista, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 }

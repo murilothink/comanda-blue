@@ -1,4 +1,4 @@
-package br.com.nextgen2020.comandablue.Service;
+package br.com.nextgen2020.comandablue.service;
 
 import br.com.nextgen2020.comandablue.form.PedidoForm;
 import br.com.nextgen2020.comandablue.model.entidade.*;
@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ComandaService {
@@ -109,4 +110,37 @@ public class ComandaService {
         comandaRepository.save(comanda);
         return comanda;
     }
+
+    public List<Pedido> listarPedidos(Long idComanda, String emailEncriptado) throws Exception {
+        String emailCliente;
+        List<Pedido> pedidoLista;
+        List<Pedido> pedidosCliente = new ArrayList<>();
+        Optional<Comanda> comanda = comandaRepository.findById(idComanda);
+
+        if(!comanda.isPresent()) {
+            return null;
+        }
+
+        if(emailEncriptado == null) {
+            //pedidoLista = pedidoRepository.findByEstabelecimentoIdAndMesaIdAndComandaId(idEstabelecimento, idMesa, idComanda);
+            pedidoLista = comanda.get().getItemPedido();
+        }
+        else {
+            //pedidoLista = pedidoRepository.findByEstabelecimentoIdAndMesaIdAndComandaIdAndEmailId(idEstabelecimento, idMesa, idComanda, idEmail);
+
+            emailCliente = encryptDecrypt.decrypt(emailEncriptado);
+
+            pedidoLista = comanda.get().getItemPedido();
+            pedidoLista.forEach(pedido -> {
+                if(pedido.getClienteSolicitante().getEmail().equals(emailCliente)) {
+                    pedidosCliente.add(pedido);
+                }
+            });
+            return pedidosCliente;
+        }
+
+        return pedidoLista;
+
+    }
+
 }
