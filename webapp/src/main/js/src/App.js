@@ -1,7 +1,5 @@
 import React, { useState, useMemo } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { createContext } from "react";
-
 
 // assets
 import './style.css';
@@ -15,19 +13,30 @@ import TelaLogin from './Pages/TelaLogin';
 import TelaAbrirComanda from './Pages/TelaAbrirComanda';
 import TelaScanQrcode from './Pages/TelaScanQrcode';
 import TelaExtrato from './Pages/TelaExtrato';
-
-// Criar contexto para login do usuario em memoria REACT
-const UserContext = createContext(null);
+import TelaPagamento from './Pages/TelaPagamento';
 
 function Routes(){
+    // Estados a serem guardados para login usuario
+    const [userLogin, setUserLogin] = useState({
+        nome: '',
+        comandaBlueCliente: '',
+        idEstabelecimento: '',
+        idMesa: ''       
+    });
+
+    const handlerSendUserLogin = (userLoginObj) =>{
+        setUserLogin(userLoginObj);
+    }
+
     return(
         <BrowserRouter>
-            <Switch>
-                <Route path="/" exact component={(props) => <TelaLogin {...props} userContext={UserContext} />} />
-                <Route path="/login" component={(props) => <TelaLogin {...props} userContext={UserContext} />} />
-                <Route path="/abrircomanda"  component={(props) => <TelaAbrirComanda {...props} userContext={UserContext} />} /> 
-                <Route path="/scanqrcode"  component={(props) => <TelaScanQrcode {...props} userContext={UserContext} />} />
-                <Route path="/extrato"  component={(props) => <TelaExtrato {...props} userContext={UserContext} />} />              
+            <Switch>                             
+                <Route path="/" exact component={(props) => <TelaLogin {...props} OnSendUserLogin={handlerSendUserLogin} />} />
+                <Route path="/login" component={(props) =>  <TelaLogin {...props} OnSendUserLogin={handlerSendUserLogin} />} />
+                <Route path="/abrircomanda"  component={(props) => <TelaAbrirComanda {...props} userLogin={userLogin} OnSendUserLogin={handlerSendUserLogin} />} /> 
+                <Route path="/scanqrcode"  component={(props) => <TelaScanQrcode {...props} userLogin={userLogin} OnSendUserLogin={handlerSendUserLogin}/>} />
+                <Route path="/extrato"  component={(props) => <TelaExtrato {...props} />} />   
+                <Route path="/pagamento"  component={(props) => <TelaPagamento {...props} userLogin={userLogin} OnSendUserLogin={handlerSendUserLogin} />} /> 
             </Switch>
         </BrowserRouter>
     );
@@ -60,26 +69,12 @@ class ComandaFooter extends React.Component {
 }
 
 export default function App(){
-
-    // Estados a serem guardados para login usuario
-    const [userLogin, setUserLogin] = useState({
-        nome: '',
-        comandaBlueCliente: '',
-        idEstabelecimento: '',
-        idMesa: ''       
-    }); 
-
-    // Toda vez que userLogin mudar, atualiza providerUserLogin 
-    const providerUserLogin = useMemo(() => ({userLogin, setUserLogin}), [userLogin, setUserLogin]);
-
     // envolver <Routes /> com UserContext para utilizarmos como forma de login em memoria REACT
     return(
         <div className="Comanda">
             <ComandaHeader />
             <div className="content">
-                <UserContext.Provider value={providerUserLogin}>
-                    <Routes />
-                </UserContext.Provider>
+                <Routes />
             </div>
             <ComandaFooter />
         </div>
