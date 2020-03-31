@@ -278,6 +278,33 @@ export default function TelaExtrato(props) {
             </Grid>   
 
         </Grid>
+        
+        <Grid
+        container
+        style={{ height: "87%" }}
+        direction="row"
+        spacing={0}
+        align="center"
+        justify="center"
+        >
+            <Grid
+            container                    
+            spacing={0}
+            align="center"
+            justify="center"
+            direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
+            style={{padding: '20px',}}
+            >
+                <Button 
+                variant="contained" 
+                style={{ background: '#2d9bf0', color: 'white', height: '40px', width:'100px',}}
+                >
+                    Pagar
+                </Button>
+
+            </Grid>
+        </Grid>
+
 
     </Grid>
   );
