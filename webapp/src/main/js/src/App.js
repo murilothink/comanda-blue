@@ -15,6 +15,7 @@ import TelaLogin from './Pages/TelaLogin';
 import TelaAbrirComanda from './Pages/TelaAbrirComanda';
 import TelaScanQrcode from './Pages/TelaScanQrcode';
 import TelaExtrato from './Pages/TelaExtrato';
+import TelaPagamento from './Pages/TelaPagamento';
 
 // Criar contexto para login do usuario em memoria REACT
 const UserContext = createContext(null);
@@ -27,7 +28,8 @@ function Routes(){
                 <Route path="/login" component={(props) => <TelaLogin {...props} userContext={UserContext} />} />
                 <Route path="/abrircomanda"  component={(props) => <TelaAbrirComanda {...props} userContext={UserContext} />} /> 
                 <Route path="/scanqrcode"  component={(props) => <TelaScanQrcode {...props} userContext={UserContext} />} />
-                <Route path="/extrato"  component={(props) => <TelaExtrato {...props} userContext={UserContext} />} />              
+                <Route path="/extrato"  component={(props) => <TelaExtrato {...props} userContext={UserContext} />} />
+                <Route path="/pagamento"  component={(props) => <TelaPagamento {...props} userContext={UserContext} />} />              
             </Switch>
         </BrowserRouter>
     );
