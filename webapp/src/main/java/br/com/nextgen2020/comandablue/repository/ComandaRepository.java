@@ -10,7 +10,7 @@ import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 
 public interface ComandaRepository extends CrudRepository<Comanda, Long> {
 
-
     List<Comanda> findByMesaIdAndEstabelecimentoId(Long idMesa, Long idEstabelecimento);
 
+    //Comanda findByIdComanda(long id);
 }
