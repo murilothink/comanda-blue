@@ -15,25 +15,25 @@ git clone https://github.com/murilothink/comanda-blue
 *   Abra o projeto no IntelliJ
 *   Crie um novo `module` atraves do menu:
 
-    <img src="docs/img/module-intellij/new-module-from-existing-source.png" width="80%">
+    <img src="https://raw.githubusercontent.com/murilothink/comanda-blue/master/docs/img/module-intellij/new-module-from-existing-source.PNG" width="80%">
 
 *   Selecione a pasta `webapp`
 
-    <img src="docs/img/module-intellij/select-folder.png" width="80%">
+    <img src="https://raw.githubusercontent.com/murilothink/comanda-blue/master/docs/img/module-intellij/select-folder.PNG" width="80%">
 
 *   Importe como maven
 
-    <img src="docs/img/module-intellij/import-as-maven.png" width="100%">
+    <img src="https://raw.githubusercontent.com/murilothink/comanda-blue/master/docs/img/module-intellij/import-as-maven.PNG" width="100%">
 
 :heavy_exclamation_mark: Para determinar versão java do projeto:
 
 *   Pelo `Project Explorer`, clique com o botão direito em `comanda-blue` e acesse a opção `Open Module Settings`
 
-    <img src="docs/img/versao-java-intellij/open-module-settings.png" width="70%">
+    <img src="https://raw.githubusercontent.com/murilothink/comanda-blue/master/docs/img/versao-java-intellij/open-module-settings.PNG" width="70%">
 
 *   Selecione `java 1.8` em `Project SDK` e também configure `Project Language Support` como: `8 - Lambdas, type annotations, etc.`
 
-     <img src="docs/img/versao-java-intellij/project-sdk.png" width="100%">
+     <img src="https://raw.githubusercontent.com/murilothink/comanda-blue/master/docs/img/versao-java-intellij/project-sdk.PNG" width="100%">
 
 
 :heavy_exclamation_mark: Para podermos trabalhar com a classe EncryptDecrypt:
