@@ -26,9 +26,7 @@ import api from "../../services/api";
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 import RemoveCircleOutlineRoundedIcon from '@material-ui/icons/RemoveCircleOutlineRounded';
 
-import "./style.css";
-import "./menu_lista/Menu.css";
-import './item_lista/style.css';
+import './TelaCardapio.css';
 
 function createData(produto, observacao, quantidade, valorUnitario, valorTotal) {
     return { produto, observacao, quantidade, valorUnitario, valorTotal};
