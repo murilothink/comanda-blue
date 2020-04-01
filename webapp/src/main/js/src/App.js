@@ -23,6 +23,7 @@ function Routes(){
     const [userLogin, setUserLogin] = useState({
         nome: '',
         comandaBlueCliente: '',
+        idComanda: '',
         idEstabelecimento: '',
         idMesa: ''       
     });

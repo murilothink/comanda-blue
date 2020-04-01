@@ -37,7 +37,7 @@ public class ComandaController {
         try{
             Comanda comanda = comandaService.abrir(pinMesa, emailClienteCriptografado);
             if(comanda != null){
-                log.info("Comanda aberta, id=" + comanda.getId() + ", idMesa=" + comanda.getMesa().getId() + ", idEstabelecimento=" + comanda.getEstabelecimento().getId());
+                log.info("Comanda id=" + comanda.getId() + ", idMesa=" + comanda.getMesa().getId() + ", idEstabelecimento=" + comanda.getEstabelecimento().getId() + " retornada");
                 return new ResponseEntity<>(comanda, HttpStatus.OK);
             }
         } catch (Exception e) {

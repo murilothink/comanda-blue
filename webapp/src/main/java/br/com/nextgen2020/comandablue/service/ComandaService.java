@@ -45,6 +45,11 @@ public class ComandaService {
      */
     public Comanda abrir(String pinMesa, String emailClienteCriptografado) throws Exception{
 
+        if(emailClienteCriptografado.isEmpty()){
+            log.info("Abrir comanda recebeu emailClienteCriptografado vazio");
+            return null;
+        }
+
         String emailCliente = encryptDecrypt.decrypt(emailClienteCriptografado);
 
         Mesa mesa = mesaRepository.findByPin(pinMesa);
@@ -54,10 +59,20 @@ public class ComandaService {
 
             for (Comanda comanda : listaComanda){
                 if (comanda.getStatus() == StatusComanda.ABERTO){
-                    log.info("Encontrada comanda aberta para requisicao pinMesa=" + pinMesa + ", adicionando usuario...");
+                    log.info("Encontrada comanda aberta para requisicao pinMesa=" + pinMesa + ", verificando lista usuario...");
+
                     List<Usuario> listaUsuarios = comanda.getUsuarios();
-                    listaUsuarios.add(usuarioRepository.findByEmail(emailCliente));
-                    comanda.setUsuarios(listaUsuarios);
+
+                    for (Usuario usuario : listaUsuarios){
+                        if(usuario.getEmail().equals(emailCliente)){
+                            log.info("Usuario ja estava inserido na comanda");
+                        }else{
+                            log.info("Usuario nao estava inserido na comanda, adicionando usuario... ");
+                            listaUsuarios.add(usuarioRepository.findByEmail(emailCliente));
+                            comanda.setUsuarios(listaUsuarios);
+                        }
+                    }
+
                     return comanda;
                 }
             }
