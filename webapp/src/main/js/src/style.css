@@ -66,6 +66,13 @@ html, body{
   flex-direction: column;
 }
 
+.overflow{
+  overflow: scroll;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  width: 100%;
+}
+
 #telaAbrirComanda #comandaSaudacao,
 #telaScanQrcode #titulo,
 #telaExtrato #titulo {
@@ -100,9 +107,4 @@ html, body{
 
 #telaExtrato #selectCliente{
   min-width: 200px;
-}
-
-.floatLeft {
-  display: block !important;
-  float: left !important;
 }
