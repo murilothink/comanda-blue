@@ -27,30 +27,30 @@ import '../style.css';
 
 
 
-export default function TelaPagamento(){
+export default function TelaPagamento(props){
+    const { userLogin, setUserLogin } = React.useState(props.userLogin);
+
     return (
     <div class="wrapper">
         <div class="main_collumn">
             
-                <Button variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white', margin:"5px"}}>
+                <Button variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white', margin:"5px", position:"fixed", marginTop:"16px"}}>
                     Voltar ao menu
                 </Button>
 
-            <Grid container spacing={3}>
+            <Grid container spacing={3}  style={{maxWidth:"100%"}}>
                 <Grid item xs={12} sm={6}>
-                    <ComponenteExtrato />
+                    <ComponenteExtrato {...props}/>
                 </Grid>
         
                 <Grid xs={12} sm={6}>
-                    <ComponentePagamento />
+                    <ComponentePagamento {...props}/>
                 </Grid>
             </Grid>
        </div>
     </div>
     )
 }
-
-
 
 
 const useStyles = makeStyles({
@@ -122,6 +122,7 @@ const jsonPagamento = {
         }
     ]
 };
+
 
 // exemplo de retorno json do servidor
 const jsonComanda = {
@@ -282,9 +283,9 @@ function ComponentePagamento(props) {
     const [ cliente, setCliente ] = useState('');
 
     return (
-    <Grid id="telaPagamento">        
+    <Grid id="telaPagamento" style={{marginTop: "15px"}}>        
         <Grid
-            container style={{ height: "10%" }}
+            container style={{ height: "10%"}}
             direction="row"
             spacing={0}
             align="center"
@@ -352,7 +353,7 @@ function ComponentePagamento(props) {
                 spacing={0}
                 align="center"
                 justify="center"
-                direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
+                direction="column" item xs={18} sm={18} lg={18} id="tabelaExtrato"
             >
                 <div className="overflow" style={{maxHeight:"325px"}}>
                     <TableContainer>
@@ -427,6 +428,8 @@ function ComponenteExtrato(props) {
                 style={{ margin:"0", padding:"0" }}
             >
                 <h1>EXTRATO</h1>
+
+                Nome:    {props.userLogin.nome}
             </Grid>
         </Grid>
 
@@ -444,7 +447,7 @@ function ComponenteExtrato(props) {
                 spacing={0}
                 align="center"
                 justify="center"
-                direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
+                direction="column" item xs={18} sm={18} lg={18} id="tabelaExtrato"
             >
                 <div className="overflow" style={{maxHeight:"350px"}}>
                     <TableContainer>
@@ -452,11 +455,11 @@ function ComponenteExtrato(props) {
 
                             <TableHead>
                                 <TableRow>
-                                    <TableCell><b>Cliente</b></TableCell>
                                     <TableCell><b>Item</b></TableCell>
                                     <TableCell align="right"><b>Quantidade</b></TableCell>
                                     <TableCell align="right"><b>Valor Unitário (R$)</b></TableCell>
                                     <TableCell align="right"><b>Valor Total (R$)</b></TableCell>
+                                    <TableCell align="right"><b>...</b></TableCell>
                                 </TableRow>
                             </TableHead>
 
@@ -464,7 +467,6 @@ function ComponenteExtrato(props) {
 
                                 {rowsComanda.map((row) => (
                                     <TableRow key={row.idPedido}>
-                                        <TableCell>{row.cliente}</TableCell>
                                         <TableCell>{row.item}</TableCell>
                                         <TableCell align="right">{row.qtde}</TableCell>
                                         <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
@@ -473,12 +475,12 @@ function ComponenteExtrato(props) {
                                 ))}
 
                                 <TableRow>
-                                    <TableCell colSpan={4}><b>Subtotal</b></TableCell>
+                                    <TableCell colSpan={3}><b>Subtotal</b></TableCell>
                                     <TableCell align="right">R$ 43,00</TableCell>
                                 </TableRow>
 
                                 <TableRow>
-                                    <TableCell colSpan={4}><b>Total Mesa</b></TableCell>
+                                    <TableCell colSpan={3}><b>Total Mesa</b></TableCell>
                                     <TableCell align="right">R$ 43,00</TableCell>
                                 </TableRow>
 
