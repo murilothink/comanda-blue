@@ -31,6 +31,11 @@ export default function TelaPagamento(){
     return (
     <div class="wrapper">
         <div class="main_collumn">
+            
+                <Button variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white', margin:"5px"}}>
+                    Voltar ao menu
+                </Button>
+
             <Grid container spacing={3}>
                 <Grid item xs={12} sm={6}>
                     <ComponenteExtrato />
@@ -133,34 +138,99 @@ const jsonComanda = {
         nome: 'Deck lago 3'
     },
     usuarios:[
-        {nome: 'Danilo de Nadai Sicari', email: 'denadai.sicari@gmail.com'},
         {nome: 'Erik Kenzo Oura Carlini Valle', email: 'erik@ciandt.com'}
     ],
     itemPedido:[
         {
             id: 1, 
             clienteSolicitante:{
-                nome: 'Danilo de Nadai Sicari', 
-                email: 'denadai.sicari@gmail.com'
+                nome: 'Erik Kenzo Oura Carlini Valle', 
+                email: 'erik@ciandt.com'
             },
             produto:{
-                id: 1,
-                nome: 'Torresmo frito',
-                valor: 12.50,
-                descricao: "Torresmos fritos no óleo e como acompanhamento molho especial",
-                unidade: 'unidade',
+                id: 2,
+                nome: 'Bavaria',
+                valor: 3,
+                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
+                unidade: 'lata',
                 categoria:{
-                    id: 1,
-                    categoria: 'Salgados'
+                    id: 2,
+                    categoria: 'Bebidas'
                 }
             },
-            observacao: 'capricha na capa da gordura',
-            quantidade: 2,
-            valorUnitario: 12.5,
-            valorTotal: 25.0
+            observacao: 'copo sujo',
+            quantidade: 3,
+            valorUnitario: 3,
+            valorTotal: 9
         },
         {
             id: 2, 
+            clienteSolicitante:{
+                nome: 'Erik Kenzo Oura Carlini Valle', 
+                email: 'erik@ciandt.com'
+            },
+            produto:{
+                id: 2,
+                nome: 'Bavaria',
+                valor: 3,
+                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
+                unidade: 'lata',
+                categoria:{
+                    id: 2,
+                    categoria: 'Bebidas'
+                }
+            },
+            observacao: 'copo sujo',
+            quantidade: 3,
+            valorUnitario: 3,
+            valorTotal: 9
+        },
+        {
+            id: 3, 
+            clienteSolicitante:{
+                nome: 'Erik Kenzo Oura Carlini Valle', 
+                email: 'erik@ciandt.com'
+            },
+            produto:{
+                id: 2,
+                nome: 'Bavaria',
+                valor: 3,
+                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
+                unidade: 'lata',
+                categoria:{
+                    id: 2,
+                    categoria: 'Bebidas'
+                }
+            },
+            observacao: 'copo sujo',
+            quantidade: 3,
+            valorUnitario: 3,
+            valorTotal: 9
+        },
+        {
+            id: 4, 
+            clienteSolicitante:{
+                nome: 'Erik Kenzo Oura Carlini Valle', 
+                email: 'erik@ciandt.com'
+            },
+            produto:{
+                id: 2,
+                nome: 'Bavaria',
+                valor: 3,
+                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
+                unidade: 'lata',
+                categoria:{
+                    id: 2,
+                    categoria: 'Bebidas'
+                }
+            },
+            observacao: 'copo sujo',
+            quantidade: 3,
+            valorUnitario: 3,
+            valorTotal: 9
+        },
+        {
+            id: 5, 
             clienteSolicitante:{
                 nome: 'Erik Kenzo Oura Carlini Valle', 
                 email: 'erik@ciandt.com'
@@ -284,7 +354,7 @@ function ComponentePagamento(props) {
                 justify="center"
                 direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
             >
-                <div className="overflow">
+                <div className="overflow" style={{maxHeight:"325px"}}>
                     <TableContainer>
                         <Table className={classes.table} aria-label="tabela pagamento">
 
@@ -342,7 +412,7 @@ function ComponenteExtrato(props) {
     return (
     <Grid id="telaExtrato">        
         <Grid
-            container style={{ height: "10%" }}
+            container 
             direction="row"
             spacing={0}
             align="center"
@@ -354,54 +424,9 @@ function ComponenteExtrato(props) {
                 align="center"
                 justify="center"
                 direction="column" item xs={12} sm={6} id="titulo"
+                style={{ margin:"0", padding:"0" }}
             >
                 <h1>EXTRATO</h1>
-            </Grid>
-        </Grid>
-
-        <Grid
-            container style={{ height: "5%" }}
-            direction="row"
-            spacing={0}
-            align="center"
-            justify="center"
-        >
-             <Grid
-                container                    
-                spacing={0}
-                align="center"
-                justify="center"
-                direction="column" item xs={12} sm={6}>
-                <Button variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white'}}
-                >
-                    Voltar ao menu
-                </Button>
-            </Grid>
-
-            <Grid
-                container
-                spacing={0}
-                justify="center"
-                direction="column" item xs={12} sm={6}
-            >
-
-                <FormControl variant="outlined" className={classes.formControl}>
-                    <InputLabel id="labelSelectCliente">Cliente</InputLabel>
-                    <Select
-                        labelId="labelSelectCliente"
-                        id="selectCliente"
-                        value={cliente}
-                        onChange={handleChangeSelectCliente}
-                        label="Cliente"
-                    >
-                        <MenuItem key="all" value="all"><em>Todos</em></MenuItem>
-                        
-                        {jsonComanda.usuarios.map((cliente) => (
-                            <MenuItem key={cliente.email} value={cliente.email}>{cliente.nome}</MenuItem>
-                        ))}
-
-                    </Select>
-                </FormControl>
             </Grid>
         </Grid>
 
@@ -421,7 +446,7 @@ function ComponenteExtrato(props) {
                 justify="center"
                 direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
             >
-                <div className="overflow">
+                <div className="overflow" style={{maxHeight:"350px"}}>
                     <TableContainer>
                         <Table className={classes.table} aria-label="tabela extrato">
 
