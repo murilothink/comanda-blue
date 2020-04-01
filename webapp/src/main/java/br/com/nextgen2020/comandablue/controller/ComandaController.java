@@ -1,7 +1,8 @@
 package br.com.nextgen2020.comandablue.controller;
 
-import br.com.nextgen2020.comandablue.Service.ComandaService;
+import br.com.nextgen2020.comandablue.service.ComandaService;
 import br.com.nextgen2020.comandablue.form.PedidoForm;
+import br.com.nextgen2020.comandablue.model.entidade.Pedido;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,17 +25,19 @@ public class ComandaController {
 
     private static final Logger log = LoggerFactory.getLogger(ComandaService.class);
 
-    @CrossOrigin(origins = "*", allowedHeaders = "*")
-    @PostMapping(path= "/estabelecimento/mesas/{pinMesa}/comandas/abrir", consumes = "application/x-www-form-urlencoded", produces = "application/json")
+    @PostMapping(path= "/estabelecimento/mesas/{pinMesa}/comandas/abrir",
+            consumes = "application/x-www-form-urlencoded",
+            produces = "application/json")
     @Transactional
-    public ResponseEntity<Comanda>  abrir(@PathVariable(value="pinMesa") String pinMesa, @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailClienteCriptografado){
+    public ResponseEntity<Comanda> abrir(@PathVariable(value="pinMesa") String pinMesa,
+                                         @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailClienteCriptografado){
 
         log.info("Abrir comanda recebido, pinMesa=" + pinMesa + ", emailClienteCriptografado=" + emailClienteCriptografado);
 
         try{
             Comanda comanda = comandaService.abrir(pinMesa, emailClienteCriptografado);
             if(comanda != null){
-                log.info("Comanda aberta, id=" + comanda.getId() + ", idMesa=" + comanda.getMesa().getId() + ", idEstabelecimento=" + comanda.getEstabelecimento().getId());
+                log.info("Comanda id=" + comanda.getId() + ", idMesa=" + comanda.getMesa().getId() + ", idEstabelecimento=" + comanda.getEstabelecimento().getId() + " retornada");
                 return new ResponseEntity<>(comanda, HttpStatus.OK);
             }
         } catch (Exception e) {
@@ -50,7 +53,9 @@ public class ComandaController {
      * Passa os parametros para o metodo 'fazerPedido' do Classe 'ComandaService'
      *
      **/
-    @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/{idComanda}/pedir", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/{idComanda}/pedir",
+            consumes = MediaType.APPLICATION_JSON_VALUE,
+            produces = MediaType.APPLICATION_JSON_VALUE)
     public Comanda fazerPedido(
             @PathVariable(value="idEstabelecimento") Long idEstabelecimento,
             @PathVariable(value="idMesa") Long idMesa,
@@ -59,5 +64,25 @@ public class ComandaController {
             @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailCliente){
 
         return comandaService.fazerPedido(idComanda, emailCliente, itemPedido, idEstabelecimento, idMesa);
+    }
+
+    @GetMapping("/estabelecimento/{id-estabelecimento}/mesas/{id-mesa}/comandas/{id-comanda}/pedidos")
+    public ResponseEntity<List<Pedido>> listarPedidos(
+            @PathVariable(value = "id-estabelecimento") Long idEstabelecimento,
+            @PathVariable(value = "id-mesa") Long idMesa,
+            @PathVariable(value = "id-comanda") Long idComanda,
+            @RequestParam(required = false) String clienteId) {
+
+        try{
+            List<Pedido> pedidosLista = comandaService.listarPedidos(idComanda, clienteId);
+
+            if(pedidosLista != null){
+                return new ResponseEntity<>(pedidosLista, HttpStatus.OK);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return ResponseEntity.badRequest().build();
     }
 }

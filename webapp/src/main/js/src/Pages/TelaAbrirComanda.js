@@ -40,7 +40,7 @@ export default function TelaAbrirComanda(props){
         try{
             // faz POST com json contendo pin para o servidor no endpoint /mesa/validatepin
             const options = {
-                headers: {'COMANDA-BLUE-CLIENTE': userLogin.comandaBlueCliente }
+                headers: {'COMANDA-BLUE-CLIENTE': props.userLogin.comandaBlueCliente }
             };
 
             const response = await api.post('/estabelecimento/mesas/' + values.pin + '/comandas/abrir', null, options);
@@ -48,13 +48,12 @@ export default function TelaAbrirComanda(props){
             console.log("PIN sent=" + values.pin, response.status, response.data);
             
             // Com o pin validado, extrair idEstabelecimento e idMesa
-
+            // e salvar no state userLogin
             props.OnSendUserLogin({
-                nome: userLogin.nome,
-                comandaBlueCliente: userLogin.comandaBlueCliente,
+                idComanda: response.data.id,
                 idEstabelecimento: values.pin.split("-")[0],
                 idMesa: values.pin.split("-")[1]
-            })
+            });
 
             props.history.push('/menu');
         }
@@ -87,9 +86,9 @@ export default function TelaAbrirComanda(props){
                     direction="column" item xs={12} sm={6} className="comanda-bemvindo"
                 >
                     <div id="comandaSaudacao">
-                        <h1>Olá {userLogin.nome}, seja bem vindo!</h1><br />
+                        <h1>Olá {props.userLogin.nome}, seja bem vindo!</h1><br />
                         Leia o QRCode ou insira o pin da sua mesa<br />
-                        token: {userLogin.comandaBlueCliente}
+                        token: {props.userLogin.comandaBlueCliente}
                     </div>
                 </Grid>
 

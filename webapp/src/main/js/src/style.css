@@ -14,18 +14,6 @@ html, body{
 #root{
   height: 100%;
 }
-.header {
-  height: 60px;
-  width: 100%;
-  background-color: blue;
-  margin: 0px;
-}
-
-.logo-cit{
-  height: 60%;
-  /* -webkit-filter: drop-shadow(2px 2px 1px rgb(44, 44, 44));
-  filter: drop-shadow(2px 2px 1px rgb(44, 44, 44)); */
-}
 
 .Container_QRCode{
   display: block;
@@ -35,15 +23,6 @@ html, body{
 .Container_PIN{
   display: block;
   float: left;
-}
-
-.textheader {
-  font-family: 'Caveat', cursive;
-  color: white;
-  margin: 0;
-  font-size: 42px;
-  padding: 20px;
-  font-weight: 700;
 }
 
 .content {
@@ -121,4 +100,9 @@ html, body{
 
 #telaExtrato #selectCliente{
   min-width: 200px;
+}
+
+.floatLeft {
+  display: block !important;
+  float: left !important;
 }

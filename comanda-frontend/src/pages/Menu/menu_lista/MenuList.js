@@ -1,6 +1,5 @@
 import React from "react";
 import "./Menu.css";
-import api from "../../../services/api";
 
 function Categoria(props){
     return(
@@ -34,27 +33,11 @@ function Categoria(props){
 export default class MenuList extends React.Component{
     constructor(props){
         super(props);
-        this.state={listaProduto:[]}
-    }
-
-    componentDidMount(){
-        const url = (this.props.idCategoria===-1)?
-        "/estabelecimento/"+this.props.idEstabelecimento+"/cardapio/produtos":
-        "/estabelecimento/"+this.props.idEstabelecimento+"/cardapio/produtos/categoria/"+this.props.idCategoria;
-
-        api.get(url)
-        .then(response => {
-            this.setState({
-                listaProduto: response.data
-            });  
-        })
-        .catch(error => {
-            console.log(error);
-        });
     }
 
     render(){
-        const produtos=this.state.listaProduto.slice();
+        const produtos=this.props.listaProduto.slice();
+        
         produtos.sort(
             (a,b) => (a.categoriaProduto.id > b.categoriaProduto.id) ? 1:-1
         );
@@ -90,7 +73,10 @@ export default class MenuList extends React.Component{
         return (
             <div className="container">
                 <div className="MenuList">
-                    {categorias}
+                    {categorias.length===0?
+                        <span>Não há itens para serem listados</span>:
+                        categorias
+                    }
                 </div>
             </div>
         );

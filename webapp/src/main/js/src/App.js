@@ -7,7 +7,10 @@ import imageLogo from './static/img/CI&T.png'
 
 import Toolbar from '@material-ui/core/Toolbar';
 import AppBar from '@material-ui/core/AppBar';
-
+import Typography from '@material-ui/core/Typography';
+import IconButton from '@material-ui/core/IconButton';
+import { makeStyles } from '@material-ui/core/styles';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
 import TelaLogin from './Pages/TelaLogin';
 import TelaAbrirComanda from './Pages/TelaAbrirComanda';
@@ -20,6 +23,7 @@ function Routes(){
     const [userLogin, setUserLogin] = useState({
         nome: '',
         comandaBlueCliente: '',
+        idComanda: '',
         idEstabelecimento: '',
         idMesa: ''       
     });
@@ -42,19 +46,59 @@ function Routes(){
     );
 }
 
-class ComandaHeader extends React.Component{
-    render() {
-        return(            
-          <div className="header">     
-            <AppBar position="static" style={{ background: '#2d9bf0'}}>
-              <Toolbar style={{ height: '60px'}}>
-                <img src={imageLogo} alt="Logo cit" className="logo-cit" />
-                <h2 className="textheader">ComandaBlue</h2>
-              </Toolbar>
-            </AppBar>
-          </div>
-        )
+
+const useStyles = makeStyles((theme) => ({
+    header: {
+        // ...
+    },
+    logoCiandt: {
+        height: "60%",
+        marginRight: theme.spacing(2),
+    },
+    textHeader: {
+        flexGrow: 1,
+        fontFamily: 'Caveat',
+        color: "white",
+        margin: 0,
+        fontSize: "42px",
+        padding: "20px",
+        fontWeight: 700,
+    },
+}));
+
+function ComandaHeader(){
+
+    const classes = useStyles();
+
+    function handleLogout(){
+        // TODO Implementar logout!!
+        console.log("TODO Implementar logout!!");
     }
+
+    return(            
+        <div className={classes.header}>     
+        <AppBar position="static" style={{ background: '#2d9bf0'}}>
+            <Toolbar style={{ height: '60px'}}>  
+
+                <img edge="start" className={classes.logoCiandt} 
+                src={imageLogo} alt="Logo CI&T" /> 
+
+                <Typography className={classes.textHeader}>ComandaBlue</Typography>
+
+                <Typography>Logout</Typography>
+
+                <IconButton
+                    aria-label="logout current user"
+                    onClick={handleLogout}
+                    color="inherit"
+                > 
+                    <ExitToAppIcon />
+                </IconButton>
+            
+            </Toolbar>
+        </AppBar>
+        </div>
+    )
 }
 
 class ComandaFooter extends React.Component {
@@ -68,7 +112,7 @@ class ComandaFooter extends React.Component {
     }
 }
 
-export default function App(){
+export default function App(props){
     // envolver <Routes /> com UserContext para utilizarmos como forma de login em memoria REACT
     return(
         <div className="Comanda">

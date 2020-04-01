@@ -1,19 +1,14 @@
 package br.com.nextgen2020.comandablue.service;
 
-import br.com.nextgen2020.comandablue.Service.ComandaService;
 import br.com.nextgen2020.comandablue.form.CategoriaForm;
 import br.com.nextgen2020.comandablue.form.PedidoForm;
 import br.com.nextgen2020.comandablue.form.ProdutoForm;
 import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 import br.com.nextgen2020.comandablue.model.entidade.Estabelecimento;
-import br.com.nextgen2020.comandablue.model.entidade.Pedido;
-import br.com.nextgen2020.comandablue.model.entidade.Produto;
 import br.com.nextgen2020.comandablue.repository.ComandaRepository;
-import br.com.nextgen2020.comandablue.repository.ProdutoRepository;
 import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
 import org.junit.Before;
 import org.junit.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.boot.test.mock.mockito.MockBean;
@@ -21,9 +16,6 @@ import org.springframework.context.annotation.Bean;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-
-import static org.junit.Assert.*;
 
 public class ComandaServiceTest {
     @TestConfiguration
@@ -81,7 +73,7 @@ public class ComandaServiceTest {
     public void geraEmailCriptografado() throws Exception {
         EncryptDecrypt encryptDecrypt = new EncryptDecrypt();
 
-        String emailAberto = "aguiar@ciandt.com";
+        String emailAberto = "murilohg@ciandt.com";
         String emailCriptografado = encryptDecrypt.encrypt(emailAberto);
 
         System.out.println(emailCriptografado);
