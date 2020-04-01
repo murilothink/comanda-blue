@@ -56,6 +56,7 @@ public class ComandaController {
     @PostMapping(path= "/estabelecimento/{idEstabelecimento}/mesas/{idMesa}/comandas/{idComanda}/pedir",
             consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
+    @CrossOrigin(origins = "http://localhost:3000")
     public Comanda fazerPedido(
             @PathVariable(value="idEstabelecimento") Long idEstabelecimento,
             @PathVariable(value="idMesa") Long idMesa,

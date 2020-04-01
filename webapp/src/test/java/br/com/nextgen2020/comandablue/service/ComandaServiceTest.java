@@ -1,10 +1,10 @@
 package br.com.nextgen2020.comandablue.service;
 
-import br.com.nextgen2020.comandablue.form.CategoriaForm;
 import br.com.nextgen2020.comandablue.form.PedidoForm;
-import br.com.nextgen2020.comandablue.form.ProdutoForm;
+import br.com.nextgen2020.comandablue.model.entidade.CategoriaProduto;
 import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 import br.com.nextgen2020.comandablue.model.entidade.Estabelecimento;
+import br.com.nextgen2020.comandablue.model.entidade.Produto;
 import br.com.nextgen2020.comandablue.repository.ComandaRepository;
 import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
 import org.junit.Before;
@@ -80,21 +80,21 @@ public class ComandaServiceTest {
     }
 
 //  public Comanda fazerPedido(Long idComanda, String emailCliente, List<PedidoForm> itemPedido, Long idEstabelecimento, Long idMesa){
-    @Test
-    public void quandoComandaFechadaRetornaErro() throws Exception{
-        Long idComanda = 1L;
-        String emailCliente = "aguiar@ciandt.com";
-        List<PedidoForm> itemPedido = criaPedidos();
-        Long idEstabelecimento = 1L;
-        Long idMesa = 1L;
-
-        this.comandaService.fazerPedido(idComanda, emailCliente, itemPedido, idEstabelecimento, idMesa);
-    }
+//    @Test
+//    public void quandoComandaFechadaRetornaErro() throws Exception{
+//        Long idComanda = 1L;
+//        String emailCliente = "aguiar@ciandt.com";
+//        List<PedidoForm> itemPedido = criaPedidos();
+//        Long idEstabelecimento = 1L;
+//        Long idMesa = 1L;
+//
+//        this.comandaService.fazerPedido(idComanda, emailCliente, itemPedido, idEstabelecimento, idMesa);
+//    }
 
     private PedidoForm pedidoForm(){
         PedidoForm pedidoForm = new PedidoForm();
 
-        pedidoForm.setProduto(produtoForm());
+        pedidoForm.setProduto(produto());
         pedidoForm.setObservacao("asdasdasd");
         pedidoForm.setQuantidade(2);
         pedidoForm.setValorTotal((double) 10);
@@ -103,27 +103,27 @@ public class ComandaServiceTest {
         return pedidoForm;
     }
 
-    private ProdutoForm produtoForm(){
-        ProdutoForm produtoForm = new ProdutoForm();
+    private Produto produto(){
+        Produto produto = new Produto();
 
-        produtoForm.setCategoriaProduto(categoriaForm());
-        produtoForm.setDescricao("asdasdasdasd");
-        produtoForm.setId(1L);
-        produtoForm.setImagemDoProduto("https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg");
-        produtoForm.setNome("Coxinha");
-        produtoForm.setUnidade("2");
-        produtoForm.setValor((double) 10);
+        produto.setCategoriaProduto(categoria());
+        produto.setDescricao("asdasdasdasd");
+        produto.setId(1L);
+        produto.setImagemDoProduto("https://p.bigstockphoto.com/GeFvQkBbSLaMdpKXF1Zv_bigstock-Aerial-View-Of-Blue-Lakes-And--227291596.jpg");
+        produto.setNome("Coxinha");
+        produto.setUnidade("2");
+        produto.setValor((double) 10);
 
-        return produtoForm;
+        return produto;
     }
 
-    private CategoriaForm categoriaForm(){
-        CategoriaForm categoriaForm = new CategoriaForm();
+    private CategoriaProduto categoria(){
+        CategoriaProduto categoria = new CategoriaProduto();
 
-        categoriaForm.setCategoria("Comida");
-        categoriaForm.setId(1L);
+        categoria.setCategoria("Comida");
+        categoria.setId(1L);
 
-        return categoriaForm;
+        return categoria;
     }
 
     private List<PedidoForm> criaPedidos(){

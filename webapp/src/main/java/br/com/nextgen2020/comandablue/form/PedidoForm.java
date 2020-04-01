@@ -4,17 +4,17 @@ import br.com.nextgen2020.comandablue.model.entidade.*;
 
 public class PedidoForm {
 
-    private ProdutoForm produto;
+    private Produto produto;
     private String observacao;
     private Integer quantidade;
     private Double valorUnitario;
     private Double valorTotal;
 
-    public ProdutoForm getProduto() {
+    public Produto getProduto() {
         return produto;
     }
 
-    public void setProduto(ProdutoForm produto) {
+    public void setProduto(Produto produto) {
         this.produto = produto;
     }
 
@@ -54,10 +54,10 @@ public class PedidoForm {
         Pedido pedido = new Pedido();
         pedido.setValorTotal(this.valorTotal);
         pedido.setValorUnitario(this.valorUnitario);
+        pedido.setObservacao(this.observacao);
         pedido.setQuantidade(this.quantidade);
         pedido.setClienteSolicitante(usuario);
-        pedido.setProduto(this.produto.converter(estabelecimento));
-
+        pedido.setProduto(this.produto);
 
         return pedido;
     }
