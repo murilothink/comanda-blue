@@ -5,7 +5,7 @@ import Login from "./pages/Login";
 import Comanda from "./pages/Comanda";
 import ScanQrcode from "./pages/ScanQrcode";
 
-import Menu from "./pages/Menu";
+import Menu from "./pages/Menu/TelaCardapio";
 
 import Users from "./pages/User";
 import NewUser from "./pages/NewUser";
