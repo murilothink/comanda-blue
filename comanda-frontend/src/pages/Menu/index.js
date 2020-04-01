@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { Button, Avatar, FormHelperText, FormControl, InputLabel, Select, NativeSelect } from '@material-ui/core';
+import React from 'react';
+import { Button, FormHelperText, FormControl, InputLabel, Select } from '@material-ui/core';
 import "./style.css";
 import MenuList from './menu_lista/MenuList';
 import ItemList from './item_lista/TabelaItems';
@@ -20,7 +20,8 @@ export default class Menu extends React.Component{
                 id: 1,
                 nome: null
             },
-            mesaId: 1
+            idMesa: 1,
+            idComanda: 1
         };
     }
 
@@ -28,7 +29,16 @@ export default class Menu extends React.Component{
     //E de todas as categorias do menu
     componentDidMount(){
         this.getCategoriasEstabelecimento();
-        this.getMenu(-1);    
+        this.getMenu(-1);
+        this.abrirComanda();    
+    }
+
+    //limpa carrinho
+    limparCarrinho(){
+        this.setState({
+            ...this.state,
+            carrinho: []
+        })
     }
 
     //Requisita o estabelecimento e suas categorias
@@ -63,6 +73,46 @@ export default class Menu extends React.Component{
             })
         })
         .catch(error => {
+            console.log(error);
+        });
+    }
+
+    //Somente para simular o fluxo completo
+    abrirComanda(){
+        const options = {
+            headers: {'COMANDA-BLUE-CLIENTE': "WAqqMDCYFpZM/TDFelwCWvjoqKRfcI6YSNWnJcNAFdM="}
+        };
+
+        api.post(
+            '/estabelecimento/mesas/' + '1-1' + 
+            '/comandas/abrir', null, options)
+        .then(response =>{
+            console.log(response);
+        })
+        .catch(err => {
+            console.log(err)
+        });
+    }
+
+    //TODO
+    //Posta na api os pedidos do referido carrinho
+    postCarrinho(){
+        const url = "/estabelecimento/"+this.state.estabelecimento.id+
+                    "/mesas/"+this.state.idMesa+
+                    "/comandas/"+this.state.idComanda+
+                    "/pedir";
+        
+        const data = this.state.carrinho.slice();
+
+        const options = {
+            headers: {'COMANDA-BLUE-CLIENTE': "WAqqMDCYFpZM/TDFelwCWvjoqKRfcI6YSNWnJcNAFdM="}
+        };
+
+        api.post(url, data, options)
+        .then( response => {
+            console.log(response);
+            this.limparCarrinho();
+        }).catch(error =>{
             console.log(error);
         });
     }
@@ -128,6 +178,19 @@ export default class Menu extends React.Component{
         });
     }
 
+    //From: <ItemList>
+    //Posta no banco os pedidos do referido carrinho
+    //limpa o carrinho
+    handleCarrinhoPedir = () =>{
+        this.postCarrinho();
+    }
+
+    //From: <ItemList>
+    //Cancela o carrinho: limpa ele
+    handleCancelCarrinho = () =>{
+        this.limparCarrinho();
+    }
+
     render(){
         return (
             <div class="wrapper">
@@ -164,7 +227,8 @@ export default class Menu extends React.Component{
                               OnDecrementItem={this.handleDecrementItem}
                               OnObsSend={this.handleObsSend}
                               carrinho={this.state.carrinho} 
-                              mesaId={this.state.mesaId}
+                              OnCarrinhoPedir={this.handleCarrinhoPedir}
+                              OnCancelCarrinho={this.handleCancelCarrinho}
                     />
                 </aside>
             </div>

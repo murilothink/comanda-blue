@@ -31,12 +31,10 @@ export default class TabelaItems extends React.Component{
     }
 
     render(){
-        //TODO
-        //Envia ao banco os pedidos do carrinho e esvazia o carrinho
+        //Emite ao componente pai que o carrinho
+        //esta sendo pedido
         const handleClickPedir = ()=>{
-            console.log("Pedindo carrinho... Bibiiii")
-    
-            console.log(this.props.carrinho)
+            this.props.OnCarrinhoPedir();
         }
 
         //From: <Button>OBS</Button>
@@ -143,7 +141,7 @@ export default class TabelaItems extends React.Component{
                 <div className="buttonBox">
                     <Button className="botaoMesmo" variant="contained" color="primary" width="100%" display="block" onClick={handleClickPedir}> Pedir </Button>
                     <br></br>
-                    <Button className="botaoMesmo" variant="contained" color="secondary"> Cancelar </Button>
+                    <Button onClick={() => this.props.OnCancelCarrinho()}className="botaoMesmo" variant="contained" color="secondary"> Cancelar </Button>
                 </div>
 
                 <Dialog open={this.state.iPedidoAtual!=null} onClose={handleClose} aria-labelledby="form-dialog-title">
