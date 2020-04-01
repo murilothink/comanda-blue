@@ -67,6 +67,7 @@ export default function TelaLogin(props){
         // Se login foi bem sucedido, servidor retorna uma string e react guarda no userLogin state
         // o nome e comandaBlueCliente (que eh o email do cliente criptografado)
         props.OnSendUserLogin({
+          ...props.userLogin,
           nome: response.data.nome,
           comandaBlueCliente: response.data.comandaBlueCliente  
         });

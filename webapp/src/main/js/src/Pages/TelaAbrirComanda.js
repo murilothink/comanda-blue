@@ -50,6 +50,7 @@ export default function TelaAbrirComanda(props){
             // Com o pin validado, extrair idEstabelecimento e idMesa
             // e salvar no state userLogin
             props.OnSendUserLogin({
+                ...props.userLogin,
                 idComanda: response.data.id,
                 idEstabelecimento: values.pin.split("-")[0],
                 idMesa: values.pin.split("-")[1]

@@ -28,6 +28,7 @@ public class ComandaController {
             consumes = "application/x-www-form-urlencoded",
             produces = "application/json")
     @Transactional
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Comanda> abrir(@PathVariable(value="pinMesa") String pinMesa,
                                          @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailClienteCriptografado){
 
