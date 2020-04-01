@@ -31,12 +31,16 @@ export default function TelaPagamento(){
     return (
     <div class="wrapper">
         <div class="main_collumn">
-            
-            <ComponenteExtrato />
-        </div>
-        <aside class="lista_itens_wrapper">
-            <ComponentePagamento />
-        </aside>
+            <Grid container spacing={3}>
+                <Grid item xs={12} sm={6}>
+                    <ComponenteExtrato />
+                </Grid>
+        
+                <Grid xs={12} sm={6}>
+                    <ComponentePagamento />
+                </Grid>
+            </Grid>
+       </div>
     </div>
     )
 }
@@ -221,38 +225,46 @@ function ComponentePagamento(props) {
                 spacing={0}
                 align="center"
                 justify="center"
-                direction="column" item xs={12} sm={2} id="titulo"
+                direction="column" item xs={12} sm={6} id="titulo"
             >
                 <h1>PAGAMENTO</h1>
             </Grid>
         </Grid>
 
         <Grid
-            container style={{ height: "10%" }}
+            container style={{ height: "5%" }}
             direction="row"
             spacing={0}
             align="center"
-            justify="center" 
+            justify="center"
         >
-            <Grid
-                container                    
-                spacing={0}
-                align="center"
-                justify="center"
-                direction="column" item xs={12} sm={2} id="titulo"
+             <Grid
+            container                    
+            spacing={0}
+            align="center"
+            justify="center"
+            direction="column" item xs={12} sm={6}
             >
-                <div className="floatLeft">
-                    <FormControl className="floatLeft" variant="outlined" style={{marginTop: "10px"}}>            
-                        <InputLabel htmlFor="input-email">VALOR</InputLabel>
-                        <OutlinedInput id="input-email" type='email' labelWidth={70}/>
-                    </FormControl>
+                <FormControl variant="outlined" style={{marginTop: "10px"}}>            
+                    <InputLabel htmlFor="input-name">Valor</InputLabel>
+                    <OutlinedInput
+                    id="input-name"
+                    type='name'                     
+                    labelWidth={20}
+                    />
+                </FormControl>
+            </Grid>
+               
+            <Grid
+                container
+                spacing={0}
+                justify="center"
+                direction="column" item xs={12} sm={6}
+            >
 
-                    <Button className="floatLeft"variant="contained" style={{ background: '#00DD00', color: 'white'}}>
-                        PAGAR
-                    </Button> 
-                </div>
-
-
+                <Button variant="contained" color="primary" style={{background: '#009900', color: 'white'}}>
+                    PAGAR
+                </Button>
             </Grid>
         </Grid>
 
@@ -272,41 +284,41 @@ function ComponentePagamento(props) {
                 justify="center"
                 direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
             >
+                <div className="overflow">
+                    <TableContainer>
+                        <Table className={classes.table} aria-label="tabela pagamento">
 
-                <TableContainer>
-                    <Table className={classes.table} aria-label="tabela pagamento">
-
-                        <TableHead>
-                            <TableRow>
-                                <TableCell width="50px"><b>Cliente</b></TableCell>
-                                <TableCell width="50px"><b>Valor Pago (R$)</b></TableCell>
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-
-                            {rowsPagamento.map((row) => (
-                                <TableRow key={row.idPedido}>
-                                    <TableCell width="50px">{row.cliente}</TableCell>
-                                    <TableCell width="50px">{row.valorPago}</TableCell>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell width="50px"><b>Cliente</b></TableCell>
+                                    <TableCell width="50px"><b>Valor Pago (R$)</b></TableCell>
                                 </TableRow>
-                            ))}
+                            </TableHead>
 
-                            <TableRow>
-                                <TableCell width="200px"><b>Total Pago</b></TableCell>
-                                <TableCell >R$ 43,00</TableCell>
-                            </TableRow>
+                            <TableBody>
 
-                            <TableRow>
-                                <TableCell width="200px"><b>Total a Pagar</b></TableCell>
-                                <TableCell>R$ 43,00</TableCell>
-                            </TableRow>
+                                {rowsPagamento.map((row) => (
+                                    <TableRow key={row.idPedido}>
+                                        <TableCell width="50px">{row.cliente}</TableCell>
+                                        <TableCell width="50px">{row.valorPago}</TableCell>
+                                    </TableRow>
+                                ))}
 
-                        </TableBody>
+                                <TableRow>
+                                    <TableCell width="200px"><b>Total Pago</b></TableCell>
+                                    <TableCell >R$ 43,00</TableCell>
+                                </TableRow>
 
-                    </Table>
-                </TableContainer>
+                                <TableRow>
+                                    <TableCell width="200px"><b>Total a Pagar</b></TableCell>
+                                    <TableCell>R$ 43,00</TableCell>
+                                </TableRow>
 
+                            </TableBody>
+
+                        </Table>
+                    </TableContainer>
+                </div>                   
             </Grid>   
 
         </Grid>
@@ -409,47 +421,47 @@ function ComponenteExtrato(props) {
                 justify="center"
                 direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
             >
+                <div className="overflow">
+                    <TableContainer>
+                        <Table className={classes.table} aria-label="tabela extrato">
 
-                <TableContainer>
-                    <Table className={classes.table} aria-label="tabela extrato">
-
-                        <TableHead>
-                            <TableRow>
-                                <TableCell><b>Cliente</b></TableCell>
-                                <TableCell><b>Item</b></TableCell>
-                                <TableCell align="right"><b>Quantidade</b></TableCell>
-                                <TableCell align="right"><b>Valor Unitário (R$)</b></TableCell>
-                                <TableCell align="right"><b>Valor Total (R$)</b></TableCell>
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-
-                            {rowsComanda.map((row) => (
-                                <TableRow key={row.idPedido}>
-                                    <TableCell>{row.cliente}</TableCell>
-                                    <TableCell>{row.item}</TableCell>
-                                    <TableCell align="right">{row.qtde}</TableCell>
-                                    <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
-                                    <TableCell align="right">{ccyFormat(row.valorTotal)}</TableCell>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell><b>Cliente</b></TableCell>
+                                    <TableCell><b>Item</b></TableCell>
+                                    <TableCell align="right"><b>Quantidade</b></TableCell>
+                                    <TableCell align="right"><b>Valor Unitário (R$)</b></TableCell>
+                                    <TableCell align="right"><b>Valor Total (R$)</b></TableCell>
                                 </TableRow>
-                            ))}
+                            </TableHead>
 
-                            <TableRow>
-                                <TableCell colSpan={4}><b>Subtotal</b></TableCell>
-                                <TableCell align="right">R$ 43,00</TableCell>
-                            </TableRow>
+                            <TableBody>
 
-                            <TableRow>
-                                <TableCell colSpan={4}><b>Total Mesa</b></TableCell>
-                                <TableCell align="right">R$ 43,00</TableCell>
-                            </TableRow>
+                                {rowsComanda.map((row) => (
+                                    <TableRow key={row.idPedido}>
+                                        <TableCell>{row.cliente}</TableCell>
+                                        <TableCell>{row.item}</TableCell>
+                                        <TableCell align="right">{row.qtde}</TableCell>
+                                        <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
+                                        <TableCell align="right">{ccyFormat(row.valorTotal)}</TableCell>
+                                    </TableRow>
+                                ))}
 
-                        </TableBody>
+                                <TableRow>
+                                    <TableCell colSpan={4}><b>Subtotal</b></TableCell>
+                                    <TableCell align="right">R$ 43,00</TableCell>
+                                </TableRow>
 
-                    </Table>
-                </TableContainer>
+                                <TableRow>
+                                    <TableCell colSpan={4}><b>Total Mesa</b></TableCell>
+                                    <TableCell align="right">R$ 43,00</TableCell>
+                                </TableRow>
 
+                            </TableBody>
+
+                        </Table>
+                    </TableContainer>
+                </div>                    
             </Grid>   
 
         </Grid>

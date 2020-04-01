@@ -25,7 +25,7 @@ import '../style.css';
 
 const useStyles = makeStyles({
   table: {
-    minWidth: 700,
+    minWidth: 100,
   },
 });
 
@@ -232,11 +232,11 @@ export default function TelaExtrato(props) {
                 direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
             >
 
-                <TableContainer>
+                <TableContainer fixedHeader ={true}>
                     <Table className={classes.table} aria-label="tabela extrato">
 
-                        <TableHead>
-                            <TableRow>
+                        <TableHead >
+                            <TableRow >
                                 <TableCell><b>Cliente</b></TableCell>
                                 <TableCell><b>Item</b></TableCell>
                                 <TableCell align="right"><b>Quantidade</b></TableCell>
