@@ -1,16 +1,18 @@
 package br.com.nextgen2020.comandablue.repository;
 
-import java.util.List;
-import java.util.Optional;
-
-import org.springframework.beans.factory.annotation.Autowired;
+import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 import org.springframework.data.repository.CrudRepository;
 
-import br.com.nextgen2020.comandablue.model.entidade.Comanda;
+import java.util.List;
+import java.util.Optional;
 
 public interface ComandaRepository extends CrudRepository<Comanda, Long> {
 
     List<Comanda> findByMesaIdAndEstabelecimentoId(Long idMesa, Long idEstabelecimento);
+
+    Optional<Comanda> findByIdAndItemPedidoClienteSolicitanteEmail(Long id, String email);
+
+    //List<Comanda> findByItemPedidoClienteSolicitanteEmail(String email);
 
     //Comanda findByIdComanda(long id);
 }

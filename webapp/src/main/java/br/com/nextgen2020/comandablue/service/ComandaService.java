@@ -101,14 +101,14 @@ public class ComandaService {
      * Método que faz um pedido de acordo com o id da comanda e o email do cliente passado.
      * Adiciona na lista de pedidos da comanda o novo pedido.
      * @param idComanda
-     * @param emailCliente
+     * @param emailClienteCriptografado
      * @return comanda atualizada
      */
     @Transactional
-    public Comanda fazerPedido(Long idComanda, String emailCliente, List<PedidoForm> itemPedido, Long idEstabelecimento, Long idMesa){
-
+    public Comanda fazerPedido(Long idComanda, String emailClienteCriptografado, List<PedidoForm> itemPedido, Long idEstabelecimento, Long idMesa) throws Exception {
+        String emailDescriptografado = encryptDecrypt.decrypt(emailClienteCriptografado);
         Comanda comanda = comandaRepository.findById(idComanda).get();
-        Usuario usuario = usuarioRepository.findByEmail(emailCliente);
+        Usuario usuario = usuarioRepository.findByEmail(emailDescriptografado);
         Estabelecimento estabelecimento = estabelecimentoRepository.findById(idEstabelecimento).get();
         Mesa mesa = mesaRepository.findById(idMesa).get();
 
@@ -126,36 +126,29 @@ public class ComandaService {
         return comanda;
     }
 
-    public List<Pedido> listarPedidos(Long idComanda, String emailEncriptado) throws Exception {
-        String emailCliente;
+    public List<Pedido> listarPedidos(Long idComanda, String emailCliente) throws Exception {
         List<Pedido> pedidoLista;
         List<Pedido> pedidosCliente = new ArrayList<>();
-        Optional<Comanda> comanda = comandaRepository.findById(idComanda);
+        Optional<Comanda> comanda;
 
-        if(!comanda.isPresent()) {
-            return null;
-        }
-
-        if(emailEncriptado == null) {
-            //pedidoLista = pedidoRepository.findByEstabelecimentoIdAndMesaIdAndComandaId(idEstabelecimento, idMesa, idComanda);
-            pedidoLista = comanda.get().getItemPedido();
+        if(emailCliente == null) {
+            log.info("email nulo");
+            comanda = comandaRepository.findById(idComanda);
         }
         else {
-            //pedidoLista = pedidoRepository.findByEstabelecimentoIdAndMesaIdAndComandaIdAndEmailId(idEstabelecimento, idMesa, idComanda, idEmail);
+            log.info("Entrou no else");
+            comanda = comandaRepository.findByIdAndItemPedidoClienteSolicitanteEmail(idComanda, emailCliente);
+            //comanda = comandaRepository.findByItemPedidoClienteSolicitanteEmail(emailCliente);
 
-            emailCliente = encryptDecrypt.decrypt(emailEncriptado);
 
-            pedidoLista = comanda.get().getItemPedido();
-            pedidoLista.forEach(pedido -> {
-                if(pedido.getClienteSolicitante().getEmail().equals(emailCliente)) {
-                    pedidosCliente.add(pedido);
-                }
-            });
-            return pedidosCliente;
         }
 
-        return pedidoLista;
-
+        if(comanda.isPresent()) {
+            return comanda.get().getItemPedido();
+        }
+        else {
+            return new ArrayList<Pedido>();
+        }
     }
 
 }
