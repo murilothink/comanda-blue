@@ -1,12 +1,13 @@
 import React, {useEffect} from 'react';
 import Button from '@material-ui/core/Button';
+import Badge from '@material-ui/core/Badge';
+import Paper from '@material-ui/core/Paper';
+import IconButton from '@material-ui/core/IconButton';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
 import TableCell from '@material-ui/core/TableCell';
 import TableContainer from '@material-ui/core/TableContainer';
 import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
-import IconButton from '@material-ui/core/IconButton';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -124,7 +125,13 @@ export default class TabelaItems extends React.Component{
                                     </TableCell>
                                     
                                     <TableCell className="ajustaTabela">
+                                        {row.observacao != ""?
+                                        <Badge badgeContent={"!"} color="primary">
+                                            <Button variant="outlined" color="primary" className="gold" onClick={()=>handleClickOpen(key)}> OBS </Button>
+                                        </Badge>:
                                         <Button variant="outlined" color="primary" className="gold" onClick={()=>handleClickOpen(key)}> OBS </Button>
+                                        }
+                                        
                                     </TableCell>
                                 
                                 </TableRow>
