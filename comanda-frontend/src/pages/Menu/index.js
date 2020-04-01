@@ -19,16 +19,19 @@ export default class Menu extends React.Component{
             estabelecimento: {
                 id: 1,
                 nome: null
-            }
+            },
+            mesaId: 1
         };
     }
 
+    //Ao montar o componente faz-se a requisição do estabelecimento
+    //E de todas as categorias do menu
     componentDidMount(){
         this.getCategoriasEstabelecimento();
-
         this.getMenu(-1);    
     }
 
+    //Requisita o estabelecimento e suas categorias
     getCategoriasEstabelecimento(){
         const url = "/estabelecimento/"+this.state.estabelecimento.id+"/categorias"
         
@@ -45,6 +48,8 @@ export default class Menu extends React.Component{
         });
     }
 
+    //Requisita o cardapio conforme um idCategoria e adiciona no state
+    //caso o idCategoria for -1 é resgatado todas as categorias
     getMenu(idCategoria){
         const url = (idCategoria==-1)?
         "/estabelecimento/"+this.state.estabelecimento.id+"/cardapio/produtos":
@@ -62,12 +67,15 @@ export default class Menu extends React.Component{
         });
     }
 
-    handleChange = event => {
+    //From: <Select label="Categoria">
+    //requisita o cardapio novamente conforme a categoria especificada
+    //pelo ComboBox
+    handleChange = (event) => {
         this.getMenu(event.target.value);
     }
 
-
-    //adicione produto no state carrinho
+    //From: <MenuList>
+    //adiciona um pedido no state carrinho
     handleAddItem = (item) =>{
         let newCarrinho = this.state.carrinho.slice();
         newCarrinho.push(createData(item, "", 1, item.valor, 1*item.valor))
@@ -77,12 +85,12 @@ export default class Menu extends React.Component{
         })
     }
 
+    //From: <ItemList>
+    //incrementa a quantidade de um pedido em 1
     handleIncrementItem = (i) =>{
-        console.log(i);
         const rows = this.state.carrinho.slice();
         rows[i].quantidade++;
         rows[i].valorTotal = rows[i].quantidade*rows[i].valorUnitario;
-        console.log(rows)
         
         this.setState({
             ...this.state,
@@ -90,6 +98,9 @@ export default class Menu extends React.Component{
         });
     }
     
+    //From: <ItemList>
+    //decrementa a quantidade de um pedido em 1
+    //caso a quantidade se igualar a 0 o pedido é deletado
     handleDecrementItem = (i) =>{
         const rows = this.state.carrinho.slice();
         rows[i].quantidade--;
@@ -106,21 +117,15 @@ export default class Menu extends React.Component{
         });
     }
 
-    renderMenuList(){
-        return(
-            <MenuList OnAddItem={this.handleAddItem} 
-                      listaProduto={this.state.listaProduto}
-            />
-        )
-    }
-
-    renderItemList(){
-        return(
-            <ItemList OnIncrementItem={this.handleIncrementItem}
-                      OnDecrementItem={this.handleDecrementItem}
-                      carrinho={this.state.carrinho} 
-            />
-        )
+    //From: <ItemList>
+    //acrescenta uma observação ao pedido carrinho[i]
+    handleObsSend = (obs, i) =>{
+        this.state.carrinho[i].observacao = obs;
+        
+        this.setState({
+            ...this.state,
+            carrinho: this.state.carrinho
+        });
     }
 
     render(){
@@ -149,11 +154,18 @@ export default class Menu extends React.Component{
                     
                     <Button size="small" className="btn_extrato" variant="contained" color="primary">Exibir Extrato</Button>
                     </div>  
-                    {this.renderMenuList()} 
+                    <MenuList OnAddItem={this.handleAddItem} 
+                      listaProduto={this.state.listaProduto}
+                    /> 
                     
                 </div>
                 <aside class="lista_itens_wrapper">
-                    {this.renderItemList()}
+                    <ItemList OnIncrementItem={this.handleIncrementItem}
+                              OnDecrementItem={this.handleDecrementItem}
+                              OnObsSend={this.handleObsSend}
+                              carrinho={this.state.carrinho} 
+                              mesaId={this.state.mesaId}
+                    />
                 </aside>
             </div>
         );
