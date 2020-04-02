@@ -9,8 +9,9 @@
 //    no canto direito da aba do browser permanecera piscando! *
 
 
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../Services/api';
+import Redirector from '../Services/redirector';
 // https://www.thomasbilliet.com/react-qr-reader/
 import QrReader from 'react-qr-reader';
 
@@ -31,6 +32,17 @@ export default function TelaScanQrcode(props){
         showViewFinder: true, // exibir quadrado de busca
         delay: 1000,  // intervalo tentativa scan qrcode
         result: ''  // valor do qrcode quando lido
+    });
+
+    const [mount, setMount] = React.useState(false);
+
+    useEffect(()=>{
+        if(!mount){
+            let redirector =  new Redirector(props);
+            redirector.checkLogado();
+
+            setMount(true);
+        }
     });
 
     function handleScan(rslt){

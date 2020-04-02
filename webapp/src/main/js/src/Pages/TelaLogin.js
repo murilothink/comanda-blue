@@ -69,8 +69,12 @@ export default function TelaLogin(props){
         props.OnSendUserLogin({
           ...props.userLogin,
           nome: response.data.nome,
+          email: response.data.email,
           comandaBlueCliente: response.data.comandaBlueCliente  
         });
+        console.log("email");
+        console.log(response.data.email);
+
 
         // Login OK, enviar usuario para tela de comanda
         // TODO nao seria melhor tela chamar ABRIRCOMANDA ?

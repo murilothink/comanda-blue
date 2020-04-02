@@ -36,6 +36,7 @@ public class UsuarioController {
                 EncryptDecrypt ed = new EncryptDecrypt();
                 JSONObject json = new JSONObject();
                 json.put("comandaBlueCliente", ed.encrypt(form.getEmail()));
+                json.put("email", form.getEmail());
                 json.put("nome", usuarioService.getUsuarioNome(form.getEmail()));
                 logger.info("Logar usuario OK, emailEnctriptado(comandaBlueCliente)=" + json.getAsString("comandaBlueCliente"));
                 return ResponseEntity.ok(json);

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../Services/api';
+import Redirector from '../Services/redirector';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -52,8 +53,18 @@ export default function TelaExtrato(props) {
 
     const [rows, setRows] = useState([]);
 
+    const [mount, setMount] = React.useState(false);
+
     // Ao carregar tela, puxar pedidos da comanda->mesa->estabelecimento
     useEffect(() => {
+        if(!mount){
+            let redirector =  new Redirector(props);
+            redirector.checkLogado();
+            redirector.checkComanda();
+
+            setMount(true);
+        }
+
         async function loadPedidos() {
             try {
                 const options = {

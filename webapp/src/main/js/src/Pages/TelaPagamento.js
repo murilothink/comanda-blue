@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../Services/api';
+import Redirector from '../Services/redirector';
 
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
@@ -26,11 +27,23 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 import '../style.css';
 
 export default function TelaPagamento(props){
+    const [mount, setMount] = React.useState(false);
+
+    useEffect(() => {
+        if(!mount){
+            let redirector =  new Redirector(props);
+            redirector.checkLogado();
+            redirector.checkComanda();
+
+            setMount(true);
+        }
+    });
+
     return (
     <div class="wrapper">
         <div class="main_collumn">
             
-                <Button variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white', margin:"5px", position:"fixed", marginTop:"16px"}}>
+                <Button onClick={()=>{props.history.push("/menu")}} variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white', margin:"5px", position:"fixed", marginTop:"16px"}}>
                     Voltar ao menu
                 </Button>
 
@@ -56,17 +69,20 @@ const useStyles = makeStyles({
 
 // Converte valor para R$XX.XX
 function ccyFormat(num) {
+    if(!num) return "R$0,0";
     return `R\$${num.toFixed(2)}`;
 }
 
 // Calcula o total, baseado na tabela
 // TODO entender melhor o reduce
 function calculaSubtotal(items) {
+    if(!items) return null;
     return items.map(({ valorTotal }) => valorTotal).reduce((sum, i) => sum + i, 0);
 }
 
 // Calcula o total pago, baseado na tabela
 function somaValoresPagos(items) {
+    if(!items) return null;
     return items.map(({ valorPago }) => valorPago).reduce((sum, i) => sum + i, 0);
 }
 
@@ -76,12 +92,12 @@ function ComponentePagamento(props) {
     const classes = useStyles();
 
     const [state, setState] = useState({
-        pagamentos: []
+        pagamentos: null
     });
 
+    //Pega os pagamentos da api
     const getPagamentos = () => {
-        const url = "/comanda/"+1+"/pagamento";
-        //const url = "/comanda/"+props.userLogin.idComanda+"/pagamento";
+        const url = "/comanda/"+props.userLogin.idComanda+"/pagamento";
         
         api.get(url)
         .then(response => {
@@ -94,20 +110,24 @@ function ComponentePagamento(props) {
         });
     }
 
+    //TODO
     const postPagamento = (valor) =>{
-        const url = "/comanda/"+1+"/valor/"+valor+"/pagar";
-        //const url = "/comanda/"+props.userLogin.idComanda+"/valor/"+valor+"/pagar";
+        const url = "/comanda/"+props.userLogin.idComanda+"/pagar";
 
         const options = {
             headers: {
-                'COMANDA-BLUE-CLIENTE': "WAqqMDCYFpZM/TDFelwCWvjoqKRfcI6YSNWnJcNAFdM="
-                //'COMANDA-BLUE-CLIENTE': props.userLogin.comandaBlueCliente
+                'COMANDA-BLUE-CLIENTE': props.userLogin.comandaBlueCliente
             }
         };
 
-        api.post(url, null, options)
+        const data = {
+            valorPago: valor
+        }
+
+        api.post(url, data, options)
         .then(response => {
-            console.log(response)
+            console.log(response);
+            getPagamentos();
         })
         .catch(err =>{
             console.log(err)
@@ -119,23 +139,23 @@ function ComponentePagamento(props) {
         return somaValoresPagos(state.pagamentos);
     }
 
-    //TODO: usa o invoice ainda
+    //Usa o invoice ainda
     const totalAPagar = () =>{
         return invoiceTotal - totalPago();
     }
 
     useEffect(()=>{
-        if(state.pagamentos.length === 0){
+        if(!state.pagamentos){
             getPagamentos()
         }
     }); //didUpdate + didMount
 
+    //Ao clicar em pagar posta um pagamento e
+    //recarrega os pagamentos da api
     const handleClickPagar = () =>{
         const valor = document.getElementById("input-name").value;
         
         postPagamento(valor);
-
-        getPagamentos();
     }
 
     return (
@@ -224,12 +244,12 @@ function ComponentePagamento(props) {
 
                             <TableBody>
 
-                                {state.pagamentos.map((row) => (
+                                {(state.pagamentos)?state.pagamentos.map((row) => (
                                     <TableRow key={row.id}>
                                         <TableCell width="50px">{row.cliente.nome}</TableCell>
                                         <TableCell width="50px">{ccyFormat(row.valorPago)}</TableCell>
                                     </TableRow>
-                                ))}
+                                )):(<></>)}
 
                                 <TableRow>
                                     <TableCell width="200px"><b>Total Pago</b></TableCell>
@@ -258,17 +278,20 @@ function ComponenteExtrato(props) {
     const classes = useStyles();
 
     const [state, setState] = useState({
-        pedidos: [],
+        pedidos: null,
         totalMesa: 0
     });
 
     const getPedidos = () => {
-        const email = "aguiar@ciandt.com"
-        const url = "/estabelecimento/"+ 1 +
-                    "/mesas/"+1+
-                    "/comandas/"+1+
+        //const email = "aguiar@ciandt.com"
+        const email = props.userLogin.email;
+        console.log(email);
+
+        const url = "/estabelecimento/"+ props.userLogin.idEstabelecimento +
+                    "/mesas/"+props.userLogin.idMesa+
+                    "/comandas/"+props.userLogin.idComanda+
                     "/pedidos";
-                
+                        
         api.get(url)
         .then(response => {
             console.log("pedidos:");
@@ -291,7 +314,7 @@ function ComponenteExtrato(props) {
     }
 
     useEffect(()=>{
-        if(state.pedidos.length === 0){
+        if(!state.pedidos){
             getPedidos();
         }
     });
@@ -359,14 +382,14 @@ function ComponenteExtrato(props) {
 
                             <TableBody>
 
-                                {state.pedidos.map((row) => (
+                                {(state.pedidos)? state.pedidos.map((row) => (
                                     <TableRow key={row.id}>
                                         <TableCell>{row.produto.nome}</TableCell>
                                         <TableCell align="right">{row.quantidade}</TableCell>
                                         <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
                                         <TableCell align="right">{ccyFormat(row.valorTotal)}</TableCell>
                                     </TableRow>
-                                ))}
+                                )):(<></>)}
 
                                 <TableRow>
                                     <TableCell colSpan={3}><b>Subtotal</b></TableCell>

@@ -21,6 +21,7 @@ import { Button,
 } from '@material-ui/core';
 
 import api from "../Services/api";
+import Redirector from "../Services/redirector";
 
 //icones
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
@@ -46,26 +47,13 @@ export default class Menu extends React.Component{
         };
     }
 
-
-    //TODO
-    //Checa as informacoes vindas do pai
-    //e no caso de algum estar faltante
-    //redireciona o usuario
-    checkUserInfo(){
-        if(!this.props.userLogin.comandaBlueCliente){
-            this.props.history.push("/login");
-        }
-        else{
-            if(!this.props.userLogin.idComanda){
-                this.props.history.push("/abrirComanda");
-            }
-        }
-    }
-
     //Ao montar o componente faz-se a requisição do estabelecimento
     //E de todas as categorias do menu
     componentDidMount(){
-        this.checkUserInfo();
+        let redirector =  new Redirector(this.props);
+        redirector.checkLogado();
+        redirector.checkComanda();
+
         this.getCategoriasEstabelecimento();
         this.getMenu(-1);  
     }
@@ -213,12 +201,12 @@ export default class Menu extends React.Component{
 
     render(){
         return (
-            <div id="telaCardapio" class="wrapper">
-                <div class="main_collumn">
-                    <h1 class="estabelecimento_title">
+            <div id="telaCardapio" className="wrapper">
+                <div className="main_collumn">
+                    <h1 className="estabelecimento_title">
                         {this.state.estabelecimento.nome}
                     </h1>
-                    <div class="row_1">
+                    <div className="row_1">
                     
                     <FormControl variant="outlined" className="ComboBox">
                         <InputLabel>Categorias</InputLabel>
@@ -244,7 +232,7 @@ export default class Menu extends React.Component{
                     /> 
                     
                 </div>
-                <aside class="lista_itens_wrapper">
+                <aside className="lista_itens_wrapper">
                     <ItemsList OnIncrementItem={this.handleIncrementItem}
                               OnDecrementItem={this.handleDecrementItem}
                               OnObsSend={this.handleObsSend}

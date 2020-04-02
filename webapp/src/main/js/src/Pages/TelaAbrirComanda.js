@@ -1,5 +1,6 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import api from '../Services/api';
+import Redirector from '../Services/redirector';
 
 import img from '../static/img/qrcode.png'
 import Grid from '@material-ui/core/Grid';
@@ -23,6 +24,17 @@ export default function TelaAbrirComanda(props){
 
     const [values, setValues] = React.useState({
         pin:'',
+    });
+
+    const [mount, setMount] = React.useState(false);
+
+    useEffect(()=>{
+        if(!mount){
+            let redirector =  new Redirector(props);
+            redirector.checkLogado();
+
+            setMount(true);
+        }
     });
 
     const handleChange = prop => event => {

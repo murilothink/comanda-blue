@@ -23,6 +23,7 @@ function Routes(){
     // Estados a serem guardados para login usuario
     const [userLogin, setUserLogin] = useState({
         nome: null,
+        email: null,
         comandaBlueCliente: null,
         idComanda: null,
         idEstabelecimento: null,
