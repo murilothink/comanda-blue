@@ -679,7 +679,7 @@ public class DatabaseLoader implements CommandLineRunner {
                 barDoLu,
                 "Suco de Limão",
                 5.50,
-                "Um delicioso suco de polpa de maracuja",
+                "Um delicioso suco de Limão",
                 "Copo",
                 categoria5,
                 "https://www.mundoboaforma.com.br/wp-content/uploads/2017/08/suco-de-limao-1280x720.jpg"
