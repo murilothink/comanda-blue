@@ -47,7 +47,7 @@ public class DatabaseContext {
         // só faz a inicialização a primeira vez // o correto é fazer em nível de classe mas tenho que refatorar
             this.criarUsuarios(5);
             this.estabelecimento = this.criarEstabelecimento();
-            this.mesasEstabelecimento = this.criarMesas(this.estabelecimento, 5);
+            this.mesasEstabelecimento = this.criarMesas(this.estabelecimento, 20);
             this.criarProdutos(this.estabelecimento, 3, 4);
 
     }
