@@ -66,9 +66,11 @@ public class ComandaService {
                     for (Usuario usuario : comanda.getUsuarios()){
                         if(usuario.getEmail().equals(emailCliente)){
                             log.info("Usuario ja estava inserido na comanda");
+                            break;
                         }else{
                             log.info("Usuario nao estava inserido na comanda, adicionando usuario... ");
                             listaNovosUsuarios.add(usuarioRepository.findByEmail(emailCliente));
+                            break;
                         }
                     }
 
