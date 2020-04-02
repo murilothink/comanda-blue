@@ -44,6 +44,7 @@ export default class Menu extends React.Component{
                 nome: null
             }
         };
+        console.log("TelaCardapio, userLogin", this.props.userLogin);
     }
 
     checkUserInfo(){
@@ -230,7 +231,9 @@ export default class Menu extends React.Component{
                         <FormHelperText>Selecione uma categoria</FormHelperText>
                     </FormControl>
                     
-                    <Button size="small" className="btn_extrato" variant="contained" color="primary">Exibir Extrato</Button>
+                    <Button size="small" className="btn_extrato" variant="contained" color="primary" onClick={()=>this.props.history.push('/extrato')} >
+                        Exibir Extrato
+                    </Button>
                     </div>  
                     <MenuList OnAddItem={this.handleAddItem} 
                       listaProduto={this.state.listaProduto}
@@ -422,7 +425,7 @@ class ItemsList extends React.Component{
 
                                     <TableCell className="ajustaTabela">
 
-                                        <IconButton className="iconButton">
+                                        <IconButton className="iconButton">                                        
                                             <RemoveCircleOutlineRoundedIcon onClick={()=>this.props.OnDecrementItem(key)} className="vermelho"/>
                                         </IconButton> 
                                         
