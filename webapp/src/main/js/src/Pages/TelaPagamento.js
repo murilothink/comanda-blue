@@ -25,11 +25,7 @@ import OutlinedInput from '@material-ui/core/OutlinedInput';
 
 import '../style.css';
 
-
-
 export default function TelaPagamento(props){
-    const { userLogin, setUserLogin } = React.useState(props.userLogin);
-
     return (
     <div class="wrapper">
         <div class="main_collumn">
@@ -52,7 +48,6 @@ export default function TelaPagamento(props){
     )
 }
 
-
 const useStyles = makeStyles({
   table: {
     minWidth: 700,
@@ -61,249 +56,87 @@ const useStyles = makeStyles({
 
 // Converte valor para R$XX.XX
 function ccyFormat(num) {
-    return `R${num.toFixed(2)}`;
-}
-
-// Calcula valor total linha
-function priceRow(qtde, valorUnitario) {
-    return qtde * valorUnitario;
-}
-
-// Calcula valor total pago
-function priceRowPagamento(valorPago) {
-    return valorPago + valorPago;
-}
-
-// Cria linha baseado nos parametros fornecidos
-function createRow(idPedido, cliente, item, qtde, valorUnitario) {
-    const valorTotal = priceRow(valorUnitario, qtde);
-    return { idPedido, cliente, item, qtde, valorUnitario, valorTotal };
-}
-
-// Cria linha baseado nos parametros fornecidos
-function createRowPagamento(idPagamento, cliente, valorPago) {
-    const valorTotal = priceRowPagamento(valorPago);
-    return { idPagamento, cliente, valorPago };
+    return `R\$${num.toFixed(2)}`;
 }
 
 // Calcula o total, baseado na tabela
 // TODO entender melhor o reduce
-function subtotal(items) {
+function calculaSubtotal(items) {
     return items.map(({ valorTotal }) => valorTotal).reduce((sum, i) => sum + i, 0);
 }
 
 // Calcula o total pago, baseado na tabela
-function totalPago(items) {
+function somaValoresPagos(items) {
     return items.map(({ valorPago }) => valorPago).reduce((sum, i) => sum + i, 0);
 }
 
-// Para criar linhas
-// const rows = [
-//     createRow(1, 'Danilo', 'Bavaria lata', 1, 3.6, 3.6),
-//     createRow(2, 'Luciano', 'Coca-cola lata', 2, 3.5),
-//     createRow(3, 'Tiago', 'Caldinho', 1, 12)
-// ];
-
-const rowsComanda = [];
-const rowsPagamento = [];
-
-const jsonPagamento = {
-    pagamentos:[
-        
-    ]
-};
-
-
-// exemplo de retorno json do servidor
-const jsonComanda = {
-    id: 1,
-    estabelecimento: {
-        id: 1,
-        cnpj: 12345678901234,
-        nome: 'Bar do zé',
-        endereco: 'Rua da Santa Missa, 840, Centro, Leme/SP', 
-        descricao: 'Desde 1978 servindo cerveja gelada e o melhor torresmo de Leme'
-    },
-    mesa: {
-        id: 1,
-        nome: 'Deck lago 3'
-    },
-    usuarios:[
-        {nome: 'Erik Kenzo Oura Carlini Valle', email: 'erik@ciandt.com'}
-    ],
-    itemPedido:[
-        {
-            id: 1, 
-            clienteSolicitante:{
-                nome: 'Erik Kenzo Oura Carlini Valle', 
-                email: 'erik@ciandt.com'
-            },
-            produto:{
-                id: 2,
-                nome: 'Bavaria',
-                valor: 3,
-                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
-                unidade: 'lata',
-                categoria:{
-                    id: 2,
-                    categoria: 'Bebidas'
-                }
-            },
-            observacao: 'copo sujo',
-            quantidade: 3,
-            valorUnitario: 3,
-            valorTotal: 9
-        },
-        {
-            id: 2, 
-            clienteSolicitante:{
-                nome: 'Erik Kenzo Oura Carlini Valle', 
-                email: 'erik@ciandt.com'
-            },
-            produto:{
-                id: 2,
-                nome: 'Bavaria',
-                valor: 3,
-                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
-                unidade: 'lata',
-                categoria:{
-                    id: 2,
-                    categoria: 'Bebidas'
-                }
-            },
-            observacao: 'copo sujo',
-            quantidade: 3,
-            valorUnitario: 3,
-            valorTotal: 9
-        },
-        {
-            id: 3, 
-            clienteSolicitante:{
-                nome: 'Erik Kenzo Oura Carlini Valle', 
-                email: 'erik@ciandt.com'
-            },
-            produto:{
-                id: 2,
-                nome: 'Bavaria',
-                valor: 3,
-                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
-                unidade: 'lata',
-                categoria:{
-                    id: 2,
-                    categoria: 'Bebidas'
-                }
-            },
-            observacao: 'copo sujo',
-            quantidade: 3,
-            valorUnitario: 3,
-            valorTotal: 9
-        },
-        {
-            id: 4, 
-            clienteSolicitante:{
-                nome: 'Erik Kenzo Oura Carlini Valle', 
-                email: 'erik@ciandt.com'
-            },
-            produto:{
-                id: 2,
-                nome: 'Bavaria',
-                valor: 3,
-                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
-                unidade: 'lata',
-                categoria:{
-                    id: 2,
-                    categoria: 'Bebidas'
-                }
-            },
-            observacao: 'copo sujo',
-            quantidade: 3,
-            valorUnitario: 3,
-            valorTotal: 9
-        },
-        {
-            id: 5, 
-            clienteSolicitante:{
-                nome: 'Erik Kenzo Oura Carlini Valle', 
-                email: 'erik@ciandt.com'
-            },
-            produto:{
-                id: 2,
-                nome: 'Bavaria',
-                valor: 3,
-                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
-                unidade: 'lata',
-                categoria:{
-                    id: 2,
-                    categoria: 'Bebidas'
-                }
-            },
-            observacao: 'copo sujo',
-            quantidade: 3,
-            valorUnitario: 3,
-            valorTotal: 9
-        }
-    ],
-    status: 'Comanda Aberta'
-};
-
-// Para cada itemPedido do json retornado do servidor, adicione em rows
-// rows sera mapeada na tabela
-
-const converterPagamento = () => {
-    jsonPagamento.pagamentos.forEach(item => {
-        console.log(item);
-        rowsPagamento.push(createRowPagamento(item.id, item.cliente.nome, item.valorPago));
-    });
-}
-
-jsonComanda.itemPedido.forEach(item => {
-    //console.log(item);
-    rowsComanda.push(createRow(item.id, item.clienteSolicitante.nome, item.produto.nome, item.quantidade, item.valorUnitario));
-});
-
-const invoiceSubtotal = subtotal(rowsComanda);
-const invoiceTotal = invoiceSubtotal;
-
-const invoiceTotalPago = totalPago(rowsPagamento);
-const invoiceTotalPagar = invoiceTotal - invoiceTotalPago;
-
-
+let invoiceTotal = 0;
 
 function ComponentePagamento(props) {
-    const [ render, setRender ] = useState(true);
-
-    const renderizar = () => {
-        setRender(!render)
-    };
-
     const classes = useStyles();
 
-    const getPagamento = () => {
-        const url = "/comanda/"+1+"/pagamento"
+    const [state, setState] = useState({
+        pagamentos: []
+    });
+
+    const getPagamentos = () => {
+        const url = "/comanda/"+1+"/pagamento";
+        //const url = "/comanda/"+props.userLogin.idComanda+"/pagamento";
         
         api.get(url)
         .then(response => {
-            jsonPagamento.pagamentos = response.data;
-            converterPagamento();
-            renderizar();
-            console.log(response);
-            console.log(jsonPagamento);
-            console.log(rowsPagamento);
+            setState({
+                pagamentos: response.data
+            });   
         })
         .catch(error => {
             console.log(error);
         });
     }
 
-    useEffect(getPagamento);
+    const postPagamento = (valor) =>{
+        const url = "/comanda/"+1+"/valor/"+valor+"/pagar";
+        //const url = "/comanda/"+props.userLogin.idComanda+"/valor/"+valor+"/pagar";
 
-    // Evento ao selecionar item no selectCliente
-    const handleChangeSelectCliente = (event) => {
-        console.log("Cliente selecionado=" + cliente)
-        setCliente(event.target.value);
-    };
+        const options = {
+            headers: {
+                'COMANDA-BLUE-CLIENTE': "WAqqMDCYFpZM/TDFelwCWvjoqKRfcI6YSNWnJcNAFdM="
+                //'COMANDA-BLUE-CLIENTE': props.userLogin.comandaBlueCliente
+            }
+        };
 
-    const [ cliente, setCliente ] = useState('');
+        api.post(url, null, options)
+        .then(response => {
+            console.log(response)
+        })
+        .catch(err =>{
+            console.log(err)
+        })
+    }
+
+    //soma os valores pagos de state.pagamentos
+    const totalPago = () =>{
+        return somaValoresPagos(state.pagamentos);
+    }
+
+    //TODO: usa o invoice ainda
+    const totalAPagar = () =>{
+        return invoiceTotal - totalPago();
+    }
+
+    useEffect(()=>{
+        if(state.pagamentos.length === 0){
+            getPagamentos()
+        }
+    }); //didUpdate + didMount
+
+    const handleClickPagar = () =>{
+        const valor = document.getElementById("input-name").value;
+        
+        postPagamento(valor);
+
+        getPagamentos();
+    }
 
     return (
     <Grid id="telaPagamento" style={{marginTop: "15px"}}>        
@@ -332,7 +165,7 @@ function ComponentePagamento(props) {
             align="center"
             justify="center"
         >
-             <Grid
+            <Grid
             container                    
             spacing={0}
             align="center"
@@ -356,7 +189,7 @@ function ComponentePagamento(props) {
                 direction="column" item xs={12} sm={6}
             >
 
-                <Button variant="contained" color="primary" style={{background: '#009900', color: 'white'}}>
+                <Button onClick={handleClickPagar} variant="contained" color="primary" style={{background: '#009900', color: 'white'}}>
                     PAGAR
                 </Button>
             </Grid>
@@ -391,21 +224,21 @@ function ComponentePagamento(props) {
 
                             <TableBody>
 
-                                {rowsPagamento.map((row) => (
-                                    <TableRow key={row.idPedido}>
-                                        <TableCell width="50px">{row.cliente}</TableCell>
+                                {state.pagamentos.map((row) => (
+                                    <TableRow key={row.id}>
+                                        <TableCell width="50px">{row.cliente.nome}</TableCell>
                                         <TableCell width="50px">{ccyFormat(row.valorPago)}</TableCell>
                                     </TableRow>
                                 ))}
 
                                 <TableRow>
                                     <TableCell width="200px"><b>Total Pago</b></TableCell>
-                                    <TableCell >{ccyFormat(invoiceTotalPago)}</TableCell>
+                                <TableCell >{ccyFormat(totalPago())}</TableCell>
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell width="200px"><b>Total a Pagar</b></TableCell>
-                                    <TableCell>{ccyFormat(invoiceTotalPagar)}</TableCell>
+                                <TableCell>{ccyFormat(totalAPagar())}</TableCell>
                                 </TableRow>
 
                             </TableBody>
@@ -422,16 +255,46 @@ function ComponentePagamento(props) {
 }
 
 function ComponenteExtrato(props) {
-
     const classes = useStyles();
-    
-    // Evento ao selecionar item no selectCliente
-    const handleChangeSelectCliente = (event) => {
-        console.log("Cliente selecionado=" + cliente)
-        setCliente(event.target.value);
-    };
 
-    const [ cliente, setCliente ] = useState('');
+    const [state, setState] = useState({
+        pedidos: [],
+        totalMesa: 0
+    });
+
+    const getPedidos = () => {
+        const email = "aguiar@ciandt.com"
+        const url = "/estabelecimento/"+ 1 +
+                    "/mesas/"+1+
+                    "/comandas/"+1+
+                    "/pedidos";
+                
+        api.get(url)
+        .then(response => {
+            console.log("pedidos:");
+            console.log(response);
+            setState({
+                pedidos: response.data.filter((value)=>{
+                    return value.clienteSolicitante.email == email;
+                }),
+                totalMesa: calculaSubtotal(response.data)
+            });   
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
+    const subtotal = () => {
+        invoiceTotal = state.totalMesa;
+        return calculaSubtotal(state.pedidos);
+    }
+
+    useEffect(()=>{
+        if(state.pedidos.length === 0){
+            getPedidos();
+        }
+    });
 
     return (
     <Grid id="telaExtrato">        
@@ -496,10 +359,10 @@ function ComponenteExtrato(props) {
 
                             <TableBody>
 
-                                {rowsComanda.map((row) => (
-                                    <TableRow key={row.idPedido}>
-                                        <TableCell>{row.item}</TableCell>
-                                        <TableCell align="right">{row.qtde}</TableCell>
+                                {state.pedidos.map((row) => (
+                                    <TableRow key={row.id}>
+                                        <TableCell>{row.produto.nome}</TableCell>
+                                        <TableCell align="right">{row.quantidade}</TableCell>
                                         <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
                                         <TableCell align="right">{ccyFormat(row.valorTotal)}</TableCell>
                                     </TableRow>
@@ -507,12 +370,12 @@ function ComponenteExtrato(props) {
 
                                 <TableRow>
                                     <TableCell colSpan={3}><b>Subtotal</b></TableCell>
-                                    <TableCell align="right">{invoiceSubtotal}</TableCell>
+                                    <TableCell align="right">{ccyFormat(subtotal())}</TableCell>
                                 </TableRow>
 
                                 <TableRow>
-                                    <TableCell colSpan={3}><b>Total Mesa</b></TableCell>
-                                    <TableCell align="right">{invoiceTotal}</TableCell>
+                                    <TableCell colSpan={3}><b>Total da Mesa</b></TableCell>
+                                    <TableCell align="right">{ccyFormat(state.totalMesa)}</TableCell>
                                 </TableRow>
 
                             </TableBody>
