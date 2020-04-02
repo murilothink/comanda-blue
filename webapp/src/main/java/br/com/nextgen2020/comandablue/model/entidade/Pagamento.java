@@ -4,6 +4,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 import br.com.nextgen2020.comandablue.model.enums.TipoPagamentoEnum;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Pagamento {
@@ -18,6 +19,7 @@ public class Pagamento {
 
     @NotNull
     @ManyToOne // varios pagamentos para 1 comanda
+    @JsonIgnore
     private Comanda comanda;
 
     @NotNull
@@ -25,6 +27,18 @@ public class Pagamento {
 
     @Enumerated(EnumType.STRING)
     private TipoPagamentoEnum tipoPagamento;
+
+    public Pagamento(){
+        // Necessita de construtor para metodos embutidos do PagamentoRepository
+    }
+
+    public Pagamento(@NotNull Usuario cliente,
+                     @NotNull Comanda comanda,
+                     @NotNull Double valorPago) {
+        this.cliente = cliente;
+        this.comanda = comanda;
+        this.valorPago = valorPago;
+    }
 
     public Long getId() {
         return id;
