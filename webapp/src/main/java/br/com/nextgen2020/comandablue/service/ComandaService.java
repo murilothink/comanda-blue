@@ -61,17 +61,20 @@ public class ComandaService {
                 if (comanda.getStatus() == StatusComanda.ABERTO){
                     log.info("Encontrada comanda aberta para requisicao pinMesa=" + pinMesa + ", verificando lista usuario...");
 
-                    List<Usuario> listaUsuarios = comanda.getUsuarios();
+                    List<Usuario> listaNovosUsuarios = new ArrayList<Usuario>();
 
-                    for (Usuario usuario : listaUsuarios){
+                    for (Usuario usuario : comanda.getUsuarios()){
                         if(usuario.getEmail().equals(emailCliente)){
                             log.info("Usuario ja estava inserido na comanda");
+                            break;
                         }else{
                             log.info("Usuario nao estava inserido na comanda, adicionando usuario... ");
-                            listaUsuarios.add(usuarioRepository.findByEmail(emailCliente));
-                            comanda.setUsuarios(listaUsuarios);
+                            listaNovosUsuarios.add(usuarioRepository.findByEmail(emailCliente));
+                            break;
                         }
                     }
+
+                    comanda.getUsuarios().addAll(listaNovosUsuarios);
 
                     return comanda;
                 }

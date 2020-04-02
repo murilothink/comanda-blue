@@ -69,16 +69,32 @@ function priceRow(qtde, valorUnitario) {
     return qtde * valorUnitario;
 }
 
+// Calcula valor total pago
+function priceRowPagamento(valorPago) {
+    return valorPago + valorPago;
+}
+
 // Cria linha baseado nos parametros fornecidos
 function createRow(idPedido, cliente, item, qtde, valorUnitario) {
     const valorTotal = priceRow(valorUnitario, qtde);
     return { idPedido, cliente, item, qtde, valorUnitario, valorTotal };
 }
 
+// Cria linha baseado nos parametros fornecidos
+function createRowPagamento(idPagamento, cliente, valorPago) {
+    const valorTotal = priceRowPagamento(valorPago);
+    return { idPagamento, cliente, valorPago };
+}
+
 // Calcula o total, baseado na tabela
 // TODO entender melhor o reduce
 function subtotal(items) {
     return items.map(({ valorTotal }) => valorTotal).reduce((sum, i) => sum + i, 0);
+}
+
+// Calcula o total pago, baseado na tabela
+function totalPago(items) {
+    return items.map(({ valorPago }) => valorPago).reduce((sum, i) => sum + i, 0);
 }
 
 // Para criar linhas
@@ -99,26 +115,31 @@ const jsonPagamento = {
                 nome: 'Danilo de Nadai Sicari', 
                 email: 'denadai.sicari@gmail.com'
             },
-            valorPago: 43.00,
-            quantidade: 2,
+            valorPago: 9
         },
         {
             id: 2, 
             clienteSolicitante:{
-                nome: 'Cristiano Andrade de Aguiar', 
-                email: 'aguiar@ciandt.com'
+                nome: 'Danilo de Nadai Sicari', 
+                email: 'denadai.sicari@gmail.com'
             },
-            valorPago: 43.00,
-            quantidade: 2,
+            valorPago: 9
         },
         {
             id: 3, 
             clienteSolicitante:{
-                nome: 'Cristiano Andrade de Aguiar', 
-                email: 'aguiar@ciandt.com'
+                nome: 'Danilo de Nadai Sicari', 
+                email: 'denadai.sicari@gmail.com'
             },
-            valorPago: 43.00,
-            quantidade: 2,
+            valorPago: 9
+        },
+        {
+            id: 4, 
+            clienteSolicitante:{
+                nome: 'Danilo de Nadai Sicari', 
+                email: 'denadai.sicari@gmail.com'
+            },
+            valorPago: 9
         }
     ]
 };
@@ -260,14 +281,21 @@ const jsonComanda = {
 // rows sera mapeada na tabela
 
 jsonPagamento.pagamentos.forEach(item => {
-    //console.log(item);
-    rowsPagamento.push(createRow(item.id, item.clienteSolicitante.nome, item.valorPago, item.quantidade));
+    console.log(item);
+    rowsPagamento.push(createRowPagamento(item.id, item.clienteSolicitante.nome, item.valorPago));
 });
 
 jsonComanda.itemPedido.forEach(item => {
     //console.log(item);
     rowsComanda.push(createRow(item.id, item.clienteSolicitante.nome, item.produto.nome, item.quantidade, item.valorUnitario));
 });
+
+const invoiceSubtotal = subtotal(rowsComanda);
+const invoiceTotal = invoiceSubtotal;
+
+const invoiceTotalPago = totalPago(rowsPagamento);
+const invoiceTotalPagar = invoiceTotal - invoiceTotalPago;
+
 
 
 function ComponentePagamento(props) {
@@ -371,18 +399,18 @@ function ComponentePagamento(props) {
                                 {rowsPagamento.map((row) => (
                                     <TableRow key={row.idPedido}>
                                         <TableCell width="50px">{row.cliente}</TableCell>
-                                        <TableCell width="50px">{row.valorPago}</TableCell>
+                                        <TableCell width="50px">{ccyFormat(row.valorPago)}</TableCell>
                                     </TableRow>
                                 ))}
 
                                 <TableRow>
                                     <TableCell width="200px"><b>Total Pago</b></TableCell>
-                                    <TableCell >R$ 43,00</TableCell>
+                                    <TableCell >{ccyFormat(invoiceTotalPago)}</TableCell>
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell width="200px"><b>Total a Pagar</b></TableCell>
-                                    <TableCell>R$ 43,00</TableCell>
+                                    <TableCell>{ccyFormat(invoiceTotalPagar)}</TableCell>
                                 </TableRow>
 
                             </TableBody>
@@ -430,6 +458,14 @@ function ComponenteExtrato(props) {
                 <h1>EXTRATO</h1>
 
                 Nome:    {props.userLogin.nome}
+
+                {/*
+                    jsonComanda.itemPedido.map((item, index) => {
+                        if (index == 0) {
+                            return item.clienteSolicitante.nome
+                        }
+                    })
+                */}
             </Grid>
         </Grid>
 
@@ -476,12 +512,12 @@ function ComponenteExtrato(props) {
 
                                 <TableRow>
                                     <TableCell colSpan={3}><b>Subtotal</b></TableCell>
-                                    <TableCell align="right">R$ 43,00</TableCell>
+                                    <TableCell align="right">{invoiceSubtotal}</TableCell>
                                 </TableRow>
 
                                 <TableRow>
                                     <TableCell colSpan={3}><b>Total Mesa</b></TableCell>
-                                    <TableCell align="right">R$ 43,00</TableCell>
+                                    <TableCell align="right">{invoiceTotal}</TableCell>
                                 </TableRow>
 
                             </TableBody>

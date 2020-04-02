@@ -26,7 +26,7 @@ import api from "../Services/api";
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 import RemoveCircleOutlineRoundedIcon from '@material-ui/icons/RemoveCircleOutlineRounded';
 
-import './TelaCardapio.css';
+import '../style.css';
 
 function createData(produto, observacao, quantidade, valorUnitario, valorTotal) {
     return { produto, observacao, quantidade, valorUnitario, valorTotal};
@@ -44,15 +44,19 @@ export default class Menu extends React.Component{
                 nome: null
             }
         };
-        console.log("TelaCardapio, userLogin", this.props.userLogin);
     }
 
+
+    //TODO
+    //Checa as informacoes vindas do pai
+    //e no caso de algum estar faltante
+    //redireciona o usuario
     checkUserInfo(){
-        if(this.props.userLogin.comandaBlueCliente == ''){
+        if(!this.props.userLogin.comandaBlueCliente){
             this.props.history.push("/login");
         }
         else{
-            if(this.props.userLogin.idComanda == ''){
+            if(!this.props.userLogin.idComanda){
                 this.props.history.push("/abrirComanda");
             }
         }
@@ -209,7 +213,7 @@ export default class Menu extends React.Component{
 
     render(){
         return (
-            <div class="wrapper">
+            <div id="telaCardapio" class="wrapper">
                 <div class="main_collumn">
                     <h1 class="estabelecimento_title">
                         {this.state.estabelecimento.nome}
