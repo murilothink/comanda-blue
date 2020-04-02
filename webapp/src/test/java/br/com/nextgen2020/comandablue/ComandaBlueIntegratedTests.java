@@ -10,10 +10,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import br.com.nextgen2020.comandablue.form.LogarUsuarioForm;
 import br.com.nextgen2020.comandablue.form.PedidoForm;
 import br.com.nextgen2020.comandablue.model.entidade.*;
+import br.com.nextgen2020.comandablue.model.enums.StatusComanda;
 import br.com.nextgen2020.comandablue.repository.*;
 import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
 import br.com.nextgen2020.comandablue.util.WebConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import net.minidev.json.JSONObject;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -57,11 +59,16 @@ public class ComandaBlueIntegratedTests {
     private ProdutoRepository produtoRepository;
 
     @Autowired
+    private PagamentoRepository pagamentoRepository;
+
+    @Autowired
+    private ComandaRepository comandaRepository;
+
+    @Autowired
     private MockMvc mvc;
 
     @Autowired
     private DatabaseContext dataContext;
-
 
     private EncryptDecrypt encryptDecrypt;
 
@@ -69,16 +76,13 @@ public class ComandaBlueIntegratedTests {
         this.encryptDecrypt = new EncryptDecrypt();
     }
 
-
     private String getEmailUsuario(int id){
         return String.format("fulano0%s@domain.com", id);
     }
 
     private String getEncryptedEmailUsuario(int id) throws Exception {
-       return this.encryptDecrypt.encrypt(this.getEmailUsuario(id));
+        return this.encryptDecrypt.encrypt(this.getEmailUsuario(id));
     }
-
-
 
     private LogarUsuarioForm createUsuarioDataForm(int idUsuario){
         String emailUsuario = this.getEmailUsuario(idUsuario);
@@ -118,13 +122,11 @@ public class ComandaBlueIntegratedTests {
     }
 
     /**
-     * Quando o usuário não existe a aplicação deveria retornar uma erro
-     * MAS ela foi configurada pra adicionar o usuário por padrão então
-     * não sei dizer se este é a funcionalidade padrão
+     * Quando o usuário não existir, cadastrar
      * @throws Exception
      */
     @Test
-    public void quandoUsuarioNAOCadastrado_EntaoAutenticaErro() throws Exception {
+    public void quandoUsuarioNAOCadastrado_EntaoSalvaUsuario() throws Exception {
 
         LogarUsuarioForm usuario99 = this.createUsuarioDataForm(99);
 
@@ -132,11 +134,11 @@ public class ComandaBlueIntegratedTests {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(WebConverter.toJson(usuario99)))
                 .andDo(print())
-                .andExpect(status().isBadRequest());
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void fazerPedidosUmUsuario() throws Exception {
+    public void fazerPedidosUmUsuarioEPagar() throws Exception {
         int idUsuario = 1;
         String usuario1EmailCrypt = this.getEncryptedEmailUsuario(idUsuario);
         String usuarioEmail = this.getEmailUsuario(idUsuario);
@@ -194,6 +196,27 @@ public class ComandaBlueIntegratedTests {
         }
 
         Assert.assertEquals(totalItemsPedidos, valorTotalPedidosRegistrados, 0.0001);
+
+        // TESTE PAGAMENTO
+
+        String urlPagarComanda = String.format("/comanda/%s/pagar", comanda.getId());
+
+        MvcResult resultPagarComanda = mvc.perform(post(urlPagarComanda)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("COMANDA-BLUE-CLIENTE",usuario1EmailCrypt)
+                .content("{\"valorPago\": "+String.valueOf(valorTotalPedidosRegistrados)+"}"))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+        Pagamento pagamento = jsonMapper.readValue(resultPagarComanda.getResponse().getContentAsString(), Pagamento.class);
+
+        Assert.assertEquals(valorTotalPedidosRegistrados, pagamento.getValorPago(), 0.0001);
+
+        Comanda comandaFinal = this.comandaRepository.findById(comanda.getId()).get();
+
+        Assert.assertEquals(StatusComanda.FECHADO, comandaFinal.getStatus());
+
     }
 
     private PedidoForm createPedido(Produto produto, int qtd){

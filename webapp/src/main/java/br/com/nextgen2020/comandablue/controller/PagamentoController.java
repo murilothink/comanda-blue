@@ -1,5 +1,6 @@
 package br.com.nextgen2020.comandablue.controller;
 
+import br.com.nextgen2020.comandablue.form.PagamentoForm;
 import br.com.nextgen2020.comandablue.model.entidade.Pagamento;
 import br.com.nextgen2020.comandablue.model.entidade.Pedido;
 import br.com.nextgen2020.comandablue.service.ComandaService;
@@ -22,17 +23,17 @@ public class PagamentoController {
 
     private final Logger log = LoggerFactory.getLogger(this.getClass());
 
-    @PostMapping("/comanda/{id-comanda}/valor/{valor}/pagar")
+    @PostMapping("/comanda/{id-comanda}/pagar")
     @Transactional
     public ResponseEntity<Pagamento> pagar(
             @PathVariable(value = "id-comanda") Long idComanda,
-            @PathVariable(value = "valor") Double valorPago,
+            @RequestBody PagamentoForm form,
             @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailClienteCriptogrado) throws Exception {
 
-        log.info("Realizar pagamento recebido, idComanda=" + idComanda + ", valorPago=" + String.valueOf(valorPago));
+        log.info("Realizar pagamento recebido, idComanda=" + idComanda + ", valorPago=" + String.valueOf(form.getValorPago()));
 
         try{
-            Pagamento pagamento = pagamentoService.realizarPagamento(emailClienteCriptogrado, idComanda, valorPago);
+            Pagamento pagamento = pagamentoService.realizarPagamento(emailClienteCriptogrado, idComanda, form.getValorPago());
 
             if(pagamento != null){
                 log.info("Pagamento criado, id=" + pagamento.getId() + ", idComanda=" + pagamento.getComanda().getId() + ", valorPago=" + pagamento.getValorPago() +

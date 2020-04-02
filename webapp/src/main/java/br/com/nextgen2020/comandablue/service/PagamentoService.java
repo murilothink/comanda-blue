@@ -4,6 +4,7 @@ import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 import br.com.nextgen2020.comandablue.model.entidade.Pagamento;
 import br.com.nextgen2020.comandablue.model.entidade.Pedido;
 import br.com.nextgen2020.comandablue.model.entidade.Usuario;
+import br.com.nextgen2020.comandablue.model.enums.StatusComanda;
 import br.com.nextgen2020.comandablue.repository.ComandaRepository;
 import br.com.nextgen2020.comandablue.repository.PagamentoRepository;
 import br.com.nextgen2020.comandablue.repository.UsuarioRepository;
@@ -55,7 +56,25 @@ public class PagamentoService {
                     Pagamento pagamento = new Pagamento(cliente, comanda.get(), valorPago);
                     pagamentoRepository.save(pagamento);
                     comanda.get().getPagamentos().add(pagamento);
+
+                    // Verificar se total pago fecha a comanda
+                    Double valorTotalConsumido = 0.0;
+                    for(Pedido pd : comanda.get().getItemPedido()){
+                        valorTotalConsumido += pd.getValorTotal();
+                    }
+
+                    Double valorTotalPago = 0.0;
+                    for(Pagamento pg : comanda.get().getPagamentos()){
+                        valorTotalPago += pg.getValorPago();
+                    }
+
+                    if(valorTotalPago >= valorTotalConsumido){
+                        log.info("Comanda foi fechada pois valorTotalConsumido=" + valorTotalPago + ", valorTotalPago=" + valorTotalConsumido);
+                        comanda.get().setStatus(StatusComanda.FECHADO);
+                    }
+
                     comandaRepository.save(comanda.get());
+
                     return pagamento;
                 }else{
                     log.info("Cliente nao consta na lista de usuarios da comanda");
