@@ -38,58 +38,63 @@ public class DatabaseLoader implements CommandLineRunner {
         insertEstabelecimento();
         insertMesa();
         insertCategoriaProduto();
-        insertProduto();
+        insertProdutoBarDoZe();
+        insertProdutoBarDoLu();
     }
 
     private void insertMesa() {
+
+        Mesa mesa;
+
+        // Salva mesas barDoZe
+
         Estabelecimento barDoZe = estabelecimentoRepository.findByCnpj("12345678901234");
 
-        Mesa mesa = new Mesa(barDoZe, "Deck lago 3");
-        this.mesaRepository.save(mesa); // salvar primeira vez para salvar id
-        // arrumei a propriedade Pin para ser uma propriedade calculada então não há necessidade de salvar 2 vezes
-//        mesa.setPin();
-//        this.mesaRepository.save(mesa); // salvar segunda vez para salvar pin gerado
+        mesa = new Mesa(barDoZe, "Deck lago 3");
+        this.mesaRepository.save(mesa);
 
         mesa = new Mesa(barDoZe, "Deck lago 7");
         this.mesaRepository.save(mesa);
 
-
         mesa = new Mesa(barDoZe, "Interno 2");
         this.mesaRepository.save(mesa);
-
 
         mesa = new Mesa(barDoZe, "Interno 8");
         this.mesaRepository.save(mesa);
 
-
         mesa = new Mesa(barDoZe, "Lado Janela A");
         this.mesaRepository.save(mesa);
 
+        // Salva mesas do barDoLu
 
         Estabelecimento barDoLu = estabelecimentoRepository.findByCnpj("98765432109876");
 
-        Mesa mesaBarDoLu = new Mesa(barDoLu, "Mesa da janela 2");
-        this.mesaRepository.save(mesaBarDoLu); // salvar primeira vez para salvar id
-
-
-        mesaBarDoLu = new Mesa(barDoLu, "Mesa da janela 3");
+        mesa = new Mesa(barDoLu, "Mesa da janela 2");
         this.mesaRepository.save(mesa);
-       ;
+
+        mesa = new Mesa(barDoLu, "Mesa da janela 3");
+        this.mesaRepository.save(mesa);
     }
 
-    private void insertProduto() {
+    private void insertProdutoBarDoZe() {
+
+        /* ----- Insercao produto no barDoZe -----*/
+
+        Estabelecimento barDoZe = estabelecimentoRepository.findByCnpj("12345678901234");
 
         //PRODUTOS DO TIPO SALGADOS
 
+        CategoriaProduto categoria = categoriaProdutoRepository.findByCategoriaAndEstabelecimento("Salgados", barDoZe);
+
         this.produtoRepository.save(new Produto(
-                        estabelecimentoRepository.findByCnpj("12345678901234"),
-                        "Torresmo frito",
-                        12.50,
-                        "Torresmo frito no óleo, acompanha molho especial",
-                        "KG",
-                        categoriaProdutoRepository.findByCategoriaAndEstabelecimento("Salgados", estabelecimentoRepository.findByCnpj("12345678901234")),
-                        "https://s2.glbimg.com/_7nmXnmXFpsLqPBlgnx4TySsOMo=/e.glbimg.com/og/ed/f/original/2019/06/19/torresmo1.jpg"
-                        ));
+                barDoZe,
+                "Torresmo frito",
+                12.50,
+                "Torresmo frito no óleo, acompanha molho especial",
+                "KG",
+                categoria,
+                "https://s2.glbimg.com/_7nmXnmXFpsLqPBlgnx4TySsOMo=/e.glbimg.com/og/ed/f/original/2019/06/19/torresmo1.jpg"
+        ));
 
         this.produtoRepository.save(new Produto(
                 estabelecimentoRepository.findByCnpj("12345678901234"),
@@ -365,28 +370,26 @@ public class DatabaseLoader implements CommandLineRunner {
                 "https://www.mundoboaforma.com.br/wp-content/uploads/2017/08/suco-de-limao-1280x720.jpg"
         ));
 
+    }
 
+    private void insertProdutoBarDoLu(){
+        /* ----- Insercao produto no barDoLu -----*/
 
+        Estabelecimento barDoLu = estabelecimentoRepository.findByCnpj("98765432109876");
 
+        //PRODUTOS DO TIPO SALGADOS
 
-
-
-
-
-
-
-
-
+        CategoriaProduto categoria = categoriaProdutoRepository.findByCategoriaAndEstabelecimento("Salgados", barDoLu);
 
         //PRODUTOS DO TIPO SALGADOS
 
         this.produtoRepository.save(new Produto(
-                estabelecimentoRepository.findByCnpj("12345678901234"),
+                barDoLu,
                 "Torresmo frito",
                 12.50,
                 "Torresmo frito no óleo, acompanha molho especial",
                 "KG",
-                categoriaProdutoRepository.findByCategoriaAndEstabelecimento("Salgados", estabelecimentoRepository.findByCnpj("12345678901234")),
+                categoria,
                 "https://s2.glbimg.com/_7nmXnmXFpsLqPBlgnx4TySsOMo=/e.glbimg.com/og/ed/f/original/2019/06/19/torresmo1.jpg"
         ));
 
@@ -663,12 +666,6 @@ public class DatabaseLoader implements CommandLineRunner {
                 categoriaProdutoRepository.findByCategoriaAndEstabelecimento("Sucos Naturais", estabelecimentoRepository.findByCnpj("98765432109876")),
                 "https://www.mundoboaforma.com.br/wp-content/uploads/2017/08/suco-de-limao-1280x720.jpg"
         ));
-
-
-
-
-
-
 
     }
 
