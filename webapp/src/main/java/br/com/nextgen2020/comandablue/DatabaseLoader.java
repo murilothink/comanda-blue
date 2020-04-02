@@ -46,40 +46,35 @@ public class DatabaseLoader implements CommandLineRunner {
 
         Mesa mesa = new Mesa(barDoZe, "Deck lago 3");
         this.mesaRepository.save(mesa); // salvar primeira vez para salvar id
-        mesa.setPin();
-        this.mesaRepository.save(mesa); // salvar segunda vez para salvar pin gerado
+        // arrumei a propriedade Pin para ser uma propriedade calculada então não há necessidade de salvar 2 vezes
+//        mesa.setPin();
+//        this.mesaRepository.save(mesa); // salvar segunda vez para salvar pin gerado
 
         mesa = new Mesa(barDoZe, "Deck lago 7");
         this.mesaRepository.save(mesa);
-        mesa.setPin();
-        this.mesaRepository.save(mesa);
+
 
         mesa = new Mesa(barDoZe, "Interno 2");
         this.mesaRepository.save(mesa);
-        mesa.setPin();
-        this.mesaRepository.save(mesa);
+
 
         mesa = new Mesa(barDoZe, "Interno 8");
         this.mesaRepository.save(mesa);
-        mesa.setPin();
-        this.mesaRepository.save(mesa);
+
 
         mesa = new Mesa(barDoZe, "Lado Janela A");
         this.mesaRepository.save(mesa);
-        mesa.setPin();
-        this.mesaRepository.save(mesa);
+
 
         Estabelecimento barDoLu = estabelecimentoRepository.findByCnpj("98765432109876");
 
         Mesa mesaBarDoLu = new Mesa(barDoLu, "Mesa da janela 2");
         this.mesaRepository.save(mesaBarDoLu); // salvar primeira vez para salvar id
-        mesaBarDoLu.setPin();
-        this.mesaRepository.save(mesaBarDoLu); // salvar segunda vez para salvar pin gerado
+
 
         mesaBarDoLu = new Mesa(barDoLu, "Mesa da janela 3");
         this.mesaRepository.save(mesa);
-        mesaBarDoLu.setPin();
-        this.mesaRepository.save(mesa);
+       ;
     }
 
     private void insertProduto() {
@@ -706,6 +701,7 @@ public class DatabaseLoader implements CommandLineRunner {
         this.categoriaProdutoRepository.save(new CategoriaProduto(barDoLu, "Bebidas"));
         this.categoriaProdutoRepository.save(new CategoriaProduto(barDoLu, "Sucos Naturais"));
         this.categoriaProdutoRepository.save(new CategoriaProduto(barDoLu, "Porçoes"));
+
 
     }
 
