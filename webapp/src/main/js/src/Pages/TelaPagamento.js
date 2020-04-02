@@ -260,12 +260,12 @@ const jsonComanda = {
 // rows sera mapeada na tabela
 
 jsonPagamento.pagamentos.forEach(item => {
-    console.log(item);
+    //console.log(item);
     rowsPagamento.push(createRow(item.id, item.clienteSolicitante.nome, item.valorPago, item.quantidade));
 });
 
 jsonComanda.itemPedido.forEach(item => {
-    console.log(item);
+    //console.log(item);
     rowsComanda.push(createRow(item.id, item.clienteSolicitante.nome, item.produto.nome, item.quantidade, item.valorUnitario));
 });
 

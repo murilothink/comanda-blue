@@ -16,8 +16,7 @@ import '../style.css';
 
 export default function TelaAbrirComanda(props){
 
-    // Para acessar contexto de login usuario
-    const { userLogin, setUserLogin } = React.useState(props.userLogin);
+    console.log("TelaAbrirComanda, userLogin", props.userLogin);
 
     // state para saber se pin falhou ou nao
     const [status, setStatus] = React.useState("");
@@ -28,7 +27,7 @@ export default function TelaAbrirComanda(props){
 
     const handleChange = prop => event => {
         setValues({ ...values, [prop]: event.target.value });
-        console.log(values);
+        //console.log(values);
     };
 
     // Funcao assincrona para verificacao do pin. É assincrona pois deve aguardar (await) o api.post
@@ -51,9 +50,9 @@ export default function TelaAbrirComanda(props){
             // e salvar no state userLogin
             props.OnSendUserLogin({
                 ...props.userLogin,
-                idComanda: response.data.id,
-                idEstabelecimento: values.pin.split("-")[0],
-                idMesa: values.pin.split("-")[1]
+                idComanda: parseInt(response.data.id),
+                idEstabelecimento: parseInt(values.pin.split("-")[0]),
+                idMesa: parseInt(values.pin.split("-")[1])
             });
 
             props.history.push('/menu');
