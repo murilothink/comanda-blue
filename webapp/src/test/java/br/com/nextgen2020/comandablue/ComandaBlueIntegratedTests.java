@@ -201,4 +201,38 @@ public class ComandaBlueIntegratedTests {
 
         return pedido;
     }
-}
+
+    @Test
+    public void multiplosUsuariosParticipandoMesmaComanda() throws Exception {
+        Mesa mesa = this.dataContext.getMesasEstabelecimento().get(3);
+        Estabelecimento estabelecimento = this.dataContext.getEstabelecimento();
+
+        String urlAbrirComanda = String.format("/estabelecimento/mesas/%s/comandas/abrir", mesa.getPin());
+
+        ObjectMapper jsonMapper = new ObjectMapper();
+
+        for(int i=1; i <= 3; i++){
+            int idUsuario = i;
+            String usuario1EmailCrypt = this.getEncryptedEmailUsuario(idUsuario);
+            String usuarioEmail = this.getEmailUsuario(idUsuario);
+
+            MvcResult result = mvc.perform(post(urlAbrirComanda)
+                    .contentType("application/x-www-form-urlencoded")
+                    .header("COMANDA-BLUE-CLIENTE", usuario1EmailCrypt))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+            Comanda comanda = jsonMapper.readValue(result.getResponse().getContentAsString(), Comanda.class);
+
+            // verifica que o estabelecimento, a mesa e o usuário são quem solicitou a comanda e verifica que só tem ele na comanda
+            Assert.assertEquals("A mesa da comanda não é igual a solicitada", mesa.getId(), comanda.getMesa().getId());
+            Assert.assertEquals("O Estabelecimento não é igual ao solicitado", estabelecimento.getCnpj(), comanda.getEstabelecimento().getCnpj());
+            Assert.assertEquals(i, comanda.getUsuarios().size());
+            Assert.assertEquals(usuarioEmail, comanda.getUsuarios().get(i-1).getEmail());
+
+        }
+
+
+      }
+    }
