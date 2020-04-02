@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../Services/api';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -31,7 +31,7 @@ const useStyles = makeStyles({
 
 // Converte valor para R$XX.XX
 function ccyFormat(num) {
-    return `R${num.toFixed(2)}`;
+    return `R$ ${num.toFixed(2)}`;
 }
 
 // Calcula valor total linha
@@ -40,16 +40,21 @@ function priceRow(qtde, valorUnitario) {
 }
 
 // Cria linha baseado nos parametros fornecidos
-function createRow(idPedido, cliente, item, qtde, valorUnitario) {
+function createRow(idPedido, cliente, email, item, qtde, valorUnitario) {
     const valorTotal = priceRow(valorUnitario, qtde);
-    return { idPedido, cliente, item, qtde, valorUnitario, valorTotal };
+    return { idPedido, cliente, email, item, qtde, valorUnitario, valorTotal };
 }
 
 // Calcula o total, baseado na tabela
 // TODO entender melhor o reduce
-function subtotal(items) {
-    return items.map(({ valorTotal }) => valorTotal).reduce((sum, i) => sum + i, 0);
-}
+
+// function subtotal(items) {
+//     let somaSubTotal
+//     items.forEach(elemnt => (elemnt.email==cliente)? somaSubTotal=somaSubTotal+element.valorTotal:null);
+//     return somaSubTotal;
+//     //return items.map(({ valorTotal }) => valorTotal).reduce((sum, i) => sum + i, 0);
+// }
+
 
 // Para criar linhas
 // const rows = [
@@ -58,86 +63,137 @@ function subtotal(items) {
 //     createRow(3, 'Tiago', 'Caldinho', 1, 12)
 // ];
 
-const rows = [];
+//const rows = [];
 
 // exemplo de retorno json do servidor
-const jsonComanda = {
-    id: 1,
-    estabelecimento: {
-        id: 1,
-        cnpj: 12345678901234,
-        nome: 'Bar do zé',
-        endereco: 'Rua da Santa Missa, 840, Centro, Leme/SP', 
-        descricao: 'Desde 1978 servindo cerveja gelada e o melhor torresmo de Leme'
-    },
-    mesa: {
-        id: 1,
-        nome: 'Deck lago 3'
-    },
-    usuarios:[
-        {nome: 'Danilo de Nadai Sicari', email: 'denadai.sicari@gmail.com'},
-        {nome: 'Erik Kenzo Oura Carlini Valle', email: 'erik@ciandt.com'}
-    ],
-    itemPedido:[
-        {
-            id: 1, 
-            clienteSolicitante:{
-                nome: 'Danilo de Nadai Sicari', 
-                email: 'denadai.sicari@gmail.com'
-            },
-            produto:{
-                id: 1,
-                nome: 'Torresmo frito',
-                valor: 12.50,
-                descricao: "Torresmo frito no óleo, acompanha molho especial",
-                unidade: 'unidade',
-                categoria:{
-                    id: 1,
-                    categoria: 'Salgados'
-                }
-            },
-            observacao: 'capricha na capa da gordura',
-            quantidade: 2,
-            valorUnitario: 12.5,
-            valorTotal: 25.0
-        },
-        {
-            id: 2, 
-            clienteSolicitante:{
-                nome: 'Erik Kenzo Oura Carlini Valle', 
-                email: 'erik@ciandt.com'
-            },
-            produto:{
-                id: 2,
-                nome: 'Bavaria',
-                valor: 3,
-                descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
-                unidade: 'lata',
-                categoria:{
-                    id: 2,
-                    categoria: 'Bebidas'
-                }
-            },
-            observacao: 'copo sujo',
-            quantidade: 3,
-            valorUnitario: 3,
-            valorTotal: 9
-        }
-    ],
-    status: 'Comanda Aberta'
-};
+// const jsonComanda = {
+//     id: 1,
+//     estabelecimento: {
+//         id: 1,
+//         cnpj: 12345678901234,
+//         nome: 'Bar do zé',
+//         endereco: 'Rua da Santa Missa, 840, Centro, Leme/SP', 
+//         descricao: 'Desde 1978 servindo cerveja gelada e o melhor torresmo de Leme'
+//     },
+//     mesa: {
+//         id: 1,
+//         nome: 'Deck lago 3'
+//     },
+//     usuarios:[
+//         {nome: 'Danilo de Nadai Sicari', email: 'denadai.sicari@gmail.com'},
+//         {nome: 'Erik Kenzo Oura Carlini Valle', email: 'erik@ciandt.com'}
+//     ],
+//     itemPedido:[
+//         {
+//             id: 1, 
+//             clienteSolicitante:{
+//                 nome: 'Danilo de Nadai Sicari', 
+//                 email: 'denadai.sicari@gmail.com'
+//             },
+//             produto:{
+//                 id: 1,
+//                 nome: 'Torresmo frito',
+//                 valor: 12.50,
+//                 descricao: "Torresmo frito no óleo, acompanha molho especial",
+//                 unidade: 'unidade',
+//                 categoria:{
+//                     id: 1,
+//                     categoria: 'Salgados'
+//                 }
+//             },
+//             observacao: 'capricha na capa da gordura',
+//             quantidade: 2,
+//             valorUnitario: 12.5,
+//             valorTotal: 25.0
+//         },
+//         {
+//             id: 2, 
+//             clienteSolicitante:{
+//                 nome: 'Erik Kenzo Oura Carlini Valle', 
+//                 email: 'erik@ciandt.com'
+//             },
+//             produto:{
+//                 id: 2,
+//                 nome: 'Bavaria',
+//                 valor: 3,
+//                 descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
+//                 unidade: 'lata',
+//                 categoria:{
+//                     id: 2,
+//                     categoria: 'Bebidas'
+//                 }
+//             },
+//             observacao: 'copo sujo',
+//             quantidade: 3,
+//             valorUnitario: 3,
+//             valorTotal: 9
+//         },
+//         {
+//             id: 3, 
+//             clienteSolicitante:{
+//                 nome: 'Danilo de Nadai Sicari', 
+//                 email: 'denadai.sicari@gmail.com'
+//             },
+//             produto:{
+//                 id: 2,
+//                 nome: 'Bavaria',
+//                 valor: 3,
+//                 descricao: "A verdadeira puro malte, sangue de rodeio, super gelada",
+//                 unidade: 'lata',
+//                 categoria:{
+//                     id: 2,
+//                     categoria: 'Bebidas'
+//                 }
+//             },
+//             observacao: 'copo sujo',
+//             quantidade: 3,
+//             valorUnitario: 3,
+//             valorTotal: 9
+//         }
+//     ],
+//     status: 'Comanda Aberta'
+// };
 
 // Para cada itemPedido do json retornado do servidor, adicione em rows
 // rows sera mapeada na tabela
-jsonComanda.itemPedido.forEach(item => {
-    console.log(item);
-    rows.push(createRow(item.id, item.clienteSolicitante.nome, item.produto.nome, item.quantidade, item.valorUnitario));
-});
+// jsonComanda.itemPedido.forEach(item => {
+//     console.log(item);
+//     rows.push(createRow(item.id, item.clienteSolicitante.nome, item.clienteSolicitante.email, item.produto.nome, item.quantidade, item.valorUnitario));
+// });
 
-const invoiceSubtotal = subtotal(rows);
-const invoiceTotal = invoiceSubtotal;
+//const invoiceSubtotal = subtotal(rows);
+//const invoiceTotal = invoiceSubtotal;
 
 export default function TelaExtrato(props) {
+
+    console.log("TelaExtrato, userLogin", props.userLogin);
+
+    const [ rows, setRows ] = useState([]);
+
+    // Ao carregar tela, puxar pedidos da comanda->mesa->estabelecimento
+    useEffect(() => {        
+        async function loadPedidos() {
+            try{
+                const options = {
+                    headers: {'COMANDA-BLUE-CLIENTE': props.userLogin.comandaBlueCliente }
+                };
+
+                const response = await api.get(`/estabelecimento/${props.userLogin.idEstabelecimento}/mesas/${props.userLogin.idMesa}/comandas/${props.userLogin.idComanda}/pedidos`);
+                
+                response.data.forEach(item => {
+                    //rows.push(createRow(item.id, item.clienteSolicitante.nome, item.clienteSolicitante.email, item.produto.nome, item.quantidade, item.valorUnitario));
+                    setRows(oldRows => [...oldRows, createRow(item.id, item.clienteSolicitante.nome, item.clienteSolicitante.email, item.produto.nome, item.quantidade, item.valorUnitario)]);
+                });
+
+                //console.log(rows);
+            }
+            catch(error) {
+                console.log(error);
+            }   
+        }
+    
+        loadPedidos();
+      }, []);
 
     const classes = useStyles();
     
@@ -147,7 +203,19 @@ export default function TelaExtrato(props) {
         setCliente(event.target.value);
     };
 
-    const [ cliente, setCliente ] = useState('');
+    const [ cliente, setCliente ] = useState('all');
+    
+    const subtotal = (items) => {
+        let somaSubTotal= 0.0;
+        items.forEach(element => (element.email==cliente)? somaSubTotal+=parseFloat(element.valorTotal):(cliente=="all")? somaSubTotal+=parseFloat(element.valorTotal):null);
+        return somaSubTotal;
+    }
+
+    const total = (items) => {
+        let somaTotal=0.0;
+        items.forEach(element => somaTotal+=parseFloat(element.valorTotal));
+        return somaTotal
+    }
 
     return (
     <Grid id="telaExtrato">        
@@ -183,6 +251,7 @@ export default function TelaExtrato(props) {
                 justify="center"
                 direction="column" item xs={12} sm={6}>
                 <Button variant="contained" color="primary" style={{background: '#2d9bf0', color: 'white'}}
+                    onClick={()=>props.history.push('/menu')}
                 >
                     Voltar ao menu
                 </Button>
@@ -206,9 +275,11 @@ export default function TelaExtrato(props) {
                     >
                         <MenuItem key="all" value="all"><em>Todos</em></MenuItem>
                         
-                        {jsonComanda.usuarios.map((cliente) => (
+                        {/* Nao temos como acessar lista usuario?? Criar novo endpoint para trazer usuarios?? Ler comanda?? Se ler comanda, comanda ja tem os pedidos... */}
+
+                        {/* {pedidos.usuarios.map((cliente) => (
                             <MenuItem key={cliente.email} value={cliente.email}>{cliente.nome}</MenuItem>
-                        ))}
+                        ))} */}
 
                     </Select>
                 </FormControl>
@@ -232,7 +303,7 @@ export default function TelaExtrato(props) {
                 direction="column" item xs={11} sm={11} lg={8} id="tabelaExtrato"
             >
 
-                <TableContainer fixedHeader ={true}>
+                <TableContainer>
                     <Table className={classes.table} aria-label="tabela extrato">
 
                         <TableHead >
@@ -246,25 +317,33 @@ export default function TelaExtrato(props) {
                         </TableHead>
 
                         <TableBody>
-
-                            {rows.map((row) => (
+                            
+                            {rows.map((row) => {return((cliente==row.email)?
                                 <TableRow key={row.idPedido}>
                                     <TableCell>{row.cliente}</TableCell>
                                     <TableCell>{row.item}</TableCell>
                                     <TableCell align="right">{row.qtde}</TableCell>
                                     <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
                                     <TableCell align="right">{ccyFormat(row.valorTotal)}</TableCell>
-                                </TableRow>
-                            ))}
-
+                                </TableRow>: 
+                                (cliente=="all")?
+                                <TableRow key={row.idPedido}>
+                                    <TableCell>{row.cliente}</TableCell>
+                                    <TableCell>{row.item}</TableCell>
+                                    <TableCell align="right">{row.qtde}</TableCell>
+                                    <TableCell align="right">{ccyFormat(row.valorUnitario)}</TableCell>
+                                    <TableCell align="right">{ccyFormat(row.valorTotal)}</TableCell>
+                                </TableRow>: null
+                            )})}
+                            
                             <TableRow>
                                 <TableCell colSpan={4}><b>Subtotal</b></TableCell>
-                                <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
+                                <TableCell align="right">{ccyFormat(subtotal(rows))}</TableCell>
                             </TableRow>
 
                             <TableRow>
                                 <TableCell colSpan={4}><b>Total Mesa</b></TableCell>
-                                <TableCell align="right">{ccyFormat(invoiceTotal)}</TableCell>
+                                <TableCell align="right">{ccyFormat(total(rows))}</TableCell>
                             </TableRow>
 
                         </TableBody>

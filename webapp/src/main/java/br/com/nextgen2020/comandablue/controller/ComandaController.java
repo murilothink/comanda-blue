@@ -1,17 +1,16 @@
 package br.com.nextgen2020.comandablue.controller;
 
-import br.com.nextgen2020.comandablue.service.ComandaService;
 import br.com.nextgen2020.comandablue.form.PedidoForm;
+import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 import br.com.nextgen2020.comandablue.model.entidade.Pedido;
+import br.com.nextgen2020.comandablue.service.ComandaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import br.com.nextgen2020.comandablue.model.entidade.Comanda;
 
 import javax.transaction.Transactional;
 import java.util.List;
@@ -29,6 +28,7 @@ public class ComandaController {
             consumes = "application/x-www-form-urlencoded",
             produces = "application/json")
     @Transactional
+    @CrossOrigin(origins = "http://localhost:3000")
     public ResponseEntity<Comanda> abrir(@PathVariable(value="pinMesa") String pinMesa,
                                          @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailClienteCriptografado){
 
@@ -62,7 +62,7 @@ public class ComandaController {
             @PathVariable(value="idMesa") Long idMesa,
             @PathVariable(value="idComanda") Long idComanda,
             @RequestBody List<PedidoForm> itemPedido,
-            @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailCliente){
+            @RequestHeader(name = "COMANDA-BLUE-CLIENTE", required = true) String emailCliente) throws Exception {
 
         return comandaService.fazerPedido(idComanda, emailCliente, itemPedido, idEstabelecimento, idMesa);
     }
@@ -72,10 +72,11 @@ public class ComandaController {
             @PathVariable(value = "id-estabelecimento") Long idEstabelecimento,
             @PathVariable(value = "id-mesa") Long idMesa,
             @PathVariable(value = "id-comanda") Long idComanda,
-            @RequestParam(required = false) String clienteId) {
+            @RequestParam(required = false) String emailCliente){
 
         try{
-            List<Pedido> pedidosLista = comandaService.listarPedidos(idComanda, clienteId);
+            log.info("Email que chegou do forno: " + emailCliente);
+            List<Pedido> pedidosLista = comandaService.listarPedidos(idComanda, emailCliente);
 
             if(pedidosLista != null){
                 return new ResponseEntity<>(pedidosLista, HttpStatus.OK);

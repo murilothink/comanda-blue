@@ -17,15 +17,16 @@ import TelaAbrirComanda from './Pages/TelaAbrirComanda';
 import TelaScanQrcode from './Pages/TelaScanQrcode';
 import TelaExtrato from './Pages/TelaExtrato';
 import TelaPagamento from './Pages/TelaPagamento';
+import TelaCardapio from './Pages/TelaCardapio';
 
 function Routes(){
     // Estados a serem guardados para login usuario
     const [userLogin, setUserLogin] = useState({
-        nome: '',
-        comandaBlueCliente: '',
-        idComanda: '',
-        idEstabelecimento: '',
-        idMesa: ''       
+        nome: null,
+        comandaBlueCliente: null,
+        idComanda: null,
+        idEstabelecimento: null,
+        idMesa: null
     });
 
     const handlerSendUserLogin = (userLoginObj) =>{
@@ -39,7 +40,8 @@ function Routes(){
                 <Route path="/login" component={(props) =>  <TelaLogin {...props} OnSendUserLogin={handlerSendUserLogin} />} />
                 <Route path="/abrircomanda"  component={(props) => <TelaAbrirComanda {...props} userLogin={userLogin} OnSendUserLogin={handlerSendUserLogin} />} /> 
                 <Route path="/scanqrcode"  component={(props) => <TelaScanQrcode {...props} userLogin={userLogin} OnSendUserLogin={handlerSendUserLogin}/>} />
-                <Route path="/extrato"  component={(props) => <TelaExtrato {...props} />} />   
+                <Route path="/menu"  component={(props) => <TelaCardapio {...props} userLogin={userLogin} />} />
+                <Route path="/extrato"  component={(props) => <TelaExtrato {...props} userLogin={userLogin} />} />   
                 <Route path="/pagamento"  component={(props) => <TelaPagamento {...props} userLogin={userLogin} OnSendUserLogin={handlerSendUserLogin} />} /> 
             </Switch>
         </BrowserRouter>

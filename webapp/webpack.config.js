@@ -7,7 +7,7 @@ var path = require('path');
 module.exports = {
 
     // Where to look for react application
-    entry: './src/main/js/index.js',
+    entry: './src/main/js/src/index.js',
 
     // This option controls if and how source maps are generated
     // Creates sourcemaps so that, when you are debugging JS code in the browser,

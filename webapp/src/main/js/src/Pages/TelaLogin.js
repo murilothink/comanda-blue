@@ -23,7 +23,7 @@ import '../style.css';
 // No foi possivel utilizar HOOKS com: export default class Login extends React.Component
 export default function TelaLogin(props){
 
-    console.log(props);
+    console.log("TelaLogin, userLogin", props.userLogin);
 
     // state para saber se login falhou ou nao
     const [status, setStatus] = React.useState("");
@@ -39,7 +39,7 @@ export default function TelaLogin(props){
     // quando qualquer input da pagina mudar de valor ira acionar este metodo
     const handleChange = prop => event => {
       setValues({ ...values, [prop]: event.target.value });
-      console.log(values);
+      //console.log(values);
     };
 
     // quando clicar no icone para ver o password
@@ -67,6 +67,7 @@ export default function TelaLogin(props){
         // Se login foi bem sucedido, servidor retorna uma string e react guarda no userLogin state
         // o nome e comandaBlueCliente (que eh o email do cliente criptografado)
         props.OnSendUserLogin({
+          ...props.userLogin,
           nome: response.data.nome,
           comandaBlueCliente: response.data.comandaBlueCliente  
         });

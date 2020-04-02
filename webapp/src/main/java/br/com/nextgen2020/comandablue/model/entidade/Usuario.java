@@ -1,5 +1,7 @@
 package br.com.nextgen2020.comandablue.model.entidade;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
@@ -20,6 +22,7 @@ public class Usuario {
     private String email;
 
     @NotEmpty
+    @JsonIgnore // Para nao retornar senha nas requsicoes
     private String senha;
 
     public Usuario(){

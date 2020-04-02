@@ -20,13 +20,13 @@ import { Button,
          TextareaAutosize,
 } from '@material-ui/core';
 
-import api from "../../services/api";
+import api from "../Services/api";
 
 //icones
 import AddCircleOutlineRoundedIcon from '@material-ui/icons/AddCircleOutlineRounded';
 import RemoveCircleOutlineRoundedIcon from '@material-ui/icons/RemoveCircleOutlineRounded';
 
-import './TelaCardapio.css';
+import '../style.css';
 
 function createData(produto, observacao, quantidade, valorUnitario, valorTotal) {
     return { produto, observacao, quantidade, valorUnitario, valorTotal};
@@ -40,20 +40,34 @@ export default class Menu extends React.Component{
             listaProduto: [],
             categorias: [],
             estabelecimento: {
-                id: 1,
+                id: this.props.userLogin.idEstabelecimento,
                 nome: null
-            },
-            idMesa: 1,
-            idComanda: 1
+            }
         };
+    }
+
+
+    //TODO
+    //Checa as informacoes vindas do pai
+    //e no caso de algum estar faltante
+    //redireciona o usuario
+    checkUserInfo(){
+        if(!this.props.userLogin.comandaBlueCliente){
+            this.props.history.push("/login");
+        }
+        else{
+            if(!this.props.userLogin.idComanda){
+                this.props.history.push("/abrirComanda");
+            }
+        }
     }
 
     //Ao montar o componente faz-se a requisição do estabelecimento
     //E de todas as categorias do menu
     componentDidMount(){
+        this.checkUserInfo();
         this.getCategoriasEstabelecimento();
-        this.getMenu(-1);
-        this.abrirComanda();    
+        this.getMenu(-1);  
     }
 
     //limpa carrinho
@@ -100,35 +114,18 @@ export default class Menu extends React.Component{
         });
     }
 
-    //Somente para simular o fluxo completo
-    abrirComanda(){
-        const options = {
-            headers: {'COMANDA-BLUE-CLIENTE': "WAqqMDCYFpZM/TDFelwCWvjoqKRfcI6YSNWnJcNAFdM="}
-        };
-
-        api.post(
-            '/estabelecimento/mesas/' + '1-1' + 
-            '/comandas/abrir', null, options)
-        .then(response =>{
-            console.log(response);
-        })
-        .catch(err => {
-            console.log(err)
-        });
-    }
-
     //TODO
     //Posta na api os pedidos do referido carrinho
     postCarrinho(){
         const url = "/estabelecimento/"+this.state.estabelecimento.id+
-                    "/mesas/"+this.state.idMesa+
-                    "/comandas/"+this.state.idComanda+
+                    "/mesas/"+this.props.userLogin.idMesa+
+                    "/comandas/"+this.props.userLogin.idComanda+
                     "/pedir";
         
         const data = this.state.carrinho.slice();
 
         const options = {
-            headers: {'COMANDA-BLUE-CLIENTE': "WAqqMDCYFpZM/TDFelwCWvjoqKRfcI6YSNWnJcNAFdM="}
+            headers: {'COMANDA-BLUE-CLIENTE': this.props.userLogin.comandaBlueCliente}
         };
 
         api.post(url, data, options)
@@ -216,7 +213,7 @@ export default class Menu extends React.Component{
 
     render(){
         return (
-            <div class="wrapper">
+            <div id="telaCardapio" class="wrapper">
                 <div class="main_collumn">
                     <h1 class="estabelecimento_title">
                         {this.state.estabelecimento.nome}
@@ -238,7 +235,9 @@ export default class Menu extends React.Component{
                         <FormHelperText>Selecione uma categoria</FormHelperText>
                     </FormControl>
                     
-                    <Button size="small" className="btn_extrato" variant="contained" color="primary">Exibir Extrato</Button>
+                    <Button size="small" className="btn_extrato" variant="contained" color="primary" onClick={()=>this.props.history.push('/extrato')} >
+                        Exibir Extrato
+                    </Button>
                     </div>  
                     <MenuList OnAddItem={this.handleAddItem} 
                       listaProduto={this.state.listaProduto}
@@ -430,7 +429,7 @@ class ItemsList extends React.Component{
 
                                     <TableCell className="ajustaTabela">
 
-                                        <IconButton className="iconButton">
+                                        <IconButton className="iconButton">                                        
                                             <RemoveCircleOutlineRoundedIcon onClick={()=>this.props.OnDecrementItem(key)} className="vermelho"/>
                                         </IconButton> 
                                         

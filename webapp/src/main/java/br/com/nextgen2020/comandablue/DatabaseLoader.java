@@ -46,28 +46,29 @@ public class DatabaseLoader implements CommandLineRunner {
 
         Mesa mesa = new Mesa(barDoZe, "Deck lago 3");
         this.mesaRepository.save(mesa); // salvar primeira vez para salvar id
-        mesa.setPin();
-        this.mesaRepository.save(mesa); // salvar segunda vez para salvar pin gerado
+        // arrumei a propriedade Pin para ser uma propriedade calculada então não há necessidade de salvar 2 vezes
+//        mesa.setPin();
+//        this.mesaRepository.save(mesa); // salvar segunda vez para salvar pin gerado
 
         mesa = new Mesa(barDoZe, "Deck lago 7");
         this.mesaRepository.save(mesa);
-        mesa.setPin();
-        this.mesaRepository.save(mesa);
+//        mesa.setPin();
+//        this.mesaRepository.save(mesa);
 
         mesa = new Mesa(barDoZe, "Interno 2");
         this.mesaRepository.save(mesa);
-        mesa.setPin();
-        this.mesaRepository.save(mesa);
+//        mesa.setPin();
+//        this.mesaRepository.save(mesa);
 
         mesa = new Mesa(barDoZe, "Interno 8");
         this.mesaRepository.save(mesa);
-        mesa.setPin();
-        this.mesaRepository.save(mesa);
+//        mesa.setPin();
+//        this.mesaRepository.save(mesa);
 
         mesa = new Mesa(barDoZe, "Lado Janela A");
         this.mesaRepository.save(mesa);
-        mesa.setPin();
-        this.mesaRepository.save(mesa);
+//        mesa.setPin();
+//        this.mesaRepository.save(mesa);
 
 //        Estabelecimento calegaris = estabelecimentoRepository.findByCnpj("54255906000186");
 //
@@ -266,8 +267,6 @@ public class DatabaseLoader implements CommandLineRunner {
         this.categoriaProdutoRepository.save(new CategoriaProduto(barDoZe, "Bebidas"));
         this.categoriaProdutoRepository.save(new CategoriaProduto(barDoZe, "Sucos Naturais"));
         this.categoriaProdutoRepository.save(new CategoriaProduto(barDoZe, "Porçoes"));
-
-
 
 //        Estabelecimento calegaris = estabelecimentoRepository.findByCnpj("54255906000186");
 //        this.categoriaProdutoRepository.save(new CategoriaProduto(calegaris, "Padaria"));

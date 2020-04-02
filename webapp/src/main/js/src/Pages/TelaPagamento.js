@@ -286,7 +286,7 @@ jsonPagamento.pagamentos.forEach(item => {
 });
 
 jsonComanda.itemPedido.forEach(item => {
-    console.log(item);
+    //console.log(item);
     rowsComanda.push(createRow(item.id, item.clienteSolicitante.nome, item.produto.nome, item.quantidade, item.valorUnitario));
 });
 
