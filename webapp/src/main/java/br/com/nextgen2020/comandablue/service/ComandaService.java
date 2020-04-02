@@ -129,8 +129,7 @@ public class ComandaService {
         return comanda;
     }
 
-    public List<Pedido> listarPedidos(Long idComanda, String emailCliente) throws Exception {
-        List<Pedido> pedidoLista;
+    public List<Pedido> listarPedidos(Long idComanda, String emailCliente) {
         List<Pedido> pedidosCliente = new ArrayList<>();
         Optional<Comanda> comanda;
 
@@ -141,16 +140,24 @@ public class ComandaService {
         else {
             log.info("Entrou no else");
             comanda = comandaRepository.findByIdAndItemPedidoClienteSolicitanteEmail(idComanda, emailCliente);
-            //comanda = comandaRepository.findByItemPedidoClienteSolicitanteEmail(emailCliente);
 
-
+            if(comanda.isPresent()) {
+                for (int j = 0; j < comanda.get().getItemPedido().size(); j++) {
+                    if (comanda.get().getItemPedido().get(j).getClienteSolicitante().getEmail().equals(emailCliente)) {
+                        pedidosCliente.add(comanda.get().getItemPedido().get(j));
+                    }
+                }
+            }
         }
 
         if(comanda.isPresent()) {
-            return comanda.get().getItemPedido();
+            if(pedidosCliente.isEmpty()) {
+                return comanda.get().getItemPedido();
+            }
+            return pedidosCliente;
         }
         else {
-            return new ArrayList<Pedido>();
+            return new ArrayList<>();
         }
     }
 
