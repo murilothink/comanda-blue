@@ -93,6 +93,7 @@ function ComandaHeader(){
                     aria-label="logout current user"
                     onClick={handleLogout}
                     color="inherit"
+                    href="/"
                 > 
                     <ExitToAppIcon />
                 </IconButton>
