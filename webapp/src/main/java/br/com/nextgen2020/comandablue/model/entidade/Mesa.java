@@ -31,7 +31,6 @@ public class Mesa {
                 @NotEmpty String nome) {
         this.estabelecimento = estabelecimento;
         this.nome = nome;
-        this.pin="";
         this.qrCode="";
     }
 
@@ -51,9 +50,12 @@ public class Mesa {
         return pin;
     }
 
+    /* // Lucianos@ciandt: não faz sentido criar este campo uma vez que ele é composto por dois IDs gerados pela base
+                           de dados. Basta calcularmos ele no get
     public void setPin() {
         this.pin = String.valueOf(estabelecimento.getId()) + "-" + String.valueOf(this.getId());
     }
+    */
 
     public String getQrCode() {
         return qrCode;
@@ -69,5 +71,14 @@ public class Mesa {
 
     public void setEstabelecimento(Estabelecimento estabelecimento) {
         this.estabelecimento = estabelecimento;
+    }
+
+    /**
+     * Gera valor do PIN da mesa antes de salvar a entidade mesa.
+     * Para mais detalhes ver a documentação do atributo @PostPersist
+     */
+    @PostPersist
+    public void onSave(){
+        this.pin = this.estabelecimento.getId() + "." + this.id;
     }
 }
