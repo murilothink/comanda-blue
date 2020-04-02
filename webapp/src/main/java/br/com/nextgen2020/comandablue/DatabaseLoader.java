@@ -66,15 +66,23 @@ public class DatabaseLoader implements CommandLineRunner {
         this.mesaRepository.save(mesa);
 
 
+
+
+
         Estabelecimento barDoLu = estabelecimentoRepository.findByCnpj("98765432109876");
 
         Mesa mesaBarDoLu = new Mesa(barDoLu, "Mesa da janela 2");
         this.mesaRepository.save(mesaBarDoLu); // salvar primeira vez para salvar id
 
+        mesaBarDoLu = new Mesa(barDoLu, "Mesa janela 3");
+        this.mesaRepository.save(mesaBarDoLu);
 
-        mesaBarDoLu = new Mesa(barDoLu, "Mesa da janela 3");
-        this.mesaRepository.save(mesa);
-       ;
+        mesaBarDoLu = new Mesa(barDoLu, "Mesa janela 4");
+        this.mesaRepository.save(mesaBarDoLu);
+
+        mesaBarDoLu = new Mesa(barDoLu, "Mesa janela 5");
+        this.mesaRepository.save(mesaBarDoLu);
+
     }
 
     private void insertProduto() {
@@ -420,7 +428,6 @@ public class DatabaseLoader implements CommandLineRunner {
                 "https://cdn.guiadacozinha.com.br/wp-content/uploads/2019/10/coxinha-batata-catupiry.jpg"
         ));
 
-
         //PRODUTOS DO TIPO PORÇÕES
 
         this.produtoRepository.save(new Produto(
@@ -473,7 +480,6 @@ public class DatabaseLoader implements CommandLineRunner {
                 "https://img.stpu.com.br/?img=https://s3.amazonaws.com/pu-mgr/default/a0R0f00000zSm5YEAS/5b3a99d1e4b0f15190213827.jpg&w=710&h=462"
         ));
 
-
         //PRODUTOS DO TIPO LANCHE
 
         this.produtoRepository.save(new Produto(
@@ -505,7 +511,6 @@ public class DatabaseLoader implements CommandLineRunner {
                 categoriaProdutoRepository.findByCategoriaAndEstabelecimento("Lanches", estabelecimentoRepository.findByCnpj("12345678901234")),
                 "https://lh3.googleusercontent.com/proxy/8f-erI083sgEHSyPRrfQlqNK5aqmJ5fVY-KdNtxeWSGsJ1C-iXMb9Mnoxvznj2rUOgz1sByt9_6VVao4BbIgFcFaePj2uvxbfqWVTiNsdYxNwImyIOmbANRvP_jCGMS06YU"
         ));
-
 
         //PRODUTOS DO TIPO BEBIDA
 
@@ -609,7 +614,6 @@ public class DatabaseLoader implements CommandLineRunner {
                 "https://www.kerokery.com.br/media/catalog/product/cache/1/image/9df78eab33525d08d6e5fb8d27136e95/k/k/kkr-_176-sku-870___bebidas__coca-cola-2l.jpg"
         ));
 
-
         //PRODUTOS DO TIPO SUCO NATURAIS
 
         this.produtoRepository.save(new Produto(
@@ -632,7 +636,6 @@ public class DatabaseLoader implements CommandLineRunner {
                 "https://www.mundoboaforma.com.br/wp-content/uploads/2017/06/suco-de-graviola-1280x720.jpg"
         ));
 
-
         this.produtoRepository.save(new Produto(
                 estabelecimentoRepository.findByCnpj("98765432109876"),
                 "Suco de Morango Com Leite",
@@ -653,7 +656,6 @@ public class DatabaseLoader implements CommandLineRunner {
                 "https://felizsaude.com.br/wp-content/uploads/2019/12/sucode.jpg"
         ));
 
-
         this.produtoRepository.save(new Produto(
                 estabelecimentoRepository.findByCnpj("98765432109876"),
                 "Suco de Limão",
@@ -663,12 +665,6 @@ public class DatabaseLoader implements CommandLineRunner {
                 categoriaProdutoRepository.findByCategoriaAndEstabelecimento("Sucos Naturais", estabelecimentoRepository.findByCnpj("98765432109876")),
                 "https://www.mundoboaforma.com.br/wp-content/uploads/2017/08/suco-de-limao-1280x720.jpg"
         ));
-
-
-
-
-
-
 
     }
 
