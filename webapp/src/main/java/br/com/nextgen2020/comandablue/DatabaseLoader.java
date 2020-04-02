@@ -268,8 +268,6 @@ public class DatabaseLoader implements CommandLineRunner {
         this.categoriaProdutoRepository.save(new CategoriaProduto(barDoZe, "Sucos Naturais"));
         this.categoriaProdutoRepository.save(new CategoriaProduto(barDoZe, "Porçoes"));
 
-
-
 //        Estabelecimento calegaris = estabelecimentoRepository.findByCnpj("54255906000186");
 //        this.categoriaProdutoRepository.save(new CategoriaProduto(calegaris, "Padaria"));
 //        this.categoriaProdutoRepository.save(new CategoriaProduto(calegaris, "Bebidas"));
