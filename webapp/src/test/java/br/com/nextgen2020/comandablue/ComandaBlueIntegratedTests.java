@@ -17,6 +17,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -36,6 +38,8 @@ import java.util.List;
 // @TestPropertySource(locations = "classpath:application-integrationtest.properties")
 @AutoConfigureTestDatabase
 public class ComandaBlueIntegratedTests {
+
+    private static final Logger log = LoggerFactory.getLogger(ComandaBlueIntegratedTests.class);
 
     @Autowired
     private UsuarioRepository usuarioRepository;
@@ -136,7 +140,7 @@ public class ComandaBlueIntegratedTests {
         int idUsuario = 1;
         String usuario1EmailCrypt = this.getEncryptedEmailUsuario(idUsuario);
         String usuarioEmail = this.getEmailUsuario(idUsuario);
-        Mesa mesa = this.dataContext.getMesasEstabelecimento().get(3);
+        Mesa mesa = this.dataContext.getMesasEstabelecimento().get(11);
         Estabelecimento estabelecimento = this.dataContext.getEstabelecimento();
 
         String urlAbrirComanda = String.format("/estabelecimento/mesas/%s/comandas/abrir", mesa.getPin());
@@ -237,19 +241,57 @@ public class ComandaBlueIntegratedTests {
       }
 
     @Test
-    public void multiplasComandasComUmUsuario() throws Exception {
+    public void mesmoUsuarioEntrandoNaMesmaMesaMultiplasVezes () throws Exception {
+        Estabelecimento estabelecimento = this.dataContext.getEstabelecimento();
+
+        Mesa mesa = this.dataContext.getMesasEstabelecimento().get(0);
+        String urlAbrirComanda = String.format("/estabelecimento/mesas/%s/comandas/abrir", mesa.getPin());
+
+        int idUsuario = 1;
+        String usuario1EmailCrypt = this.getEncryptedEmailUsuario(idUsuario);
+        String usuarioEmail = this.getEmailUsuario(idUsuario);
+
+        ObjectMapper jsonMapper = new ObjectMapper();
+
+        for(int i=1; i <= 4; i++){
+
+            log.info(String.format("Abrir comanda usuario %s | %s",usuarioEmail, urlAbrirComanda));
+
+            MvcResult result = mvc.perform(post(urlAbrirComanda)
+                    .contentType("application/x-www-form-urlencoded")
+                    .header("COMANDA-BLUE-CLIENTE", usuario1EmailCrypt))
+                    .andDo(print())
+                    .andExpect(status().isOk())
+                    .andReturn();
+
+            Comanda comanda = jsonMapper.readValue(result.getResponse().getContentAsString(), Comanda.class);
+
+            // verifica que o estabelecimento, a mesa e o usuário são quem solicitou a comanda e verifica que só tem ele na comanda
+            Assert.assertEquals("A mesa da comanda não é igual a solicitada", mesa.getId(), comanda.getMesa().getId());
+            Assert.assertEquals("O Estabelecimento não é igual ao solicitado", estabelecimento.getCnpj(), comanda.getEstabelecimento().getCnpj());
+            Assert.assertEquals(1, comanda.getUsuarios().size());
+            Assert.assertEquals(usuarioEmail, comanda.getUsuarios().get(0).getEmail());
+
+        }
+    }
+
+
+    @Test
+    public void mesmoUsuarioEmMultiplasComandas() throws Exception {
         Estabelecimento estabelecimento = this.dataContext.getEstabelecimento();
 
 
         ObjectMapper jsonMapper = new ObjectMapper();
 
-        for(int i=1; i <= 2; i++){
-            int idUsuario = i;
+        for(int i=1; i <= 4; i++){
+            int idUsuario = 1;
             String usuario1EmailCrypt = this.getEncryptedEmailUsuario(idUsuario);
             String usuarioEmail = this.getEmailUsuario(idUsuario);
             Mesa mesa = this.dataContext.getMesasEstabelecimento().get(i);
 
             String urlAbrirComanda = String.format("/estabelecimento/mesas/%s/comandas/abrir", mesa.getPin());
+
+            log.info(String.format("Abrir comanda usuario %s | %s",usuarioEmail, urlAbrirComanda));
 
             MvcResult result = mvc.perform(post(urlAbrirComanda)
                     .contentType("application/x-www-form-urlencoded")
