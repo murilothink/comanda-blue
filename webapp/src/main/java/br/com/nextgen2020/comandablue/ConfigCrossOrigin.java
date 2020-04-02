@@ -13,10 +13,8 @@ public class ConfigCrossOrigin implements WebMvcConfigurer {
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
                 .allowedOrigins("http://localhost:3000");
-                //.allowedMethods("GET", "POST", "PUT", "DELETE")
-                //.allowedHeaders("COMANDA-BLUE-CLIENTE" /*, "header2"*/);
-                //.exposedHeaders("header1", "header2")
-                //.allowCredentials(false).maxAge(3600);
+
+
     }
 
 }

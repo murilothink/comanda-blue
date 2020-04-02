@@ -6,7 +6,6 @@ import br.com.nextgen2020.comandablue.model.entidade.Estabelecimento;
 import br.com.nextgen2020.comandablue.repository.CategoriaProdutoRepository;
 import br.com.nextgen2020.comandablue.repository.EstabelecimentoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
