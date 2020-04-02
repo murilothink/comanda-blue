@@ -265,6 +265,7 @@ export default function TelaExtrato(props) {
                     <Button
                         variant="contained"
                         style={{ background: '#2d9bf0', color: 'white', height: '40px', width: '100px', }}
+                        onClick={()=>props.history.push('/pagamento')}
                     >
                         Pagar
                 </Button>
