@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import api from '../Services/api';
 
 import { makeStyles } from '@material-ui/core/styles';
@@ -109,38 +109,7 @@ const rowsPagamento = [];
 
 const jsonPagamento = {
     pagamentos:[
-        {
-            id: 1, 
-            clienteSolicitante:{
-                nome: 'Danilo de Nadai Sicari', 
-                email: 'denadai.sicari@gmail.com'
-            },
-            valorPago: 9
-        },
-        {
-            id: 2, 
-            clienteSolicitante:{
-                nome: 'Danilo de Nadai Sicari', 
-                email: 'denadai.sicari@gmail.com'
-            },
-            valorPago: 9
-        },
-        {
-            id: 3, 
-            clienteSolicitante:{
-                nome: 'Danilo de Nadai Sicari', 
-                email: 'denadai.sicari@gmail.com'
-            },
-            valorPago: 9
-        },
-        {
-            id: 4, 
-            clienteSolicitante:{
-                nome: 'Danilo de Nadai Sicari', 
-                email: 'denadai.sicari@gmail.com'
-            },
-            valorPago: 9
-        }
+        
     ]
 };
 
@@ -280,10 +249,12 @@ const jsonComanda = {
 // Para cada itemPedido do json retornado do servidor, adicione em rows
 // rows sera mapeada na tabela
 
-jsonPagamento.pagamentos.forEach(item => {
-    console.log(item);
-    rowsPagamento.push(createRowPagamento(item.id, item.clienteSolicitante.nome, item.valorPago));
-});
+const converterPagamento = () => {
+    jsonPagamento.pagamentos.forEach(item => {
+        console.log(item);
+        rowsPagamento.push(createRowPagamento(item.id, item.cliente.nome, item.valorPago));
+    });
+}
 
 jsonComanda.itemPedido.forEach(item => {
     //console.log(item);
@@ -299,8 +270,32 @@ const invoiceTotalPagar = invoiceTotal - invoiceTotalPago;
 
 
 function ComponentePagamento(props) {
+    const [ render, setRender ] = useState(true);
+
+    const renderizar = () => {
+        setRender(!render)
+    };
 
     const classes = useStyles();
+
+    const getPagamento = () => {
+        const url = "/comanda/"+1+"/pagamento"
+        
+        api.get(url)
+        .then(response => {
+            jsonPagamento.pagamentos = response.data;
+            converterPagamento();
+            renderizar();
+            console.log(response);
+            console.log(jsonPagamento);
+            console.log(rowsPagamento);
+        })
+        .catch(error => {
+            console.log(error);
+        });
+    }
+
+    useEffect(getPagamento);
 
     // Evento ao selecionar item no selectCliente
     const handleChangeSelectCliente = (event) => {
