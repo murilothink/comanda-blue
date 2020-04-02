@@ -8,15 +8,13 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import br.com.nextgen2020.comandablue.form.LogarUsuarioForm;
+import br.com.nextgen2020.comandablue.form.PedidoForm;
 import br.com.nextgen2020.comandablue.model.entidade.*;
 import br.com.nextgen2020.comandablue.repository.*;
 import br.com.nextgen2020.comandablue.security.EncryptDecrypt;
 import br.com.nextgen2020.comandablue.util.WebConverter;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import net.minidev.json.JSONObject;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +27,11 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 
-import javax.annotation.PostConstruct;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = ComandablueApplication.class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {ComandablueApplication.class,DatabaseContext.class} )
 @AutoConfigureMockMvc
 // @TestPropertySource(locations = "classpath:application-integrationtest.properties")
 @AutoConfigureTestDatabase
@@ -60,11 +55,9 @@ public class ComandaBlueIntegratedTests {
     @Autowired
     private MockMvc mvc;
 
-    private Estabelecimento estabelecimento;
+    @Autowired
+    private DatabaseContext dataContext;
 
-    private List<Mesa> mesasEstabelecimento;
-
-    private static boolean inicializado = false;
 
     private EncryptDecrypt encryptDecrypt;
 
@@ -72,19 +65,6 @@ public class ComandaBlueIntegratedTests {
         this.encryptDecrypt = new EncryptDecrypt();
     }
 
-    @Before
-    public void setUpDatabase(){
-
-        // só faz a inicialização a primeira vez // o correto é fazer em nível de classe mas tenho que refatorar
-        if(!inicializado){
-            this.criarUsuarios(5);
-            this.estabelecimento = this.criarEstabelecimento();
-            this.mesasEstabelecimento = this.criarMesas(this.estabelecimento, 5);
-            this.criarProdutos(this.estabelecimento, 3, 4);
-
-            ComandaBlueIntegratedTests.inicializado = true;
-        }
-    }
 
     private String getEmailUsuario(int id){
         return String.format("fulano0%s@domain.com", id);
@@ -94,50 +74,6 @@ public class ComandaBlueIntegratedTests {
        return this.encryptDecrypt.encrypt(this.getEmailUsuario(id));
     }
 
-    private void criarUsuarios(int qtdRegistros){
-        for(int i=1; i <= qtdRegistros; i++){
-            String nome = "Fulano_" + i;
-            String email = this.getEmailUsuario(i);//"fulano0" + i + "@domain.com";
-            String senha = "123456";
-
-            Usuario usuario = new Usuario(nome, email, senha);
-            this.usuarioRepository.save(usuario);
-        }
-    }
-
-    private Estabelecimento criarEstabelecimento(){
-        Estabelecimento estab = new Estabelecimento("CNPJ123456","Estabelecimento Teste"
-                                                 , "Rua Null", "Estabelecimento de testes");
-        return this.estabelecimentoRepository.save(estab);
-    }
-
-    private List<Mesa> criarMesas(Estabelecimento estabelecimento, int qtdRegistros){
-        List<Mesa> mesas = new ArrayList<>();
-
-        for(int i=1; i <= qtdRegistros; i++){
-            Mesa mesa = new Mesa(estabelecimento, "Mesa::"+i);
-            mesa = this.mesaRepository.save(mesa);
-            mesas.add(mesa);
-        }
-
-        return mesas;
-    }
-
-    private void criarProdutos(Estabelecimento estabelecimento, int qtdCategorias, int qtdProdutosCategoria){
-        for(int categoria=1; categoria <= qtdCategorias; categoria++){
-            CategoriaProduto catProd = new CategoriaProduto(estabelecimento, "ProdCategoria_0" + categoria);
-            catProd = this.categoriaProdutoRepository.save(catProd);
-
-            for(int produto=1; produto <= qtdProdutosCategoria; produto++){
-                String nome = "Produto: " + produto;
-                double valor = (categoria*10)+produto;
-                String unidade = "unidade";
-                String descricao = "produto " + categoria + "." + produto;
-                Produto prod = new Produto(estabelecimento, nome, valor, descricao, unidade, catProd, "--IMAGEM--");
-                prod = this.produtoRepository.save(prod);
-            }
-        }
-    }
 
 
     private LogarUsuarioForm createUsuarioDataForm(int idUsuario){
@@ -200,7 +136,8 @@ public class ComandaBlueIntegratedTests {
         int idUsuario = 1;
         String usuario1EmailCrypt = this.getEncryptedEmailUsuario(idUsuario);
         String usuarioEmail = this.getEmailUsuario(idUsuario);
-        Mesa mesa = this.mesasEstabelecimento.get(3);
+        Mesa mesa = this.dataContext.getMesasEstabelecimento().get(3);
+        Estabelecimento estabelecimento = this.dataContext.getEstabelecimento();
 
         String urlAbrirComanda = String.format("/estabelecimento/mesas/%s/comandas/abrir", mesa.getPin());
 
@@ -217,16 +154,51 @@ public class ComandaBlueIntegratedTests {
 
         // verifica que o estabelecimento, a mesa e o usuário são quem solicitou a comanda e verifica que só tem ele na comanda
         Assert.assertEquals("A mesa da comanda não é igual a solicitada",mesa.getId(),comanda.getMesa().getId());
-        Assert.assertEquals("O Estabelecimento não é igual ao solicitado", this.estabelecimento.getCnpj(), comanda.getEstabelecimento().getCnpj());
+        Assert.assertEquals("O Estabelecimento não é igual ao solicitado", estabelecimento.getCnpj(), comanda.getEstabelecimento().getCnpj());
         Assert.assertEquals(1, comanda.getUsuarios().size());
         Assert.assertEquals(usuarioEmail, comanda.getUsuarios().get(0).getEmail());
 
         // lista os produtos do estabelecimetno pra fazer pedidos
-        List<Produto> produtosEstabelecimento = this.produtoRepository.findByEstabelecimentoId(this.estabelecimento.getId());
+        List<Produto> produtosEstabelecimento = this.produtoRepository.findByEstabelecimentoId(estabelecimento.getId());
         double totalItemsPedidos = 0;
 
+        List<PedidoForm> pedidos = new ArrayList<>();
+        pedidos.add(this.createPedido(produtosEstabelecimento.get(2), 1));
+        pedidos.add(this.createPedido(produtosEstabelecimento.get(5), 1));
+        pedidos.add(this.createPedido(produtosEstabelecimento.get(9), 1));
 
+        for(PedidoForm pedido : pedidos){
+            totalItemsPedidos += pedido.getValorTotal();
+        }
 
+        String urlFazerPedido = String.format("/estabelecimento/%s/mesas/%s/comandas/%s/pedir", estabelecimento.getId(), mesa.getId(), comanda.getId());
+
+        MvcResult resultFazerPedido = mvc.perform(post(urlFazerPedido)
+                .contentType(MediaType.APPLICATION_JSON_VALUE)
+                .header("COMANDA-BLUE-CLIENTE",usuario1EmailCrypt)
+                .content(WebConverter.toJson(pedidos)))
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andReturn();
+
+        comanda = jsonMapper.readValue(resultFazerPedido.getResponse().getContentAsString(), Comanda.class);
+
+        double valorTotalPedidosRegistrados = 0;
+
+        for(Pedido pedido : comanda.getItemPedido()){
+            valorTotalPedidosRegistrados += pedido.getValorTotal();
+        }
+
+        Assert.assertEquals(totalItemsPedidos, valorTotalPedidosRegistrados, 0.0001);
     }
 
+    private PedidoForm createPedido(Produto produto, int qtd){
+        PedidoForm pedido = new PedidoForm();
+        pedido.setProduto(produto);
+        pedido.setQuantidade(qtd);
+        pedido.setValorUnitario(produto.getValor());
+        pedido.setValorTotal(produto.getValor() * qtd);
+
+        return pedido;
+    }
 }
