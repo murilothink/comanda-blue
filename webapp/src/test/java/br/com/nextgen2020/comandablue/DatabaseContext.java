@@ -13,26 +13,6 @@ import java.util.List;
 @TestComponent
 public class DatabaseContext {
 
-    private static DatabaseContext context;
-
-    public static DatabaseContext initializeDatabaseContext(UsuarioRepository usuarioRepository
-            , EstabelecimentoRepository estabelecimentoRepository
-            , MesaRepository mesaRepository
-            , CategoriaProdutoRepository categoriaProdutoRepository
-            , ProdutoRepository produtoRepository){
-        if(DatabaseContext.context == null){
-            context = new DatabaseContext();
-            context.usuarioRepository = usuarioRepository;
-            context.estabelecimentoRepository = estabelecimentoRepository;
-            context.mesaRepository = mesaRepository;
-            context.categoriaProdutoRepository = categoriaProdutoRepository;
-            context.produtoRepository = produtoRepository;
-
-            context.setUpDatabase();
-        }
-
-        return context;
-    }
 
     @Autowired
     private UsuarioRepository usuarioRepository;

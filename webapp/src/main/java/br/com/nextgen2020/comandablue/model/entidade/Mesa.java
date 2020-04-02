@@ -79,6 +79,6 @@ public class Mesa {
      */
     @PostPersist
     public void onSave(){
-        this.pin = this.estabelecimento.getId() + "." + this.id;
+        this.pin = this.estabelecimento.getId() + "-" + this.id;
     }
 }
