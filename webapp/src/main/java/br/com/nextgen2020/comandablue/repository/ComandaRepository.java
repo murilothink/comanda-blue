@@ -10,9 +10,5 @@ public interface ComandaRepository extends CrudRepository<Comanda, Long> {
 
     List<Comanda> findByMesaIdAndEstabelecimentoId(Long idMesa, Long idEstabelecimento);
 
-    Optional<Comanda> findByIdAndItemPedidoClienteSolicitanteEmail(Long id, String email);
-
-    //List<Comanda> findByItemPedidoClienteSolicitanteEmail(String email);
-
-    //Comanda findByIdComanda(long id);
+    Optional<Comanda> findByIdAndItemPedidoClienteSolicitanteEmail(Long idComanda, String email);
 }
