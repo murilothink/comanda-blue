@@ -268,7 +268,7 @@ export default function TelaExtrato(props) {
                     >
                         Pagar
                 </Button>
-
+                
                 </Grid>
             </Grid>
 
