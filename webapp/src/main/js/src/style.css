@@ -170,7 +170,7 @@ html, body{
 }
 
 #telaCardapio .iconButton {
-    width: 20px;
+    /* width: 20px; */
     height: 20px;
     padding: 0;
     margin: 0;
