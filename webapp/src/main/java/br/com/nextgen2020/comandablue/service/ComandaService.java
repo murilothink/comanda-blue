@@ -75,7 +75,7 @@ public class ComandaService {
                     }
 
                     comanda.getUsuarios().addAll(listaNovosUsuarios);
-
+                    comandaRepository.save(comanda);
                     return comanda;
                 }
             }

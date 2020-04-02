@@ -3,6 +3,7 @@ package br.com.nextgen2020.comandablue.model.entidade;
 import br.com.nextgen2020.comandablue.model.enums.StatusComanda;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -23,7 +24,7 @@ public class Comanda {
     private Mesa mesa;
 
     @NotNull
-    @OneToMany(cascade = CascadeType.ALL) // varios usuarios para 1 comanda
+    @ManyToMany(cascade = CascadeType.ALL) // varios usuarios para 1 comanda
     private List<Usuario> usuarios;
 
     @OneToMany(cascade = CascadeType.ALL) // varios pedidos para 1 comanda
