@@ -153,6 +153,16 @@ public class DatabaseLoader implements CommandLineRunner {
 
         this.produtoRepository.save(new Produto(
                 barDoZe,
+                "Mandioca Frita",
+                10.50,
+                "Deliciosas Mandiocas Fritas",
+                "Unidade",
+                categoria2,
+                "https://media-cdn.tripadvisor.com/media/photo-s/09/02/14/6c/restaurante-sol-nascente.jpg"
+        ));
+
+        this.produtoRepository.save(new Produto(
+                barDoZe,
                 "Porção de Camarão",
                 41.50,
                 "Deliciosos Camarão bem fritos e crocantes",
@@ -203,6 +213,36 @@ public class DatabaseLoader implements CommandLineRunner {
                 "Unidade",
                 categoria3,
                 "https://media-cdn.tripadvisor.com/media/photo-s/0c/08/5a/a0/lanche-de-mortadela-com.jpg"
+        ));
+
+        this.produtoRepository.save(new Produto(
+                barDoZe,
+                "X-Tudo",
+                18.50,
+                "pão De Hambuerguer em tamanho especial com tudo que tem direito.",
+                "Unidade",
+                categoria3,
+                "https://img.stpu.com.br/?img=https://s3.amazonaws.com/pu-mgr/default/a0R0f00000wfezIEAQ/5c669c2ee4b0a461715ade1f.jpg&w=710&h=462"
+        ));
+
+        this.produtoRepository.save(new Produto(
+                barDoZe,
+                "Lanche de calabresa",
+                16.50,
+                "pão frances em tamanho especial com muita calabresa",
+                "Unidade",
+                categoria3,
+                "https://receitasdepai.com.br/wp-content/uploads/2019/03/Sandu%C3%ADche-de-ling%C3%BCi%C3%A7a-calabresa-maravilhoso_ReceitasDePai-2-740x400.jpg"
+        ));
+
+        this.produtoRepository.save(new Produto(
+                barDoZe,
+                "X-Salada",
+                14.50,
+                "pão de hamburguer em tamanho especial para quem esta de regime.",
+                "Unidade",
+                categoria3,
+                "https://k2lanches.com.br/wp-content/uploads/2015/12/X-SALADA-C%C3%B3pia-600x600.png"
         ));
 
         this.produtoRepository.save(new Produto(
@@ -363,6 +403,16 @@ public class DatabaseLoader implements CommandLineRunner {
                 "Copo",
                 categoria5,
                 "https://img.elo7.com.br/product/zoom/262F374/adesivo-parede-decoracao-suco-de-laranja-fruta-lanchonete-adesivo-decorativo.jpg"
+        ));
+
+        this.produtoRepository.save(new Produto(
+                barDoZe,
+                "Suco de Caju",
+                6.50,
+                "Um delicioso suco de Caju",
+                "Copo",
+                categoria5,
+                "https://www.mundoboaforma.com.br/wp-content/uploads/2017/06/suco-de-caju-1280x720.jpg"
         ));
 
         this.produtoRepository.save(new Produto(
