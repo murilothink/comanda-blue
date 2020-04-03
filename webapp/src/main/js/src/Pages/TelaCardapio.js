@@ -33,10 +33,24 @@ function createData(produto, observacao, quantidade, valorUnitario, valorTotal) 
     return { produto, observacao, quantidade, valorUnitario, valorTotal};
 }
 
+// Calcula o total, baseado na tabela
+// TODO entender melhor o reduce
+function calculaSubtotal(items) {
+    if(!items) return null;
+    return items.map(({ valorTotal }) => valorTotal).reduce((sum, i) => sum + i, 0);
+}
+
+// Converte valor para R$XX.XX
+function ccyFormat(num) {
+    if(!num) return "R$0,0";
+    return `R\$${num.toFixed(2)}`;
+}
+
 export default class Menu extends React.Component{
     constructor(props){
         super(props);
         this.state={
+            open: false,
             carrinho: [],
             listaProduto: [],
             categorias: [],
@@ -132,6 +146,15 @@ export default class Menu extends React.Component{
         this.getMenu(event.target.value);
     }
 
+    
+    //From: Dialog confirmar
+    //Posta no banco os pedidos do referido carrinho
+    //limpa o carrinho e fecha o dialog confirmar
+    handleCarrinhoConfirmar = () =>{
+        this.postCarrinho();
+        this.setState({...this.state, open: false});
+    }
+
     //From: <MenuList>
     //adiciona um pedido no state carrinho
     handleAddItem = (item) =>{
@@ -187,10 +210,9 @@ export default class Menu extends React.Component{
     }
 
     //From: <ItemList>
-    //Posta no banco os pedidos do referido carrinho
-    //limpa o carrinho
+    //Abre o Dialog de confirmacao
     handleCarrinhoPedir = () =>{
-        this.postCarrinho();
+        this.setState({...this.state, open: true});
     }
 
     //From: <ItemList>
@@ -241,6 +263,27 @@ export default class Menu extends React.Component{
                               OnCancelCarrinho={this.handleCancelCarrinho}
                     />
                 </aside>
+
+                <Dialog
+                    open={this.state.open}
+                    aria-labelledby="alert-dialog-title"
+                    aria-describedby="alert-dialog-description"
+                >
+                    <DialogTitle id="alert-dialog-title">Deseja confirmar seu pedido?</DialogTitle>
+                    <DialogContent>
+                    <DialogContentText id="alert-dialog-description">
+                        Valor total: {ccyFormat(calculaSubtotal(this.state.carrinho))}
+                    </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                    <Button onClick={()=>{this.setState({...this.state, open:false})}} color="primary">
+                        Cancelar
+                    </Button>
+                    <Button onClick={this.handleCarrinhoConfirmar} color="primary" autoFocus>
+                        Confirmar
+                    </Button>
+                    </DialogActions>
+                </Dialog>
             </div>
         );
     }
