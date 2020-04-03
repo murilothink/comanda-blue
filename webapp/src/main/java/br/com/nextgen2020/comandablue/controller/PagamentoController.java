@@ -47,7 +47,6 @@ public class PagamentoController {
         return ResponseEntity.badRequest().build();
     }
 
-
     @GetMapping("/comanda/{idComanda}/pagamento")
     public List<Pagamento> listarPagamento(@PathVariable(value = "idComanda", required = true) Long idComanda){
 
