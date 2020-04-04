@@ -7,7 +7,7 @@ var path = require('path');
 module.exports = {
 
     // Where to look for react application
-    entry: ['./src/main/js/src/index.js'],
+    entry: ['./src/index.js'],
 
     // This option controls if and how source maps are generated
     // Creates sourcemaps so that, when you are debugging JS code in the browser,
@@ -28,7 +28,7 @@ module.exports = {
     // All your custom code AND the modules pulled in by the require() calls are stuffed into this file.
     output: {
         path: __dirname,
-        filename: './src/main/resources/static/built/bundle.js'
+        filename: '../resources/static/built/bundle.js'
     },
     module: {
         rules: [
