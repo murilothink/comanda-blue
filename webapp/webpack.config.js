@@ -7,7 +7,7 @@ var path = require('path');
 module.exports = {
 
     // Where to look for react application
-    entry: './src/main/js/src/index.js',
+    entry: ['./src/main/js/src/index.js'],
 
     // This option controls if and how source maps are generated
     // Creates sourcemaps so that, when you are debugging JS code in the browser,
@@ -19,7 +19,7 @@ module.exports = {
 
     // Providing the mode configuration option tells webpack to use its built-in optimizations accordingly.
     // 'development': Sets process.env.NODE_ENV on DefinePlugin to value development. Enables NamedChunksPlugin and NamedModulesPlugin
-    mode: 'development',
+    mode: 'production',
 
     // The top-level output key contains set of options instructing webpack on how and where it
     // should output your bundles, assets and anything else you bundle or load with webpack.
@@ -34,14 +34,37 @@ module.exports = {
         rules: [
             {
                 test: path.join(__dirname, '.'),
-                exclude: /(node_modules)/,
+                exclude: [/(node_modules)/, /\.(png|jpe?g|gif)$/i],
                 use: [{
                     loader: 'babel-loader',
                     options: {
-                        presets: ["@babel/preset-env", "@babel/preset-react"]
-                    }
+                        presets: ["@babel/preset-env"
+                                , "@babel/preset-react"
+                                ],
+                        plugins: [ "@babel/plugin-proposal-class-properties"
+                                  ,["@babel/plugin-proposal-decorators", { "legacy": true }]
+                                  , "@babel/plugin-transform-runtime"
+                                 ]
+                    },
                 }]
-            }
+            },
+            {
+                    test: /\.(png|jpe?g|gif)$/i,
+                    use: [
+                      {
+                        loader: 'file-loader',
+                        options: {
+                           name: '[name].[ext]',
+                           publicPath: 'img',
+                           emitFile: false
+                        }
+                      },
+                    ],
+            },
+            {
+                    test: /\.css$/i,
+                    use: ['style-loader', 'css-loader'],
+            },
         ]
 
     }
