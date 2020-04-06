@@ -54,6 +54,26 @@ npm start
 
 Acessar frontend via `https://localhost:3000`
 
+# Para rodar a aplicação no Docker
+
+Para realizar download do docker no windows siga as instruções para instalar o Docker no Windows https://docs.docker.com/docker-for-windows/install/
+
+Abra o terminal e cole:
+
+    docker run --publish 8080:8080 --detach --name comanda-blue lucianoscit/nextgen2020.blue.comanda:latest
+
+## Caso dê errado.
+
+Faça o pull da imagem 
+
+    $docker pull lucianoscit/nextgen2020.blue.comanda
+
+Veja se a imagem está em seu Docker
+
+    $docker images
+
+docker run -d -p 8080:8080 lucianoscit/nextgen2020.blue.comanda
+
 ## :dancers: contributors
 
 * Cristiano Andrade de Aguiar [CrisAndrade](https://github.com/CrisAndrade)
