@@ -66,11 +66,11 @@ Abra o terminal e cole:
 
 Faça o pull da imagem 
 
-    $docker pull lucianoscit/nextgen2020.blue.comanda
+    docker pull lucianoscit/nextgen2020.blue.comanda
 
 Veja se a imagem está em seu Docker
 
-    $docker images
+    docker images
     
 Inicie a aplicação na porta 8080:
 
