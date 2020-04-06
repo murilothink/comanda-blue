@@ -76,7 +76,7 @@ Inicie a aplicação na porta 8080:
 
     docker run -d -p 8080:8080 lucianoscit/nextgen2020.blue.comanda
     
-Em seu navegado acesse o localhost:8080
+Em seu navegado acesse o `https://localhost:3000`
 
 ## :dancers: contributors
 
