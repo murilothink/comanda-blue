@@ -120,6 +120,45 @@
 				</executions>
 			</plugin>
 
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>2.1.0</version>
+				<configuration>
+                 <!--
+					<to>
+						<image>docker.io/[USERNAME:DockerHub]/nextgen2020.blue.comanda</image>
+						<tags>
+							<tag>v0.9.1</tag>
+							<tag>latest</tag>
+						</tags>
+						<auth>
+							<username>[USERNAME: Docker Hub]</username>
+							<password>[SENHA: username docker hub]</password>
+						</auth>
+					</to>
+					-->
+					<to>
+						<image>nextgen2020.blue.comanda</image>
+						<tags>
+							<tag>v0.9.1</tag>
+							<tag>latest</tag>
+						</tags>
+					</to>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>package</phase>
+						<goals>
+							<!-- para gerar imagem e subir pra repositório externo
+							<goal>build</goal>
+							-->
+							<goal>dockerBuild</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
 		</plugins>
 	</build>
 
