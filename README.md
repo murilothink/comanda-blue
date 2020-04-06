@@ -54,7 +54,7 @@ npm start
 
 Acessar frontend via `https://localhost:3000`
 
-# Para rodar a aplicação no Docker
+# Aplicação com Docker
 
 Para realizar download do docker no windows siga as instruções para instalar o Docker no Windows https://docs.docker.com/docker-for-windows/install/
 
@@ -71,8 +71,12 @@ Faça o pull da imagem
 Veja se a imagem está em seu Docker
 
     $docker images
+    
+Inicie a aplicação na porta 8080:
 
-docker run -d -p 8080:8080 lucianoscit/nextgen2020.blue.comanda
+    docker run -d -p 8080:8080 lucianoscit/nextgen2020.blue.comanda
+    
+Em seu navegado acesse o localhost:8080
 
 ## :dancers: contributors
 
